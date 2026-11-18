@@ -1,0 +1,78 @@
+=== FONTS ===
+/F4: BaseFont=/AAAAAA+CourierNewPSMT Subtype=/Type0 Encoding=/Identity-H
+/F5: BaseFont=/BAAAAA+ArialMT Subtype=/Type0 Encoding=/Identity-H
+/F6: BaseFont=/CAAAAA+Arial-BoldMT Subtype=/Type0 Encoding=/Identity-H
+/F11: BaseFont=/DAAAAA+Arial-Black Subtype=/Type0 Encoding=/Identity-H
+/F13: BaseFont=None Subtype=/Type3 Encoding={'/Type': '/Encoding', '/Differences': [0, '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g0', '/g653']}
+/F14: BaseFont=/FAAAAA+CambriaMath Subtype=/Type0 Encoding=/Identity-H
+/F15: BaseFont=/GAAAAA+ArialMT Subtype=/Type0 Encoding=/Identity-H
+/F20: BaseFont=/HAAAAA+Arial-BoldMT Subtype=/Type0 Encoding=/Identity-H
+/F22: BaseFont=/IAAAAA+Arial-Black Subtype=/Type0 Encoding=/Identity-H
+/F23: BaseFont=/JAAAAA+Georgia-BoldItalic Subtype=/Type0 Encoding=/Identity-H
+/F28: BaseFont=/KAAAAA+SegoeUISymbol Subtype=/Type0 Encoding=/Identity-H
+/F29: BaseFont=/LAAAAA+Georgia Subtype=/Type0 Encoding=/Identity-H
+
+=== COLOR SPACES / EXT GSTATE ===
+/ColorSpace: none
+/ExtGState: ['/G3', '/G7', '/G9', '/G12', '/G16', '/G17', '/G21', '/G30', '/G33']
+  /G3: {'/ca': 1, '/BM': '/Normal'}
+  /G7: {'/CA': 0.6, '/ca': 0.6, '/LC': 0, '/LJ': 0, '/LW': 2, '/ML': 4, '/SA': True, '/BM': '/Normal'}
+  /G9: {'/ca': 0.25, '/BM': '/Normal'}
+  /G12: {'/CA': 1, '/ca': 1, '/LC': 1, '/LJ': 1, '/LW': 8, '/ML': 4, '/SA': True, '/BM': '/Normal'}
+  /G16: {'/CA': 1, '/ca': 1, '/LC': 0, '/LJ': 0, '/LW': 3, '/ML': 4, '/SA': True, '/BM': '/Normal'}
+  /G17: {'/ca': 0.8, '/BM': '/Normal'}
+  /G21: {'/CA': 1, '/ca': 1, '/LC': 0, '/LJ': 0, '/LW': 1, '/ML': 4, '/SA': True, '/BM': '/Normal'}
+  /G30: {'/ca': 0.2, '/BM': '/Normal'}
+  /G33: {'/CA': 1, '/ca': 1, '/LC': 1, '/LJ': 1, '/LW': 2.2, '/ML': 4, '/SA': True, '/BM': '/Normal'}
+/Pattern: none
+/Shading: none
+
+=== CONTENT STREAM COLORS ===
+RGB colors (hex -> count):
+  #D4DECD RG: 24
+  #D4DECD rg: 24
+  #232425 RG: 22
+  #232425 rg: 22
+  #C43B25 RG: 13
+  #C43B25 rg: 13
+  #000000 RG: 6
+  #000000 rg: 6
+  #A2AA6E RG: 6
+  #A2AA6E rg: 6
+  #3B6F74 RG: 5
+  #3B6F74 rg: 5
+  #AC4B2F RG: 5
+  #AC4B2F rg: 5
+  #586660 RG: 4
+  #586660 rg: 4
+  #FFFFFF RG: 1
+  #FFFFFF rg: 1
+
+Grayscale values:
+
+CMYK colors:
+
+=== TEXT OPERATIONS (first 200) ===
+Tf (font size) combos:
+  /F11 161.589996: 9
+  /F6 15: 7
+  /F22 33.779999: 6
+  /F6 19: 4
+  /F11 308.48999: 4
+  /F5 39.66: 3
+  /F20 32.310001: 3
+  /F5 19: 3
+  /F5 23: 3
+  /F4 13: 2
+  /F6 20: 2
+  /F5 13: 2
+  /F15 24: 2
+  /F23 367.25: 2
+  /F4 14: 2
+  /F4 16: 2
+  /F6 98.419998: 2
+  /F13 161.589996: 1
+  /F14 30: 1
+  /F23 98.419998: 1
+  /F28 16: 1
+  /F29 249.73: 1

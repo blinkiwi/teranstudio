@@ -1,0 +1,16 @@
+# Dependencias (el proyecto no usa ninguna, pero por si acaso)
+node_modules/
+
+# Base de datos local: se regenera con `npm run reset`
+data/
+
+# Secretos (el token del panel vive aquí)
+.env
+
+# Copia local de seguridad de un estado anterior del sitio
+_backup_before_teran_mix/
+
+# Ruido de sistema
+*.log
+Thumbs.db
+.DS_Store

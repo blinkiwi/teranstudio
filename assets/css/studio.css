@@ -1,0 +1,891 @@
+/* =============================================================
+   No Plan Studio Clone — Studio CSS v2
+   Full overrides + scroll/motion/responsive system
+   ============================================================= */
+
+/* ── 0. DESIGN TOKENS ──────────────────────────────────────── */
+:root {
+  --bg:          #f2eddf;
+  --bg-dark:     #e8e2d2;
+  --ink:         #111111;
+  --ink-muted:   #555555;
+  --ink-faint:   #999999;
+  --accent:      #d84315;
+  --accent-soft: rgba(216, 67, 21, 0.12);
+  --white:       #fdfaf3;
+  --border:      rgba(0,0,0,0.10);
+  --shadow-s:    0 2px 8px rgba(0,0,0,0.06);
+  --shadow-m:    0 8px 32px rgba(0,0,0,0.10);
+  --shadow-l:    0 24px 64px rgba(0,0,0,0.14);
+  --font:        'custom_66210','Mabry',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    0.18s;
+  --dur-mid:     0.38s;
+  --dur-slow:    0.65s;
+}
+
+/* ── 1. RESET & GLOBAL SCROLL FIX ──────────────────────────── */
+/* Override Readymag viewer.css scroll-locks completely */
+
+html {
+  height: auto             !important;
+  min-height: 100%         !important;
+  min-width: 0             !important;
+  overflow-x: hidden       !important;
+  overflow-y: scroll       !important;
+  scroll-behavior: smooth  !important;
+  background: var(--bg)    !important;
+  /* Smooth momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  height: auto             !important;
+  min-height: 100vh        !important;
+  min-width: 0             !important;
+  /* The html element is the only scroll container. Keeping overflow
+     on the body would create a second, nested scrollbar and steal
+     15px from the scaled canvas on short pages. */
+  overflow: hidden         !important;
+  position: relative       !important;
+  margin: 0                !important;
+  padding: 0               !important;
+  background: var(--bg)    !important;
+  color: var(--ink);
+  font-family: var(--font);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+::selection {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+img { max-width: 100%; display: block; }
+
+/* ── 2. LAYOUT CONTAINERS ───────────────────────────────────── */
+
+#main-content {
+  position: relative  !important;
+  width: 100%         !important;
+  height: auto        !important;
+  min-height: 100vh   !important;
+  display: flex       !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  overflow: visible   !important;
+}
+
+#mags {
+  position: relative  !important;
+  width: 100%         !important;
+  height: auto        !important;
+  /* The canvas is scaled by studio.js; a viewport-tall minimum would
+     leave a large empty gap under the mobile hero. */
+  min-height: 0       !important;
+  display: flex       !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  /* Clip the unscaled 1024px canvas overflow at the scaled height. */
+  overflow: hidden    !important;
+  background: var(--bg) !important;
+  margin: 0 auto      !important;
+}
+
+article.page, .page {
+  position: relative     !important;
+  top: 0                 !important;
+  left: 0                !important;
+  right: 0               !important;
+  /* #mags centres the canvas with flexbox; auto side margins would
+     resolve to 0 once the 1024px canvas is wider than the phone and
+     would leave the right edge clipped. Keep only the vertical margin
+     that studio.js uses for the scaled height. */
+  margin: 0;
+  display: block         !important;
+  overflow: visible      !important;
+  background: var(--bg)  !important;
+  transform-origin: top center;
+}
+
+.content-scroll-wrapper {
+  position: relative !important;
+  top: 0             !important;
+  left: 0            !important;
+  width: 100%        !important;
+  height: auto       !important;
+  min-height: 100%   !important;
+  overflow: visible  !important;
+  z-index: 10        !important;
+}
+
+.content-bounds {
+  position: relative !important;
+  width: 100%        !important;
+  height: auto       !important;
+  overflow: visible  !important;
+}
+
+.page-content-container {
+  position: relative !important;
+  overflow: visible  !important;
+}
+
+.page-fixed-bg-container {
+  position: absolute !important;
+  top: 0             !important;
+  left: 0            !important;
+  width: 100%        !important;
+  height: 100%       !important;
+  min-height: 100%   !important;
+  pointer-events: none !important;
+  z-index: 0         !important;
+  overflow: hidden   !important; /* clips parallax travel only here */
+}
+
+.page-fixed-bg-container .widget-background,
+.page-fixed-bg-container .widget-background > div {
+  width: 100%        !important;
+  height: 100%       !important;
+  min-height: 100%   !important;
+}
+
+.fixed-position-container,
+.fixed-position-container-top {
+  position: absolute !important;
+  top: 0             !important;
+  left: 0            !important;
+  width: 100%        !important;
+  height: 100%       !important;
+  overflow: visible  !important;
+  pointer-events: none !important;
+  z-index: 100       !important;
+}
+
+.fixed-position-container .rmwidget,
+.fixed-position-container a,
+.fixed-position-container button {
+  pointer-events: auto !important;
+}
+
+/* ── 3. SCROLL PROGRESS BAR ─────────────────────────────────── */
+
+.studio-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;           /* JS sets this */
+  height: 2px;
+  background: linear-gradient(90deg, var(--ink) 0%, var(--accent) 100%);
+  z-index: 100000;
+  pointer-events: none;
+  transform-origin: left center;
+  transition: width 0.08s linear;
+  will-change: width;
+}
+
+/* ── 4. STUDIO NAVIGATION ───────────────────────────────────── */
+
+.studio-nav-header {
+  --nav-ink: var(--ink);
+  --nav-contrast: var(--bg);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Height and the vertical spacer are governed by the CMS
+     (Ajustes → Tamaños y espaciado). */
+  height: var(--nav-height, 58px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* The scaled page canvas fills the viewport, so the menu uses
+     the same fluid edge inset as the page instead of a fixed column.
+     --nav-pad keeps the logo and the buttons off the bar edges. */
+  padding: var(--nav-pad, 0px) clamp(20px, 3.2vw, 48px);
+  z-index: 99999;
+  pointer-events: none;
+  /* The general menu is always transparent. */
+  background: transparent;
+  transition: background var(--dur-mid) var(--ease-out),
+              box-shadow var(--dur-mid) var(--ease-out);
+}
+
+.studio-nav-header.scrolled {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* The mobile overlay is cream, so keep the menu dark while it is open. */
+.studio-nav-header.mobile-open {
+  --nav-ink: #111111 !important;
+  --nav-contrast: #f2eddf !important;
+}
+
+.studio-nav-header * { pointer-events: auto; }
+
+.studio-nav-logo {
+  font-family: var(--font);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--nav-ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  transition: opacity var(--dur-fast) ease;
+}
+.studio-nav-logo:hover { opacity: 0.65; }
+
+/* Animated underline on logo */
+.studio-nav-logo::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--dur-mid) var(--ease-out);
+}
+.studio-nav-logo:hover::after { width: 100%; }
+
+.studio-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.studio-nav-link {
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--nav-ink);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: background var(--dur-fast) ease,
+              color var(--dur-fast) ease,
+              transform var(--dur-fast) var(--ease-spring);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+}
+
+.studio-nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--nav-ink);
+  border-radius: 20px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-mid) var(--ease-out);
+  z-index: -1;
+}
+
+.studio-nav-link:hover {
+  color: var(--nav-contrast);
+  transform: translateY(-1px);
+}
+.studio-nav-link:hover::before { transform: scaleX(1); }
+
+.studio-nav-link.active {
+  background: var(--nav-ink);
+  color: var(--nav-contrast);
+}
+
+.studio-nav-link.projects-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+.studio-nav-link.projects-toggle .toggle-arrow {
+  font-size: 10px;
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+.studio-nav-link.projects-toggle.open .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* Mobile nav toggle button */
+.studio-nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.studio-nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--nav-ink);
+  transition: transform var(--dur-mid) var(--ease-out),
+              opacity var(--dur-fast) ease,
+              width var(--dur-mid) var(--ease-out);
+  transform-origin: center;
+}
+.studio-nav-mobile-toggle.open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.studio-nav-mobile-toggle.open span:nth-child(2) {
+  opacity: 0; width: 0;
+}
+.studio-nav-mobile-toggle.open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── 5. PROJECTS DRAWER ──────────────────────────────────────── */
+
+.projects-drawer {
+  position: fixed;
+  top: 68px;
+  right: 20px;
+  width: 340px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-l);
+  padding: 12px;
+  z-index: 10000;
+  /* Hidden state */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px) scale(0.97);
+  transition: opacity var(--dur-mid) var(--ease-out),
+              transform var(--dur-mid) var(--ease-out);
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.projects-drawer::-webkit-scrollbar { width: 4px; }
+.projects-drawer::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.projects-drawer.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.projects-drawer-header {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  padding: 6px 10px 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.projects-drawer-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--ink-faint);
+  padding: 0 4px;
+  line-height: 1;
+  transition: color var(--dur-fast) ease, transform var(--dur-fast) var(--ease-spring);
+}
+.projects-drawer-close:hover {
+  color: var(--ink);
+  transform: rotate(90deg);
+}
+
+.projects-drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.projects-drawer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background var(--dur-fast) ease,
+              transform var(--dur-fast) var(--ease-spring),
+              color var(--dur-fast) ease;
+  position: relative;
+}
+.projects-drawer-item::after {
+  content: '→';
+  font-size: 13px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity var(--dur-fast) ease,
+              transform var(--dur-fast) var(--ease-spring);
+}
+.projects-drawer-item:hover {
+  background: rgba(0,0,0,0.045);
+  transform: translateX(4px);
+}
+.projects-drawer-item:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+.projects-drawer-item.active {
+  background: var(--ink);
+  color: var(--bg);
+}
+.projects-drawer-item.active::after { display: none; }
+
+.projects-drawer-item .item-num {
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+.projects-drawer-item.active .item-num { color: rgba(255,255,255,0.4); }
+
+/* ── 6. BOTTOM PAGER ─────────────────────────────────────────── */
+
+.studio-pager {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(242,237,223,0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  padding: 8px 16px;
+  box-shadow: var(--shadow-m);
+  z-index: 9998;
+  transition: opacity var(--dur-mid) ease, transform var(--dur-mid) var(--ease-out);
+  white-space: nowrap;
+}
+
+/* Hide pager when scrolled near bottom to avoid overlap */
+.studio-pager.hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+  pointer-events: none;
+}
+
+.studio-pager a, .studio-pager button {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background var(--dur-fast) ease, transform var(--dur-fast) var(--ease-spring);
+}
+.studio-pager a:hover, .studio-pager button:hover {
+  background: rgba(0,0,0,0.07);
+  transform: translateY(-1px);
+}
+
+.pager-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ── 7. FLOATING STUDIO BADGE ────────────────────────────────── */
+
+.studio-demo-badge {
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  background: rgba(242,237,223,0.90);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 6px 14px;
+  font-size: 11px;
+  color: var(--ink-muted);
+  box-shadow: var(--shadow-s);
+  z-index: 9997;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.03em;
+  transition: opacity var(--dur-mid) ease;
+}
+.studio-demo-badge:hover { opacity: 0.7; }
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2e7d32;
+  box-shadow: 0 0 0 0 rgba(46,125,50,0.5);
+  animation: badge-pulse 2.4s ease infinite;
+  flex-shrink: 0;
+}
+@keyframes badge-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(46,125,50,0.5); }
+  60%  { box-shadow: 0 0 0 7px rgba(46,125,50,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(46,125,50,0);   }
+}
+
+/* ── 8. BACK TO TOP ──────────────────────────────────────────── */
+
+.back-to-top-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(242,237,223,0.90);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 15px;
+  box-shadow: var(--shadow-s);
+  z-index: 9997;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity var(--dur-mid) var(--ease-out),
+              transform var(--dur-mid) var(--ease-out),
+              background var(--dur-fast) ease,
+              color var(--dur-fast) ease;
+}
+.back-to-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.back-to-top-btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+  transform: translateY(-3px);
+}
+
+/* ── 9. PAGE TRANSITION OVERLAY ──────────────────────────────── */
+
+.page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  z-index: 999999;
+  pointer-events: none;
+  /* Clip from bottom: hidden by default */
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.5s var(--ease-in-out);
+}
+.page-transition-overlay.entering {
+  clip-path: inset(0 0 0 0);   /* full cover */
+}
+.page-transition-overlay.leaving {
+  clip-path: inset(0 0 100% 0); /* wipe out upward */
+}
+
+/* ── 10. SCROLL & MOTION EFFECTS ─────────────────────────────── */
+
+/* Scroll-rotation stamps — hardware accelerated */
+[data-id="65eb824cda7f23003dcb2994"],
+[data-id="65eb824cda7f23003dcb2995"],
+[data-id="65eb824cda7f23003dcb29b8"],
+[data-id="65eb824cda7f23003dcb29b9"] {
+  will-change: transform;
+  transform-origin: center center !important;
+  transition: filter var(--dur-fast) ease;
+}
+[data-id="65eb824cda7f23003dcb2994"]:hover,
+[data-id="65eb824cda7f23003dcb2995"]:hover,
+[data-id="65eb824cda7f23003dcb29b8"]:hover,
+[data-id="65eb824cda7f23003dcb29b9"]:hover {
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.20));
+}
+
+/* Animation containers — hover glow + cursor */
+.animation-container {
+  cursor: pointer;
+  will-change: transform;
+  transition: filter var(--dur-fast) ease;
+}
+.animation-container:hover {
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.16));
+}
+
+/* ── Marquee ribbon ──────────────────────────────────────────── */
+[data-id="65eb824cda7f23003dcb2a6e"] {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+.marquee-inner {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* ── Fade-reveal on scroll ───────────────────────────────────── */
+/* Applied by JS; CSS controls the transition */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for sibling reveals */
+.reveal-on-scroll[data-delay="1"] { transition-delay: 0.08s; }
+.reveal-on-scroll[data-delay="2"] { transition-delay: 0.16s; }
+.reveal-on-scroll[data-delay="3"] { transition-delay: 0.24s; }
+.reveal-on-scroll[data-delay="4"] { transition-delay: 0.32s; }
+.reveal-on-scroll[data-delay="5"] { transition-delay: 0.40s; }
+
+/* ── Clip-path image reveal ──────────────────────────────────── */
+.clip-reveal {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--dur-slow) var(--ease-out);
+  will-change: clip-path;
+}
+.clip-reveal.revealed {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ── Parallax layers ─────────────────────────────────────────── */
+/* JS sets CSS custom props --py (parallax Y offset in px) */
+.parallax-slow  { will-change: transform; }
+.parallax-mid   { will-change: transform; }
+.parallax-fast  { will-change: transform; }
+
+/* ── 11. IMAGE LAZY LOADING (blur-up) ───────────────────────── */
+img.lazy {
+  filter: blur(10px);
+  transition: filter var(--dur-slow) ease;
+}
+img.lazy.loaded { filter: blur(0); }
+
+/* ── 12. HOVER EFFECTS ON PROJECT THUMBNAILS ────────────────── */
+.rmwidget.widget-picture {
+  transition: transform var(--dur-mid) var(--ease-out),
+              filter var(--dur-mid) ease;
+}
+.rmwidget.widget-picture:hover {
+  transform: scale(1.015);
+  filter: brightness(0.96);
+  z-index: 10;
+  position: relative;
+}
+
+/* Project link hover styles (from original site classes) */
+[class*="link-style"]:hover .rmwidget.widget-picture,
+a:hover .rmwidget.widget-picture {
+  transform: scale(1.03);
+  filter: brightness(0.93);
+}
+
+/* ── 13. CUSTOM CURSOR ───────────────────────────────────────── */
+.custom-studio-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999998;
+  /* JS handles position via top/left – no transform offset needed */
+  mix-blend-mode: difference;
+  display: none;
+  will-change: top, left, width, height;
+}
+.custom-studio-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--ink);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  display: none;
+  will-change: top, left;
+  mix-blend-mode: difference;
+}
+
+@media (pointer: fine) {
+  .custom-studio-cursor,
+  .custom-studio-cursor-dot { display: block; }
+  /* Hide native cursor only on non-input elements */
+  body { cursor: none; }
+  a, button, input, textarea, select { cursor: none; }
+}
+
+.custom-studio-cursor.hovering {
+  width: 48px;
+  height: 48px;
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  mix-blend-mode: normal;
+}
+.custom-studio-cursor.clicking {
+  width: 12px;
+  height: 12px;
+  background: var(--ink);
+}
+
+/* ── 14. MOBILE / RESPONSIVE ─────────────────────────────────── */
+
+@media (max-width: 760px) {
+  .studio-nav-header { padding: var(--nav-pad, 0px) 20px; }
+  .studio-nav-links { display: none; }
+  .studio-nav-mobile-toggle { display: flex; }
+  .studio-demo-badge { display: none; }
+  .studio-pager { font-size: 12px; padding: 6px 12px; }
+}
+
+/* Mobile full-screen nav overlay */
+.studio-mobile-nav {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity var(--dur-mid) var(--ease-out),
+              transform var(--dur-mid) var(--ease-out);
+}
+.studio-mobile-nav.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.studio-mobile-nav a {
+  font-family: var(--font);
+  font-size: clamp(28px, 7vw, 48px);
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: opacity var(--dur-fast) ease;
+}
+.studio-mobile-nav a:hover { opacity: 0.4; }
+
+@media (max-width: 600px) {
+  .back-to-top-btn { bottom: 80px; right: 16px; }
+  .studio-pager { bottom: 14px; gap: 6px; padding: 6px 10px; }
+}
+
+/* ── 15. TYPOGRAPHY REFINEMENTS ──────────────────────────────── */
+/* Text widgets are already scaled with the whole 1024px canvas;
+   overriding their font-size here would shrink headings a second time. */
+
+/* ── 16. UTILITY / MISC ──────────────────────────────────────── */
+
+/* Smooth scrollbar for Firefox */
+html { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-on-scroll { opacity: 1; transform: none; }
+  .clip-reveal { clip-path: none; }
+}
+
+/* ── 17. EMBED MODE ──────────────────────────────────────────── */
+/* Project pages rendered inside the stacked showcase on index.html.
+   The host page owns scrolling, so fixed UI and scroll chrome are
+   removed from the embedded document. */
+html.embed-mode,
+html.embed-mode body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: hidden !important;
+}
+
+html.embed-mode body {
+  cursor: auto !important;
+}
+
+html.embed-mode .studio-nav-header,
+html.embed-mode .studio-progress-bar,
+html.embed-mode .projects-drawer,
+html.embed-mode .studio-pager,
+html.embed-mode .studio-demo-badge,
+html.embed-mode .back-to-top-btn,
+html.embed-mode .custom-studio-cursor,
+html.embed-mode .custom-studio-cursor-dot,
+html.embed-mode .page-transition-overlay,
+html.embed-mode .studio-mobile-nav {
+  display: none !important;
+}
+
+/* Original Readymag menu, hidden in favour of the general menu. */
+.embed-hide-chrome {
+  display: none !important;
+}
+
+html.embed-mode a,
+html.embed-mode button,
+html.embed-mode input,
+html.embed-mode textarea,
+html.embed-mode select {
+  cursor: pointer !important;
+}

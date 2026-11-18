@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No Plan Studio Template</title>
+  <style>
+    :root {
+      --color-bg: oklch(0.97 0.01 250);
+      --color-surface: oklch(1 0 0);
+      --color-text: oklch(0.2 0.01 250);
+      --color-text-muted: oklch(0.5 0.01 250);
+      --color-border: oklch(0.9 0.01 250);
+      --color-accent: oklch(0.78 0.16 200);
+      --color-primary: oklch(0.65 0.12 250);
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 3rem;
+      --spacing-xxl: 4rem;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --transition-fast: 150ms ease;
+      --transition-normal: 250ms ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-family);
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      transition: background-color var(--transition-normal);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(100% - 2rem, 1200px); margin-inline: auto; padding-inline: 1rem; }
+    h1, h2, h3 { line-height: 1.25; font-weight: 600; color: var(--color-text); }
+    h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
+    h2 { font-size: 2.25rem; }
+    h3 { font-size: 1.875rem; }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      border: none;
+      background-color: var(--color-primary);
+      color: white;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: var(--spacing-md);
+      background-color: transparent;
+      z-index: 100;
+      transition: background-color var(--transition-normal);
+    }
+    .nav-scrolled { background-color: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); margin: var(--spacing-sm); }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: var(--spacing-xxl); margin: 0 auto; }
+    .nav-logo { font-size: var(--font-size-xl); font-weight: 700; }
+    .nav-links { display: flex; gap: var(--spacing-lg); list-style: none; }
+    .nav-links a { padding: var(--spacing-xs) 0; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--color-accent); transition: width var(--transition-fast); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-toggle { display: none; flex-direction: column; background: transparent; border: none; cursor: pointer; padding: var(--spacing-xs); }
+    .nav-toggle span { width: 25px; height: 2px; background-color: var(--color-text); margin: 3px 0; transition: all var(--transition-fast); }
+    @media (max-width: 768px) {
+      .nav-links { position: fixed; top: 70px; right: 0; bottom: 0; width: 250px; background-color: var(--color-surface); flex-direction: column; padding: var(--spacing-lg); transform: translateX(100%); transition: transform var(--transition-normal); }
+      .nav-links.active { transform: translateX(0); }
+      .nav-toggle { display: flex; }
+    }
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: var(--spacing-xxl); }
+    .hero-container { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: center; }
+    .hero-title { font-size: clamp(2.5rem, 8vw, 4rem); line-height: 1.1; margin-bottom: var(--spacing-md); }
+    .hero-accent { color: var(--color-accent); }
+    .hero-subtitle { font-size: var(--font-size-lg); color: var(--color-text-muted); margin-bottom: var(--spacing-lg); }
+    .hero-image-placeholder { width: 400px; height: 500px; background: linear-gradient(135deg, oklch(0.8 0.1 200), oklch(0.7 0.1 250)); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+    @media (max-width: 1024px) { .hero-container { grid-template-columns: 1fr; } .hero-image-placeholder { width: 100%; height: 400px; } }
+    .section { padding: var(--spacing-xxl) var(--spacing-md); }
+    .section-alt { background-color: var(--color-surface); }
+    .section-header { text-align: center; margin-bottom: var(--spacing-xxl); }
+    .section-title { font-size: 2.25rem; margin-bottom: var(--spacing-sm); }
+    .section-subtitle { color: var(--color-text-muted); font-size: var(--font-size-lg); }
+    .projects-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-lg); }
+    .project-card { background-color: var(--color-surface); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: transform var(--transition-normal), box-shadow var(--transition-normal); }
+    .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .project-card-media { aspect-ratio: 16/9; overflow: hidden; }
+    .project-card-image { width: 100%; height: 100%; background: linear-gradient(135deg, oklch(0.85 0.08 200), oklch(0.75 0.08 250)); transition: transform var(--transition-fast); }
+    .project-card:hover .project-card-image { transform: scale(1.05); }
+    .project-card-content { padding: var(--spacing-md); }
+    .project-card-title { font-size: var(--font-size-lg); margin-bottom: var(--spacing-xs); }
+    .project-card-description { color: var(--color-text-muted); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
+    .project-card-link { color: var(--color-primary); font-weight: 500; }
+    .project-card-link:hover { color: var(--color-accent); }
+    @media (max-width: 1024px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .projects-grid { grid-template-columns: 1fr; } }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: center; }
+    .about-image-placeholder { aspect-ratio: 4/5; background: linear-gradient(135deg, oklch(0.8 0.1 200), oklch(0.7 0.1 250)); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+    .about-stats { display: flex; gap: var(--spacing-xl); margin-top: var(--spacing-lg); }
+    .stat { text-align: center; }
+    .stat-number { display: block; font-size: var(--font-size-3xl); font-weight: 700; color: var(--color-accent); }
+    .stat-label { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+    @media (max-width: 1024px) { .about-grid { grid-template-columns: 1fr; } }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xxl); align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+    .contact-item h4 { font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: var(--spacing-xs); }
+    .contact-form { display: flex; flex-direction: column; gap: var(--spacing-md); }
+    .form-group { display: flex; flex-direction: column; gap: var(--spacing-xs); }
+    .form-group input, .form-group textarea { padding: var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-surface); color: var(--color-text); transition: border-color var(--transition-fast); }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 3px oklch(0.8 0.2 200 / 0.3); }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+    .footer { background-color: var(--color-surface); padding: var(--spacing-xxl) var(--spacing-md); margin-top: var(--spacing-xxl); }
+    .footer-container { display: grid; grid-template-columns: 200px 1fr 200px; gap: var(--spacing-lg); align-items: start; margin-bottom: var(--spacing-lg); }
+    .footer-brand h3 { font-size: var(--font-size-xl); margin-bottom: var(--spacing-xs); }
+    .footer-brand p { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+    .footer-links a { color: var(--color-text-muted); transition: color var(--transition-fast); }
+    .footer-links a:hover { color: var(--color-text); }
+    .footer-social a { color: var(--color-text-muted); transition: color var(--transition-fast); }
+    .footer-social a:hover { color: var(--color-text); }
+    .footer-copyright { text-align: center; color: var(--color-text-muted); font-size: var(--font-size-sm); }
+    @media (max-width: 768px) { .footer-container { grid-template-columns: 1fr; text-align: center; } }
+    :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel/7.23.0/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const Navigation = () => {
+      const [scrolled, setScrolled] = useState(false);
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 50);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+      const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) navLinks.classList.toggle('active');
+      };
+      return (
+        <nav className={"nav " + (scrolled ? "nav-scrolled" : "")}>
+          <div className="nav-container">
+            <a href="#home" className="nav-logo">noplan</a>
+            <ul className="nav-links">
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button className="nav-toggle" aria-label="Toggle menu" onClick={toggleMobileMenu}>
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </nav>
+      );
+    };
+    const HeroSection = () => (
+      <section id="home" className="hero">
+        <div className="hero-container">
+          <div className="hero-content">
+            <h1 className="hero-title">Studio <span className="hero-accent">No Plan</span></h1>
+            <p className="hero-subtitle">Creative agency crafting digital experiences</p>
+            <a href="#projects" className="btn">View Work</a>
+          </div>
+          <div className="hero-visual">
+            <div className="hero-image-placeholder" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+    );
+    const ProjectCard = ({ project, index }) => {
+      const delay = index * 0.1;
+      return (
+        <div className="project-card" style={{ '--delay': `${delay}s` }}>
+          <div className="project-card-media">
+            <div className="project-card-image" aria-hidden="true"></div>
+          </div>
+          <div className="project-card-content">
+            <h3 className="project-card-title">{project.title}</h3>
+            <p className="project-card-description">{project.description}</p>
+            <a href={project.href} className="project-card-link">View project →</a>
+          </div>
+        </div>
+      );
+    };
+    const ProjectsSection = () => {
+      const projects = [
+        { title: "Brand Identity", description: "Visual identity system for modern brands", href: "#project-1" },
+        { title: "Digital Experience", description: "Interactive web experiences that captivate", href: "#project-2" },
+        { title: "Product Design", description: "End-to-end product design solutions", href: "#project-3" },
+        { title: "Motion Graphics", description: "Animated storytelling for digital media", href: "#project-4" }
+      ];
+      return (
+        <section id="projects" className="section">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-title">Featured Work</h2>
+              <p className="section-subtitle">A selection of projects we're proud of</p>
+            </div>
+            <div className="projects-grid">
+              {projects.map((project, index) => (
+                <ProjectCard key={project.title} project={project} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+    const AboutSection = () => (
+      <section id="about" className="section section-alt">
+        <div className="container">
+          <div className="about-grid">
+            <div className="about-image-placeholder" aria-hidden="true"></div>
+            <div className="about-content">
+              <h2 className="section-title">About Us</h2>
+              <p>We are a collective of designers, developers, and storytellers working together to create meaningful digital experiences. Our approach is rooted in curiosity, collaboration, and craft.</p>
+              <div className="about-stats">
+                <div className="stat">
+                  <span className="stat-number">15+</span>
+                  <span className="stat-label">Projects</span>
+                </div>
+                <div className="stat">
+                  <span className="stat-number">5+</span>
+                  <span className="stat-label">Years</span>
+                </div>
+                <div className="stat">
+                  <span className="stat-number">100%</span>
+                  <span className="stat-label">Passion</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+    const ContactSection = () => {
+      const handleSubmit = (e) => e.preventDefault();
+      return (
+        <section id="contact" className="section">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-title">Get in Touch</h2>
+              <p className="section-subtitle">Let's create something amazing together</p>
+            </div>
+            <div className="contact-grid">
+              <div className="contact-info">
+                <div className="contact-item">
+                  <h4>Email</h4>
+                  <p>hello@noplan.studio</p>
+                </div>
+                <div className="contact-item">
+                  <h4>Location</h4>
+                  <p>Remote • Worldwide</p>
+                </div>
+              </div>
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <input type="text" placeholder="Your name" required />
+                </div>
+                <div className="form-group">
+                  <input type="email" placeholder="Your email" required />
+                </div>
+                <div className="form-group">
+                  <textarea placeholder="Your message" rows="4" required></textarea>
+                </div>
+                <button type="submit" className="btn">Send Message</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      );
+    };
+    const Footer = () => (
+      <footer className="footer">
+        <div className="footer-container">
+          <div className="footer-brand">
+            <h3>noplan</h3>
+            <p>Creative digital studio</p>
+          </div>
+          <div className="footer-links">
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div className="footer-social">
+            <a href="#" aria-label="Twitter">Twitter</a>
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          </div>
+          <div className="footer-copyright">
+            <p>&copy; 2024 No Plan Studio. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    );
+    const App = () => (
+      <div className="App">
+        <Navigation />
+        <HeroSection />
+        <ProjectsSection />
+        <AboutSection />
+        <ContactSection />
+        <Footer />
+      </div>
+    );
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

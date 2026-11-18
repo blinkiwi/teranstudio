@@ -1,0 +1,23 @@
+{
+  "name": "noplan-studio-cms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "No Plan Studio — clon full stack con panel de administración (Node nativo + node:sqlite, sin dependencias).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "dev": "node --no-warnings --watch server.js",
+    "seed": "node --no-warnings scripts/cms-seed.js",
+    "reset": "node --no-warnings scripts/cms-seed.js --reset"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "keywords": [
+    "noplan",
+    "cms",
+    "sqlite",
+    "node"
+  ],
+  "license": "UNLICENSED"
+}

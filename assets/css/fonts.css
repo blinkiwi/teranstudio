@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'custom_66210';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../fonts/mabry.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mabry';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../fonts/mabry.ttf') format('truetype');
+}
