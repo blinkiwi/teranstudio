@@ -17,6 +17,6 @@ const reset = process.argv.includes('--reset');
 const result = seed({ reset });
 
 console.log(`Base de datos: ${db.DB_PATH}`);
+console.log(`Origen: ${result.source === 'content/site.json' ? 'content/site.json' : 'valores por defecto + HTML estático'}`);
 console.log(`Proyectos: ${result.projects}`);
 console.log(`Imágenes: ${result.images}`);
-console.log(reset ? 'Contenido reiniciado desde el sitio estático.' : 'Contenido sembrado.');

@@ -8,7 +8,8 @@
     "start": "node --no-warnings server.js",
     "dev": "node --no-warnings --watch server.js",
     "seed": "node --no-warnings scripts/cms-seed.js",
-    "reset": "node --no-warnings scripts/cms-seed.js --reset"
+    "reset": "node --no-warnings scripts/cms-seed.js --reset",
+    "export": "node --no-warnings scripts/cms-export.js"
   },
   "engines": {
     "node": ">=22.5.0"

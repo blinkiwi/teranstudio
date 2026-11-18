@@ -20,6 +20,7 @@ const crypto = require('crypto');
 require('./lib/env').loadEnv();
 
 const db = require('./lib/db');
+const contentFile = require('./lib/contentfile');
 const { seedIfEmpty } = require('./lib/seed');
 const auth = require('./lib/auth');
 const { GROUPS } = require('./lib/content');
@@ -359,6 +360,20 @@ async function handleApi(req, res, url) {
   return sendJson(res, 404, { error: 'Ruta de API no encontrada' });
 }
 
+/* Mirror every successful change into content/site.json, which is the
+   file committed to git. Cheap: a small JSON write per edit. */
+function snapshotContent(req, res, url) {
+  if (req.method.toUpperCase() === 'GET') return;
+  if (res.statusCode < 200 || res.statusCode >= 300) return;
+  if (/^\/api\/(login|logout|session|upload)\b/.test(url.pathname)) return;
+
+  try {
+    contentFile.exportContent();
+  } catch (error) {
+    console.warn('[cms] No se pudo escribir content/site.json:', error.message);
+  }
+}
+
 /* ── Server ───────────────────────────────────────────────── */
 
 const server = http.createServer(async (req, res) => {
@@ -367,6 +382,7 @@ const server = http.createServer(async (req, res) => {
   try {
     if (url.pathname.startsWith('/api/')) {
       await handleApi(req, res, url);
+      snapshotContent(req, res, url);
       return;
     }
     serveStatic(req, res, url.pathname);

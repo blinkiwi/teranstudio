@@ -149,14 +149,23 @@ e imágenes, garantizando que vean la última versión. La versión actual se mu
 POST /api/cache/clear   → { ok: true, version: N }
 ```
 
-### Base de datos
-SQLite integrado en `data/noplan.db`. En el primer arranque se siembra
-automáticamente desde el sitio estático (proyectos, imágenes y su posición original).
+### Base de datos y contenido versionado
+El contenido vive en SQLite (`data/noplan.db`, **no se sube a git**), y cada cambio
+del panel se copia automáticamente a **`content/site.json`**, que sí se versiona.
+
+Así un clon limpio arranca con todo tu contenido: al primer `npm start`, si la base
+está vacía, se importa `content/site.json` (textos, colores, menú, hero, footer,
+proyectos, imágenes, posiciones y estado publicado/borrador). Si ese archivo no
+existe, se generan los valores por defecto desde el sitio estático.
 
 ```bash
-npm run seed           # sembrar solo si está vacía
-npm run reset          # reiniciar todo el contenido
+npm run seed           # sembrar solo si está vacía (importa content/site.json)
+npm run reset          # reiniciar todo el contenido desde content/site.json
+npm run export         # reescribir content/site.json a mano
 ```
+
+Recuerda: al clonar, crea el `.env` con tu `ADMIN_TOKEN` (usa `.env.example`).
+Tras cada sesión de edición, haz commit de `content/site.json` para conservar los cambios.
 
 ---
 
@@ -185,14 +194,18 @@ NoPlan/
 │   ├── content.js             # Modelo de contenido y valores por defecto
 │   ├── db.js                  # SQLite (node:sqlite): esquema y acceso a datos
 │   ├── auth.js                # Token único + sesiones con cookie HttpOnly
-│   └── seed.js                # Siembra desde el sitio estático
+│   ├── contentfile.js         # Exporta/importa content/site.json
+│   └── seed.js                # Siembra desde content/site.json o el sitio estático
+├── content/
+│   └── site.json              # Contenido del panel versionado en git
 ├── admin/
 │   ├── index.html             # Panel de administración (SPA vanilla)
 │   ├── admin.css              # Estilos del panel
 │   └── admin.js               # Lógica del panel (menú, hero, proyectos, footer…)
 ├── data/                      # Base de datos SQLite (noplan.db)
 ├── scripts/
-│   └── cms-seed.js            # Sembrar / reiniciar el contenido
+│   ├── cms-seed.js            # Sembrar / reiniciar el contenido
+│   └── cms-export.js          # Escribir content/site.json a mano
 ├── validate_clone.js          # Validador de integridad de enlaces e imágenes
 ├── generate_pages.js          # Script generador maestro
 ├── assets/

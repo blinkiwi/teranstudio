@@ -1,0 +1,3203 @@
+{
+  "version": 1,
+  "exportedAt": "2026-11-18T13:30:20.301Z",
+  "settings": {
+    "site": {
+      "title": "Terán Studio — Design and Art Web Studio",
+      "description": "Terán Studio — Design & Art Web Studio. Estudio de diseño gráfico, letterpress y dirección creativa.",
+      "logo": "assets/uploads/1794957872043-27b5ccbd-logoTeranStudio.png",
+      "logoAlt": "Terán Studio",
+      "logoHeight": 58,
+      "favicon": "assets/uploads/1794957003544-df47dd67-ICOTeranStudio.png"
+    },
+    "theme": {
+      "bg": "#f2eddf",
+      "bgDark": "#e8e2d2",
+      "ink": "#111111",
+      "inkMuted": "#555555",
+      "inkFaint": "#999999",
+      "accent": "#d84315",
+      "border": "rgba(0,0,0,0.10)",
+      "fontFamily": "'custom_66210','Mabry',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",
+      "baseFontSize": 16,
+      "navFontSize": 12,
+      "sectionTitleSize": 64,
+      "letterSpacing": 0,
+      "lineHeight": 1.5
+    },
+    "sizes": {
+      "navHeight": 85,
+      "navPad": 12,
+      "embedsTravel": 0,
+      "embedsOverlap": 0,
+      "sectionPadding": 0,
+      "heroMinHeight": 0
+    },
+    "nav": {
+      "logoText": "Terán Studio",
+      "logoHref": "index.html",
+      "links": [
+        {
+          "label": "Proyectos",
+          "action": "drawer",
+          "href": ""
+        },
+        {
+          "label": "About",
+          "action": "link",
+          "href": "about.html"
+        },
+        {
+          "label": "Shop",
+          "action": "external",
+          "href": "https://www.noplan.press/"
+        },
+        {
+          "label": "Contact",
+          "action": "link",
+          "href": "contact.html"
+        }
+      ]
+    },
+    "hero": {
+      "enabled": false,
+      "eyebrow": "Terán Studio",
+      "title": "Design & Art Web Studio",
+      "subtitle": "A graphic design, letterpress and art studio.",
+      "ctaLabel": "",
+      "ctaHref": "",
+      "marqueeText": "Design & Art Web Studio — Terán Studio  —  graphic design — ",
+      "showStamps": true,
+      "bgType": "",
+      "bgColor": "#D4DECE",
+      "bgImage": "",
+      "bgSize": "cover",
+      "bgPosition": "center"
+    },
+    "projectsSection": {
+      "kicker": "01 — 10 · Terán Studio Archive",
+      "title": "Proyectos",
+      "note": "Selected branding, art direction & letterpress projects. Scroll to explore."
+    },
+    "footer": {
+      "enabled": true,
+      "brand": "Terán Studio",
+      "tagline": "Design & Art Web Studio",
+      "columns": [
+        {
+          "title": "Studio",
+          "links": [
+            {
+              "label": "About",
+              "href": "about.html"
+            },
+            {
+              "label": "Contact",
+              "href": "contact.html"
+            }
+          ]
+        },
+        {
+          "title": "Tienda",
+          "links": [
+            {
+              "label": "Terán Studio Press",
+              "href": "#"
+            }
+          ]
+        }
+      ],
+      "social": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/"
+        }
+      ],
+      "copyright": "Todos los derechos reservado 2026 © By Terán Studio — Design & Art Web Studio",
+      "badgeText": "Terán Studio — Design & Art Web Studio",
+      "badgeDot": "#d84315"
+    },
+    "cache": {
+      "version": 2
+    }
+  },
+  "projects": [
+    {
+      "slug": "lost-sock",
+      "title": "Mystic Bolivia ",
+      "subtitle": "Branding & Web",
+      "color": "#C53A24",
+      "page": "lost-sock.html",
+      "pageHeight": 4974,
+      "sort": 0,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "Mystic Bolivia ",
+      "infoLabel": "+Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "347",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "348",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "346",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb299b",
+          "src": "assets/images/Image-b85c02c2-7abe-4556-a9f6-_f93de091.gif",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "392px",
+            "height": "450px",
+            "zIndex": "304",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29a0",
+          "src": "assets/uploads/1794958138037-868ea29d-654.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "353px",
+            "top": "193px",
+            "width": "318px",
+            "height": "333px",
+            "zIndex": "309",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29a5",
+          "src": "assets/images/image-01ff4a08-84c2-4dfc-9b80-_a1e5035a.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "237px",
+            "top": "636.42px",
+            "width": "436px",
+            "height": "610px",
+            "zIndex": "314",
+            "zoom": "",
+            "transform": "rotate(-2deg)",
+            "chrome": false
+          },
+          "sort": 6
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2998",
+          "src": "assets/images/image-b57b8d96-79cf-4a58-8faf-_ef89ae39.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "563.18px",
+            "top": "734.28px",
+            "width": "447px",
+            "height": "597px",
+            "zIndex": "301",
+            "zoom": "",
+            "transform": "rotate(1deg)",
+            "chrome": false
+          },
+          "sort": 7
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29a6",
+          "src": "assets/images/image-da6452c3-b399-483a-94f1-_55ca6904.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-111.25px",
+            "top": "758.66px",
+            "width": "449px",
+            "height": "617px",
+            "zIndex": "315",
+            "zoom": "",
+            "transform": "rotate(8deg)",
+            "chrome": false
+          },
+          "sort": 8
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2999",
+          "src": "assets/uploads/1794967276066-5e24d130-456.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "558px",
+            "top": "1278.42px",
+            "width": "554px",
+            "height": "831px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 9
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb299a",
+          "src": "assets/uploads/1794967282648-46753b73-WhatsApp-Image-2026-11-16-at-9.12.04-PM.jpeg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "2.92px",
+            "top": "1302.14px",
+            "width": "430px",
+            "height": "665px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "rotate(7deg)",
+            "chrome": false
+          },
+          "sort": 10
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb299f",
+          "src": "assets/uploads/1794967307822-b41e61df-321.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "139px",
+            "top": "2167.42px",
+            "width": "314px",
+            "height": "316px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 11
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb299d",
+          "src": "assets/images/image-3b47b12a-8006-44c8-adcf-_f58ac2be.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "472px",
+            "top": "2399px",
+            "width": "511px",
+            "height": "341px",
+            "zIndex": "306",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 12
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb299e",
+          "src": "assets/images/image-f5728291-9473-4cd6-ba90-_4f2bde54.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "40px",
+            "top": "2502.42px",
+            "width": "415px",
+            "height": "636px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 13
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb299c",
+          "src": "assets/images/image-bc47e7cd-8461-43dd-8ed0-_4ca39b2f.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "473px",
+            "top": "2757.42px",
+            "width": "403px",
+            "height": "604px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 14
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29a1",
+          "src": "assets/images/image-905ff701-b323-4fb5-85de-_28530ffa.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "550px",
+            "top": "3532.42px",
+            "width": "416px",
+            "height": "213px",
+            "zIndex": "310",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 15
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29a3",
+          "src": "assets/images/image-1ac3b3cb-6e65-498d-adfd-_f98acad7.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "370px",
+            "top": "3915.42px",
+            "width": "596px",
+            "height": "458px",
+            "zIndex": "312",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 16
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29a4",
+          "src": "assets/images/image-eec26968-83dd-42a9-af16-_a93de5cc.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "31px",
+            "top": "4305.42px",
+            "width": "322px",
+            "height": "367px",
+            "zIndex": "313",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 17
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29a2",
+          "src": "assets/images/Image-185a562f-9e8b-4230-9d84-_10e0f90c.gif",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "370px",
+            "top": "4392.71px",
+            "width": "405px",
+            "height": "507.42px",
+            "zIndex": "311",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 18
+        }
+      ]
+    },
+    {
+      "slug": "motorkat",
+      "title": "Proyecto 2",
+      "subtitle": "Wood Grill & Raw Bar",
+      "color": "#cbcb15",
+      "page": "motorkat.html",
+      "pageHeight": 5488,
+      "sort": 1,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb2994",
+          "src": "assets/images/image-c5521c01-baab-4e3a-8ab9-_ae8b8ac5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "347",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2995",
+          "src": "assets/images/image-8e3bd332-2bd8-456e-a55d-_0be0efcd.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "348",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb298d",
+          "src": "assets/images/image-ef186f66-d88b-4a57-b594-_27624984.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "30px",
+            "top": "26px",
+            "width": "181px",
+            "height": "59px",
+            "zIndex": "365",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 2
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2993",
+          "src": "assets/images/image-ca288a07-d819-458a-8eff-_c34376b0.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.99px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "346",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a08",
+          "src": "assets/images/image-8484295f-5fb5-4fcf-a7be-_f3d4adc3.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "10.3297px",
+            "top": "10.4662px",
+            "width": "251px",
+            "height": "248px",
+            "zIndex": "312",
+            "zoom": "",
+            "transform": "rotate(-5deg)",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a0d",
+          "src": "assets/images/image-dfc2c2ed-efdc-4130-b5c1-_3a381e26.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "688px",
+            "height": "322px",
+            "zIndex": "317",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a05",
+          "src": "assets/images/image-39f32f9d-1415-4f54-97b8-_42087d67.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "5.8556px",
+            "top": "8.32345px",
+            "width": "483px",
+            "height": "344px",
+            "zIndex": "309",
+            "zoom": "",
+            "transform": "rotate(-2deg)",
+            "chrome": true
+          },
+          "sort": 6
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a06",
+          "src": "assets/images/image-0436ddf4-c296-42e5-8993-_821197b5.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "11.375px",
+            "top": "16.4284px",
+            "width": "483px",
+            "height": "343px",
+            "zIndex": "310",
+            "zoom": "",
+            "transform": "rotate(4deg)",
+            "chrome": true
+          },
+          "sort": 7
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a07",
+          "src": "assets/images/image-bdf1409b-9dae-48bd-8f30-_aaadaca4.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "201px",
+            "top": "210px",
+            "width": "621px",
+            "height": "248px",
+            "zIndex": "311",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 8
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a09",
+          "src": "assets/images/image-7e4f99bc-c1d0-47ea-b0c7-_aa754183.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-59px",
+            "top": "552px",
+            "width": "358px",
+            "height": "599px",
+            "zIndex": "313",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 9
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29fe",
+          "src": "assets/images/image-71938996-c340-4906-8420-_66ee90dc.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "315px",
+            "top": "729px",
+            "width": "767px",
+            "height": "511px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 10
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a03",
+          "src": "assets/images/image-f90bfdb9-6999-46aa-8663-_4fa12cec.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-20px",
+            "top": "1303px",
+            "width": "1064px",
+            "height": "682px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 11
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a0e",
+          "src": "assets/images/image-cd5fdd47-e7f3-4d0c-8ced-_1d2dc162.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "1895px",
+            "width": "512px",
+            "height": "70px",
+            "zIndex": "318",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 12
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a00",
+          "src": "assets/images/image-a3c168bb-4678-4f4e-b886-_1a8fae49.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-88px",
+            "top": "2087px",
+            "width": "1200px",
+            "height": "783px",
+            "zIndex": "304",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 13
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a01",
+          "src": "assets/images/image-ffb219b5-45a3-4da7-adfd-_8491047f.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "92px",
+            "top": "2192px",
+            "width": "841px",
+            "height": "573px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 14
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a0f",
+          "src": "assets/images/Image-09b6736a-bc52-4109-a1c7-_947c5d23.gif",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-57px",
+            "top": "2265px",
+            "width": "419.81px",
+            "height": "138px",
+            "zIndex": "319",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 15
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a0a",
+          "src": "assets/images/image-117db35f-1155-4671-9dd7-_d2d41a13.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "568px",
+            "top": "2992px",
+            "width": "453px",
+            "height": "604px",
+            "zIndex": "314",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 16
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a04",
+          "src": "assets/images/image-a1cc2aaf-efe4-450f-91b8-_d02d34c1.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "3150px",
+            "width": "550px",
+            "height": "447px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 17
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a0b",
+          "src": "assets/images/image-393e8a14-c334-48d6-9233-_db52f3d3.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "390px",
+            "top": "3615px",
+            "width": "439px",
+            "height": "439px",
+            "zIndex": "315",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 18
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29fd",
+          "src": "assets/images/image-c4a35ff0-ad6f-4aee-9748-_2adfa2c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "710px",
+            "top": "4161px",
+            "width": "216px",
+            "height": "162px",
+            "zIndex": "301",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 19
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29ff",
+          "src": "assets/images/image-304440df-deeb-4688-9551-_046f0a43.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-88px",
+            "top": "4642px",
+            "width": "1200px",
+            "height": "846px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 20
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a0c",
+          "src": "assets/images/image-debaef22-4cf1-4abf-bfe8-_a2c0b6b8.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50px",
+            "top": "4742px",
+            "width": "296px",
+            "height": "296px",
+            "zIndex": "316",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 21
+        }
+      ]
+    },
+    {
+      "slug": "zinnia",
+      "title": "Zinnia",
+      "subtitle": "Multi-Restaurant Concept",
+      "color": "#f6f3eb",
+      "page": "zinnia.html",
+      "pageHeight": 7030,
+      "sort": 2,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "362",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "363",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "361",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b28",
+          "src": "assets/images/image-d9c17666-8208-473b-b556-_f80a8826.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "165px",
+            "height": "162px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b2a",
+          "src": "assets/images/image-36c16d74-5d12-4c52-80af-_83470503.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "255px",
+            "height": "159px",
+            "zIndex": "310",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b30",
+          "src": "assets/images/image-6771ce60-71d1-4dc3-9dfd-_912f26ef.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "501px",
+            "height": "351px",
+            "zIndex": "316",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 6
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b31",
+          "src": "assets/images/image-89366ec7-057a-470a-bf9f-_cdc3f01f.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "3.02474px",
+            "top": "4.3451px",
+            "width": "501px",
+            "height": "351px",
+            "zIndex": "317",
+            "zoom": "",
+            "transform": "rotate(-1deg)",
+            "chrome": true
+          },
+          "sort": 7
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b34",
+          "src": "assets/images/image-1b5a1ae5-1235-4e5c-aad5-_3294e986.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "379px",
+            "height": "379px",
+            "zIndex": "320",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 8
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b33",
+          "src": "assets/images/image-e8a19899-5360-49bf-9517-_4284c11e.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "487px",
+            "height": "514px",
+            "zIndex": "319",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 9
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b3d",
+          "src": "assets/images/image-4ce32795-73a5-43ff-94bc-_269a179d.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "31.8662px",
+            "top": "29.446px",
+            "width": "597px",
+            "height": "641px",
+            "zIndex": "329",
+            "zoom": "",
+            "transform": "rotate(6deg)",
+            "chrome": true
+          },
+          "sort": 10
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b24",
+          "src": "assets/images/image-01189f81-2d61-4f86-8cce-_f6ffd52c.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "332px",
+            "top": "248px",
+            "width": "351px",
+            "height": "290px",
+            "zIndex": "304",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 11
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b25",
+          "src": "assets/images/image-aef78ddd-4ea7-4f49-9427-_55ee0350.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "124px",
+            "top": "734px",
+            "width": "258px",
+            "height": "36px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 12
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b26",
+          "src": "assets/images/image-7fd67144-a72e-4b1a-b779-_b5377193.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "521px",
+            "top": "734px",
+            "width": "500px",
+            "height": "665px",
+            "zIndex": "306",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 13
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b27",
+          "src": "assets/images/image-6a0171cf-e961-4f44-b8b3-_3e581c08.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "3px",
+            "top": "928px",
+            "width": "500px",
+            "height": "665px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 14
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b2d",
+          "src": "assets/images/image-387d611c-29a4-4f2f-8218-_1fcf535a.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "532px",
+            "top": "1648px",
+            "width": "567px",
+            "height": "644px",
+            "zIndex": "313",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 15
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b2c",
+          "src": "assets/images/image-19fc5158-c922-4d35-8007-_b3b96a3b.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-85px",
+            "top": "1649px",
+            "width": "566px",
+            "height": "641px",
+            "zIndex": "312",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 16
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b2b",
+          "src": "assets/images/image-0a6e574c-7dff-443d-9eab-_30499ff5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "236px",
+            "top": "1655px",
+            "width": "562px",
+            "height": "636px",
+            "zIndex": "311",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 17
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b35",
+          "src": "assets/images/image-44e23025-f8a0-4cc2-a113-_5ec096bc.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "119.98px",
+            "top": "2232.12px",
+            "width": "245px",
+            "height": "229px",
+            "zIndex": "321",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 18
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b37",
+          "src": "assets/images/image-8663299b-ff69-4855-9d8f-_e81615a8.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "181.19px",
+            "top": "2342.89px",
+            "width": "227px",
+            "height": "360px",
+            "zIndex": "323",
+            "zoom": "",
+            "transform": "rotate(6deg)",
+            "chrome": false
+          },
+          "sort": 19
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b36",
+          "src": "assets/images/image-8481761e-4127-49dc-bd22-_29db76a9.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "8px",
+            "top": "2429px",
+            "width": "219px",
+            "height": "212px",
+            "zIndex": "322",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 20
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b2f",
+          "src": "assets/images/image-651dacd4-74e7-4e6d-af0f-_d3f803c7.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-88px",
+            "top": "2772px",
+            "width": "1200px",
+            "height": "800px",
+            "zIndex": "315",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 21
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b32",
+          "src": "assets/images/image-602029ba-efab-49a1-8b2b-_167f1356.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "509px",
+            "top": "3621px",
+            "width": "504px",
+            "height": "671px",
+            "zIndex": "318",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 22
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b38",
+          "src": "assets/images/image-0d26b5e1-4fe1-42b2-b676-_c639b000.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "109px",
+            "top": "4369px",
+            "width": "800px",
+            "height": "543px",
+            "zIndex": "324",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 23
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b39",
+          "src": "assets/images/image-17902bc9-5220-497d-9b83-_52953e11.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "30px",
+            "top": "4951.79px",
+            "width": "508px",
+            "height": "737px",
+            "zIndex": "325",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 24
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b3a",
+          "src": "assets/images/image-d774cc72-b18b-4936-96a0-_91bfcf69.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "558px",
+            "top": "5040.79px",
+            "width": "364px",
+            "height": "430px",
+            "zIndex": "326",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 25
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b3b",
+          "src": "assets/images/image-42ffb6df-5238-4879-af6e-_bb779bd2.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "558px",
+            "top": "5488.79px",
+            "width": "480px",
+            "height": "320px",
+            "zIndex": "327",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 26
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b3c",
+          "src": "assets/images/image-16ab1b70-a062-47c2-811d-_87e5e9d6.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "112px",
+            "top": "5706.79px",
+            "width": "426px",
+            "height": "426px",
+            "zIndex": "328",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 27
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b40",
+          "src": "assets/images/image-cb2c7419-acf4-4afb-8856-_ac2fcd34.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-60px",
+            "top": "6306px",
+            "width": "442px",
+            "height": "537px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 28
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b41",
+          "src": "assets/images/image-f341fa39-57d6-4531-8295-_c15160d5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "342px",
+            "top": "6378px",
+            "width": "126px",
+            "height": "126px",
+            "zIndex": "331",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 29
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b42",
+          "src": "assets/images/image-3b944ec5-8336-4d99-9e1e-_7a477d90.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "268px",
+            "top": "6459px",
+            "width": "114px",
+            "height": "121px",
+            "zIndex": "332",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 30
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b3f",
+          "src": "assets/images/image-7c4b1dd4-001a-4846-95d5-_5b351ba6.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "342px",
+            "top": "6481px",
+            "width": "732px",
+            "height": "488px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 31
+        }
+      ]
+    },
+    {
+      "slug": "peoples-book",
+      "title": "People’s Book",
+      "subtitle": "Bookstore Identity",
+      "color": "#f7de59",
+      "page": "peoples-book.html",
+      "pageHeight": 4396,
+      "sort": 3,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "345",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "346",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "344",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a37",
+          "src": "assets/images/image-87a63381-2c88-4c2c-8774-_52181b19.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "453px",
+            "height": "629px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a32",
+          "src": "assets/images/image-caabec80-8c98-4517-b43f-_d2973268.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "377px",
+            "top": "141px",
+            "width": "272px",
+            "height": "468px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a34",
+          "src": "assets/images/image-184709cd-d0d3-4c84-b1eb-_412a20c4.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "938px",
+            "top": "350.67px",
+            "width": "122px",
+            "height": "45px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 6
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a33",
+          "src": "assets/images/image-e61b4ebf-7974-4cae-8703-_0719d0ef.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-17px",
+            "top": "352.67px",
+            "width": "108px",
+            "height": "44px",
+            "zIndex": "304",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 7
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a35",
+          "src": "assets/images/image-66ab5467-4acd-4d2f-90ed-_10b3288e.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "14.875px",
+            "top": "791px",
+            "width": "1083px",
+            "height": "609px",
+            "zIndex": "306",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 8
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a30",
+          "src": "assets/images/image-d933acb3-528b-416a-854c-_b678f492.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-58px",
+            "top": "1540.53px",
+            "width": "604px",
+            "height": "496px",
+            "zIndex": "301",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 9
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a31",
+          "src": "assets/images/image-42d67b21-a933-4bf6-b59c-_2fddc340.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "557px",
+            "top": "1717.53px",
+            "width": "456px",
+            "height": "565px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 10
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a36",
+          "src": "assets/images/image-c1126a9e-46aa-4bbb-ad65-_5ee46097.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "544px",
+            "top": "2455.53px",
+            "width": "364px",
+            "height": "163px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 11
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a39",
+          "src": "assets/images/image-12cba580-2bdd-4656-8985-_29944b5c.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "168px",
+            "top": "2718.06px",
+            "width": "687px",
+            "height": "264px",
+            "zIndex": "309",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 12
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a38",
+          "src": "assets/images/image-a1ae8e2b-b1e0-4580-8695-_30974752.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "58px",
+            "top": "3075px",
+            "width": "905px",
+            "height": "78px",
+            "zIndex": "315",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 13
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a3e",
+          "src": "assets/images/Image-7568f219-708b-4d0b-bc28-_e1d11d55.gif",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "459.24px",
+            "top": "3247px",
+            "width": "427.52px",
+            "height": "428px",
+            "zIndex": "314",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 14
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a3a",
+          "src": "assets/images/image-c8f06900-499c-4bc8-9178-_3546a417.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "13px",
+            "top": "3411.53px",
+            "width": "428px",
+            "height": "571px",
+            "zIndex": "310",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 15
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a3b",
+          "src": "assets/images/image-64e403e7-a537-4019-857d-_e7b0d358.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "459px",
+            "top": "3693px",
+            "width": "557px",
+            "height": "483px",
+            "zIndex": "311",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 16
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a3c",
+          "src": "assets/images/image-34155102-57a9-4a12-9d8b-_d4fecb58.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "171px",
+            "top": "4001px",
+            "width": "270px",
+            "height": "308px",
+            "zIndex": "312",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 17
+        }
+      ]
+    },
+    {
+      "slug": "soko",
+      "title": "SOKO",
+      "subtitle": "Butcher Shop & Deli",
+      "color": "#ebebeb",
+      "page": "soko.html",
+      "pageHeight": 5557,
+      "sort": 4,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "347",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "348",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "346",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc1",
+          "src": "assets/images/image-e9629a5a-adf1-418f-aab6-_c083f206.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "312px",
+            "height": "267px",
+            "zIndex": "317",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bca",
+          "src": "assets/images/image-1c298901-8674-4b85-96c9-_51b47e68.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "314px",
+            "height": "185px",
+            "zIndex": "312",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc3",
+          "src": "assets/images/image-a0151549-d95a-4959-8407-_ba76ad4d.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "314px",
+            "height": "185px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 6
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bcd",
+          "src": "assets/images/image-00b1e69b-afb9-4188-926d-_4f54e23e.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "9.79518px",
+            "top": "22.941px",
+            "width": "450px",
+            "height": "211px",
+            "zIndex": "314",
+            "zoom": "",
+            "transform": "rotate(-6deg)",
+            "chrome": true
+          },
+          "sort": 7
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bbf",
+          "src": "assets/images/image-80ffc2e2-c63f-4076-9a3c-_bb7eb425.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "58px",
+            "top": "244px",
+            "width": "602px",
+            "height": "189px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 8
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc0",
+          "src": "assets/images/image-9b7f6449-c39a-49e2-a983-_b42997b5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "825px",
+            "top": "284px",
+            "width": "192px",
+            "height": "107px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 9
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bce",
+          "src": "assets/images/image-61a2f3ee-29d5-47bb-928c-_cef9d4be.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-103.125px",
+            "top": "599px",
+            "width": "742px",
+            "height": "950px",
+            "zIndex": "316",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 10
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc9",
+          "src": "assets/images/image-c69dc537-6c7e-4112-a954-_6e1f9e50.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "727px",
+            "top": "1267.72px",
+            "width": "304px",
+            "height": "395px",
+            "zIndex": "311",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 11
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc2",
+          "src": "assets/images/image-d81a3124-abc3-4680-987d-_fb95d17c.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "376px",
+            "top": "1771.72px",
+            "width": "406px",
+            "height": "406px",
+            "zIndex": "304",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 12
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc4",
+          "src": "assets/images/image-cb68bbd2-6f9b-4ae5-92e5-_9cac840d.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "492px",
+            "top": "2196.72px",
+            "width": "511px",
+            "height": "665px",
+            "zIndex": "306",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 13
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bbe",
+          "src": "assets/images/image-f2eac0fd-4e49-4a95-893a-_cce0fc63.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-88px",
+            "top": "2737px",
+            "width": "1200px",
+            "height": "682.75px",
+            "zIndex": "301",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 14
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc6",
+          "src": "assets/images/image-a1537f92-d8e4-49c1-b07e-_b7fed757.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "253px",
+            "top": "3521px",
+            "width": "456px",
+            "height": "303px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 15
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc5",
+          "src": "assets/images/image-ae259a46-e25b-4e90-b14d-_66c0e913.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-6px",
+            "top": "3841px",
+            "width": "528px",
+            "height": "528px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 16
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc7",
+          "src": "assets/images/image-0a3e4c60-b38f-44b7-9bc0-_61095d6e.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "540px",
+            "top": "3841px",
+            "width": "490px",
+            "height": "348px",
+            "zIndex": "309",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 17
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bcb",
+          "src": "assets/images/image-8b3634b2-b638-4afa-8452-_6dca3e51.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "540px",
+            "top": "4208px",
+            "width": "407px",
+            "height": "509px",
+            "zIndex": "313",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 18
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2bc8",
+          "src": "assets/images/image-50181ac0-39d4-41e8-a302-_49ebb596.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "258px",
+            "top": "4860px",
+            "width": "507px",
+            "height": "549px",
+            "zIndex": "310",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 19
+        }
+      ]
+    },
+    {
+      "slug": "indigro",
+      "title": "Indigro",
+      "subtitle": "Houseplant Studio",
+      "color": "#ed718d",
+      "page": "indigro.html",
+      "pageHeight": 3779,
+      "sort": 5,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "350",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "351",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "349",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b74",
+          "src": "assets/images/image-997699b6-fcdf-40f8-b176-_5562832f.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "3.69452px",
+            "top": "2.58542px",
+            "width": "300px",
+            "height": "426px",
+            "zIndex": "313",
+            "zoom": "",
+            "transform": "rotate(-1deg)",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b73",
+          "src": "assets/images/image-1d8515d5-0296-4cdf-af76-_b2e84590.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "3.98126px",
+            "top": "2.72253px",
+            "width": "316px",
+            "height": "459px",
+            "zIndex": "312",
+            "zoom": "",
+            "transform": "rotate(1deg)",
+            "chrome": true
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b72",
+          "src": "assets/images/image-f8a8e1a0-c546-400d-bb4b-_431ce847.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "246px",
+            "height": "257px",
+            "zIndex": "311",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 6
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b77",
+          "src": "assets/images/image-73fc37e2-5611-4877-ac8a-_1517df80.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "406px",
+            "height": "594px",
+            "zIndex": "316",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 7
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b6a",
+          "src": "assets/images/image-0b50a3ba-3f34-4a5e-a541-_b87d8346.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "286px",
+            "top": "151px",
+            "width": "450px",
+            "height": "447px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 8
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b6b",
+          "src": "assets/images/image-2aeba474-cdbc-4b46-ae54-_d85f4b4e.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "211px",
+            "top": "294px",
+            "width": "610px",
+            "height": "178px",
+            "zIndex": "304",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 9
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b6c",
+          "src": "assets/images/image-62caca66-41fa-456a-8d08-_ed6d4e71.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "705px",
+            "top": "754px",
+            "width": "252px",
+            "height": "722px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 10
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b6d",
+          "src": "assets/images/image-26d48243-d3d4-4b93-836e-_4a08a49a.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "99px",
+            "top": "1294px",
+            "width": "247px",
+            "height": "322px",
+            "zIndex": "306",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 11
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b6e",
+          "src": "assets/images/Image-888e8874-6cdf-4982-ac65-_af1ff6bf.gif",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "444px",
+            "top": "1408.18px",
+            "width": "410px",
+            "height": "410px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 12
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b6f",
+          "src": "assets/images/image-33e4ed34-6b02-4655-87b1-_20d35ab6.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "24px",
+            "top": "1740.18px",
+            "width": "402px",
+            "height": "536px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 13
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b70",
+          "src": "assets/images/image-6d43d32b-2adb-49b2-85d8-_15394939.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "444px",
+            "top": "1836.18px",
+            "width": "538px",
+            "height": "359px",
+            "zIndex": "309",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 14
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b75",
+          "src": "assets/images/image-9c169362-f70d-4441-a865-_f022c20a.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "578px",
+            "top": "2344.18px",
+            "width": "383px",
+            "height": "229px",
+            "zIndex": "314",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 15
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b71",
+          "src": "assets/images/image-2af5dac4-be22-4e32-916d-_8ef594ca.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "54px",
+            "top": "2461.18px",
+            "width": "425px",
+            "height": "476px",
+            "zIndex": "310",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 16
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b76",
+          "src": "assets/images/image-a92aebf1-94f1-46d0-985e-_b0aa76d1.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "599px",
+            "top": "2564.18px",
+            "width": "383px",
+            "height": "229px",
+            "zIndex": "315",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 17
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b69",
+          "src": "assets/images/image-4f59bae1-5918-4ca6-86e5-_46ecd653.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-88px",
+            "top": "3133px",
+            "width": "1200px",
+            "height": "800px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 18
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b78",
+          "src": "assets/images/image-7b3652e4-ef55-4b4f-8087-_e8263f21.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "31px",
+            "top": "3169px",
+            "width": "372px",
+            "height": "215px",
+            "zIndex": "317",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 19
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b79",
+          "src": "assets/images/image-7b3652e4-ef55-4b4f-8087-_e8263f21.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "31px",
+            "top": "3403px",
+            "width": "372px",
+            "height": "215px",
+            "zIndex": "318",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 20
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b7a",
+          "src": "assets/images/image-7b3652e4-ef55-4b4f-8087-_e8263f21.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "31px",
+            "top": "3637px",
+            "width": "372px",
+            "height": "215px",
+            "zIndex": "319",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 21
+        }
+      ]
+    },
+    {
+      "slug": "atlantic-rhythms-1",
+      "title": "Goodnight Shiva",
+      "subtitle": "Cassette J-Card",
+      "color": "#e4decb",
+      "page": "atlantic-rhythms-1.html",
+      "pageHeight": 1310,
+      "sort": 6,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "334",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "335",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "333",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a54",
+          "src": "assets/images/image-e8671433-895d-484b-9614-_1956ed1e.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-19px",
+            "top": "120px",
+            "width": "445px",
+            "height": "555px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a53",
+          "src": "assets/images/image-73b78dd9-f728-4d90-94dc-_b852eccc.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "444px",
+            "top": "331px",
+            "width": "599px",
+            "height": "599px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a52",
+          "src": "assets/images/image-f5c65499-e9c0-4767-866e-_4622e7a2.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "30px",
+            "top": "694px",
+            "width": "396px",
+            "height": "528px",
+            "zIndex": "301",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 6
+        }
+      ]
+    },
+    {
+      "slug": "atlantic-rhythms-2",
+      "title": "Miru Mira",
+      "subtitle": "Cassette J-Card",
+      "color": "#f75f23",
+      "page": "atlantic-rhythms-2.html",
+      "pageHeight": 1429,
+      "sort": 7,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "334",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "335",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "333",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a62",
+          "src": "assets/images/image-0e28c63f-3cd2-4988-a1bb-_fcf595f8.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "596px",
+            "top": "118px",
+            "width": "445px",
+            "height": "555px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2a61",
+          "src": "assets/images/image-dce84265-99c4-42b6-81c2-_24fea5b7.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-21px",
+            "top": "417px",
+            "width": "599px",
+            "height": "599px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 5
+        }
+      ]
+    },
+    {
+      "slug": "no-way",
+      "title": "No Way",
+      "subtitle": "2,100 sq ft Mural",
+      "color": "#faf0e8",
+      "page": "no-way.html",
+      "pageHeight": 6600,
+      "sort": 8,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "342",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "343",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "341",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2aea",
+          "src": "assets/images/image-1b5a9551-1ba8-4828-bd9a-_c52c44f1.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-88px",
+            "top": "116px",
+            "width": "1200px",
+            "height": "760px",
+            "zIndex": "301",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2aeb",
+          "src": "assets/images/image-1bfc796e-1ad6-43c7-aaa6-_050fc9e2.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "29px",
+            "top": "974px",
+            "width": "468px",
+            "height": "640px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2aec",
+          "src": "assets/images/image-43526e30-3752-4eae-9963-_35068f95.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "527px",
+            "top": "1144px",
+            "width": "468px",
+            "height": "640px",
+            "zIndex": "303",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 6
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2aed",
+          "src": "assets/images/image-9b9c1840-d871-43e8-a1db-_2dec4b99.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-103.125px",
+            "top": "1881px",
+            "width": "1080px",
+            "height": "720px",
+            "zIndex": "304",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 7
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2aee",
+          "src": "assets/images/image-eedeb011-a767-40a6-a345-_58bfc50f.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "29px",
+            "top": "2701px",
+            "width": "468px",
+            "height": "640px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 8
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2aef",
+          "src": "assets/images/image-a1000782-75c8-4308-b5cc-_7a90faa9.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "527px",
+            "top": "2701px",
+            "width": "468px",
+            "height": "640px",
+            "zIndex": "306",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 9
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2af0",
+          "src": "assets/images/image-5883043a-f409-4d17-aad0-_13e89e40.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "16.875px",
+            "top": "3441px",
+            "width": "1080px",
+            "height": "720px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 10
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2af2",
+          "src": "assets/images/image-fe93f5c2-2c91-4f0f-8a6d-_5a9d16e1.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "527px",
+            "top": "4244px",
+            "width": "468px",
+            "height": "640px",
+            "zIndex": "309",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 11
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2af1",
+          "src": "assets/images/image-ce2c0154-1bf0-4c28-8cb3-_10a69e09.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "29px",
+            "top": "4386px",
+            "width": "468px",
+            "height": "695px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 12
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2af3",
+          "src": "assets/images/image-3cf12ffe-802c-484b-9daf-_bb529c63.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-88px",
+            "top": "5164px",
+            "width": "1200px",
+            "height": "764px",
+            "zIndex": "310",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 13
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2af4",
+          "src": "assets/images/image-41b15020-e8fc-4dbe-8bca-_3d963a34.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "21px",
+            "top": "6082px",
+            "width": "982px",
+            "height": "359px",
+            "zIndex": "311",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 14
+        }
+      ]
+    },
+    {
+      "slug": "abcdc",
+      "title": "ABCDC",
+      "subtitle": "Cherry Blossom Sculpture",
+      "color": "#212121",
+      "page": "abcdc.html",
+      "pageHeight": 1841,
+      "sort": 9,
+      "inStack": true,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb2994",
+          "src": "assets/images/image-c5521c01-baab-4e3a-8ab9-_ae8b8ac5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "330",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2995",
+          "src": "assets/images/image-8e3bd332-2bd8-456e-a55d-_0be0efcd.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "331",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb298d",
+          "src": "assets/images/image-ef186f66-d88b-4a57-b594-_27624984.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "30px",
+            "top": "26px",
+            "width": "181px",
+            "height": "59px",
+            "zIndex": "348",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 2
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2993",
+          "src": "assets/images/image-ca288a07-d819-458a-8eff-_c34376b0.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.99px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "329",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b14",
+          "src": "assets/images/image-673eda2c-9484-4783-9eba-_ac78895d.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-87px",
+            "top": "112px",
+            "width": "832px",
+            "height": "667px",
+            "zIndex": "301",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b18",
+          "src": "assets/images/image-0c00e852-1300-4cee-89eb-_a2210ab4.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "798px",
+            "top": "224px",
+            "width": "237px",
+            "height": "61px",
+            "zIndex": "305",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb2b15",
+          "src": "assets/images/image-98fb5e5d-6a9a-4bda-9869-_bc6a2eee.jpg",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "1px",
+            "top": "1132px",
+            "width": "645px",
+            "height": "540px",
+            "zIndex": "302",
+            "zoom": "",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 6
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "subtitle": "About Studio",
+      "color": "#f2eddf",
+      "page": "about.html",
+      "pageHeight": 800,
+      "sort": 10,
+      "inStack": false,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "341",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "342",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "340",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        },
+        {
+          "widgetId": "65eb84ea93fab80068c8fce5",
+          "src": "assets/images/image-ce3910b8-6c27-4a5e-b849-_d47df0ce.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-17px",
+            "top": "17px",
+            "width": "284px",
+            "height": "250px",
+            "zIndex": "307",
+            "zoom": "",
+            "transform": "rotate(90deg)",
+            "chrome": true
+          },
+          "sort": 4
+        },
+        {
+          "widgetId": "65eb84ebec5d6e006f6a6c4f",
+          "src": "assets/images/image-2038257a-a4ce-40f9-b5c0-_73d2e8a3.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "0px",
+            "top": "0px",
+            "width": "283px",
+            "height": "250px",
+            "zIndex": "308",
+            "zoom": "",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 5
+        },
+        {
+          "widgetId": "65eb84ec22dc770036bcd337",
+          "src": "assets/images/image-ce3910b8-6c27-4a5e-b849-_d47df0ce.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "-17px",
+            "top": "17px",
+            "width": "284px",
+            "height": "250px",
+            "zIndex": "313",
+            "zoom": "",
+            "transform": "rotate(90deg)",
+            "chrome": true
+          },
+          "sort": 6
+        }
+      ]
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "subtitle": "Get In Touch",
+      "color": "#f2eddf",
+      "page": "contact.html",
+      "pageHeight": 800,
+      "sort": 11,
+      "inStack": false,
+      "enabled": true,
+      "footerTitle": "",
+      "infoLabel": "Info",
+      "infoHref": "",
+      "showBar": true,
+      "images": [
+        {
+          "widgetId": "65eb824cda7f23003dcb29b8",
+          "src": "assets/images/image-e31084f6-7f1b-4754-b359-_83e76836.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "328",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 0
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b9",
+          "src": "assets/images/image-9a11c4dd-5d4c-442b-a9d0-_642434c5.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "50%",
+            "top": "50%",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "329",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": false
+          },
+          "sort": 1
+        },
+        {
+          "widgetId": "65eb824cda7f23003dcb29b7",
+          "src": "assets/images/image-a9e796b9-947e-404d-919c-_095d2046.png",
+          "alt": "",
+          "caption": "",
+          "position": {
+            "left": "",
+            "top": "30.81px",
+            "width": "54px",
+            "height": "54px",
+            "zIndex": "327",
+            "zoom": "0.853333",
+            "transform": "",
+            "chrome": true
+          },
+          "sort": 3
+        }
+      ]
+    }
+  ]
+}
