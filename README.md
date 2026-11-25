@@ -1,4 +1,4 @@
-# No Plan Studio — Clon Demostrativo de Alta Fidelidad
+# TernStudio Web
 
 Este proyecto es un clon demostrativo e interactivo del sitio web oficial de **[No Plan Studio](https://noplan.studio/)** (Takoma Park, MD), enfocado en preservar con máxima fidelidad sus estilos, colores característicos, tipografía artesanal, animaciones e interconexión fluida de páginas y casos de estudio internos.
 
