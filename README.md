@@ -105,6 +105,10 @@ Al introducir el token, el panel crea una cookie de sesión `HttpOnly`; el naveg
 nunca guarda el token en claro. Para scripts también se admite `Authorization: Bearer <token>`
 o `Authorization: Token <token>`.
 
+El token se puede **cambiar desde el panel**, en la pestaña **Seguridad**: se pide el
+token actual, el nuevo y su confirmación. El cambio se escribe en `.env` (sin reiniciar
+el servidor) y cierra todas las demás sesiones abiertas, manteniendo la que hizo el cambio.
+
 ### Imágenes por proyecto (posición preservada)
 Cada proyecto conserva el layout Readymag exacto: el panel lista **todas las
 imágenes de cada página** (la cantidad varía por proyecto) y permite cambiar el
@@ -121,6 +125,8 @@ GET    /api/projects/:slug         → un proyecto con sus imágenes
 POST   /api/login                  → { token } → cookie de sesión
 POST   /api/logout
 GET    /api/session
+GET    /api/admin/token            → estado del token (autenticado)
+PUT    /api/admin/token            → { currentToken, newToken } rotar token
 PUT    /api/settings/:grupo        → theme | sizes | nav | hero | projectsSection | footer
 POST   /api/projects               → crear proyecto
 PUT    /api/projects/:id           → editar proyecto

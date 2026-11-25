@@ -141,7 +141,8 @@
     { id: 'menu', label: 'Menú superior' },
     { id: 'hero', label: 'Hero' },
     { id: 'proyectos', label: 'Proyectos' },
-    { id: 'footer', label: 'Footer' }
+    { id: 'footer', label: 'Footer' },
+    { id: 'seguridad', label: 'Seguridad' }
   ];
 
   function renderShell(body) {
@@ -577,6 +578,64 @@
       <div class="btn-row"><button class="btn primary" data-save="footer">Guardar footer</button></div>`;
   }
 
+  /* ── tab: seguridad ─────────────────────────────────────── */
+
+  function renderSeguridad() {
+    return `
+      <div class="page-head">
+        <h2>Seguridad</h2>
+        <p>Token de acceso al panel. Se guarda en el <code>.env</code> del servidor como <code>ADMIN_TOKEN</code>.</p>
+      </div>
+
+      <div class="card">
+        <h3>Estado actual</h3>
+        <div class="field">
+          <div class="token-status" id="token-status">Cargando…</div>
+          <span class="hint">Al actualizar el token se cierran las demás sesiones abiertas; esta se mantiene activa.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Cambiar token</h3>
+        ${textField('token-current', 'Token actual', '', 'password', 'Obligatorio para confirmar el cambio.')}
+        ${textField('token-new', 'Nuevo token', '', 'text', 'Mínimo 16 caracteres, sin espacios.')}
+        ${textField('token-confirm', 'Repite el nuevo token', '', 'text')}
+        <div class="btn-row">
+          <button class="btn" data-generate-token>Generar token aleatorio</button>
+          <button class="btn primary" data-save="seguridad">Actualizar token</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Recomendaciones</h3>
+        <ul class="hint" style="margin:0;padding-left:18px;line-height:1.9">
+          <li>Usa un token largo y aleatorio (el botón lo genera por ti).</li>
+          <li>No compartas el token ni lo subas a git: <code>.env</code> ya está ignorado.</li>
+          <li>Si cambias el token, actualiza también donde lo tengas guardado.</li>
+        </ul>
+      </div>`;
+  }
+
+  async function loadTokenStatus() {
+    const node = document.getElementById('token-status');
+    if (!node) return;
+    try {
+      const info = await api('GET', '/api/admin/token');
+      state.token = info;
+      node.innerHTML = info.configured
+        ? `Configurado · ${info.length} caracteres · <code>${esc(info.preview)}</code>`
+        : 'Sin configurar';
+    } catch (error) {
+      node.textContent = error.message;
+    }
+  }
+
+  function randomToken() {
+    const bytes = new Uint8Array(24);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+  }
+
   /* ── tab: proyectos ─────────────────────────────────────── */
 
   function currentProject() {
@@ -732,9 +791,11 @@
       menu: renderMenu,
       hero: renderHero,
       proyectos: renderProyectos,
-      footer: renderFooter
+      footer: renderFooter,
+      seguridad: renderSeguridad
     };
     main().innerHTML = (builders[state.tab] || renderApariencia)();
+    if (state.tab === 'seguridad') loadTokenStatus();
   }
 
   async function reload() {
@@ -893,6 +954,20 @@
           infoLabel: val('project-infoLabel'),
           infoHref: val('project-infoHref')
         });
+      } else if (group === 'seguridad') {
+        const newToken = val('token-new').trim();
+        const confirm = val('token-confirm').trim();
+        if (newToken.length < 16) throw new Error('El nuevo token debe tener al menos 16 caracteres');
+        if (newToken !== confirm) throw new Error('Los tokens nuevos no coinciden');
+        const result = await api('PUT', '/api/admin/token', {
+          currentToken: val('token-current'),
+          newToken,
+          confirmToken: confirm
+        });
+        state.token = result.token;
+        toast('Token actualizado · las demás sesiones se cerraron', 'ok');
+        await reload();
+        return;
       }
       toast('Cambios guardados', 'ok');
       await reload();
@@ -957,6 +1032,19 @@
       } catch (error) {
         toast(error.message, 'error');
       }
+      return;
+    }
+
+    /* generar token aleatorio */
+    if (target.closest('[data-generate-token]')) {
+      const token = randomToken();
+      const next = document.getElementById('token-new');
+      const confirm = document.getElementById('token-confirm');
+      const current = document.getElementById('token-current');
+      if (next) next.value = token;
+      if (confirm) confirm.value = token;
+      if (current) current.focus();
+      toast('Token generado · guarda el cambio para aplicarlo', 'ok');
       return;
     }
 

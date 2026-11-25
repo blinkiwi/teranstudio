@@ -17,7 +17,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-require('./lib/env').loadEnv();
+const env = require('./lib/env');
+env.loadEnv();
 
 const db = require('./lib/db');
 const contentFile = require('./lib/contentfile');
@@ -192,6 +193,18 @@ function serveStatic(req, res, pathname) {
 
 /* ── API ──────────────────────────────────────────────────── */
 
+function tokenInfo() {
+  const token = auth.adminToken();
+  return {
+    configured: Boolean(token),
+    length: token.length,
+    preview: token ? `${token.slice(0, 4)}…${token.slice(-4)}` : ''
+  };
+}
+
+const TOKEN_MIN_LENGTH = 16;
+const TOKEN_MAX_LENGTH = 256;
+
 async function handleApi(req, res, url) {
   const { pathname } = url;
   const method = req.method.toUpperCase();
@@ -223,6 +236,50 @@ async function handleApi(req, res, url) {
 
   if (pathname === '/api/session' && method === 'GET') {
     return sendJson(res, 200, { authenticated: auth.isAuthenticated(req) });
+  }
+
+  /* Admin token: read status and rotate it from the panel. */
+  if (pathname === '/api/admin/token' && method === 'GET') {
+    if (!requireAuth()) return;
+    return sendJson(res, 200, tokenInfo());
+  }
+
+  if (pathname === '/api/admin/token' && (method === 'PUT' || method === 'PATCH')) {
+    if (!requireAuth()) return;
+    const body = await readJson(req);
+
+    const currentToken = String(body.currentToken || '');
+    const newToken = String(body.newToken || '').trim();
+    const confirmToken = body.confirmToken === undefined ? newToken : String(body.confirmToken);
+
+    if (!currentToken || !auth.verifyToken(currentToken)) {
+      return sendJson(res, 401, { error: 'El token actual no es correcto' });
+    }
+    if (newToken.length < TOKEN_MIN_LENGTH) {
+      return sendJson(res, 400, { error: `El nuevo token debe tener al menos ${TOKEN_MIN_LENGTH} caracteres` });
+    }
+    if (newToken.length > TOKEN_MAX_LENGTH) {
+      return sendJson(res, 400, { error: `El nuevo token no puede superar ${TOKEN_MAX_LENGTH} caracteres` });
+    }
+    if (/\s/.test(newToken)) {
+      return sendJson(res, 400, { error: 'El nuevo token no puede contener espacios' });
+    }
+    if (newToken !== confirmToken) {
+      return sendJson(res, 400, { error: 'Los tokens nuevos no coinciden' });
+    }
+    if (newToken === auth.adminToken()) {
+      return sendJson(res, 400, { error: 'El nuevo token debe ser distinto del actual' });
+    }
+
+    try {
+      env.setEnvVar('ADMIN_TOKEN', newToken);
+    } catch (error) {
+      return sendJson(res, 500, { error: `No se pudo escribir .env: ${error.message}` });
+    }
+
+    auth.setAdminToken(newToken);
+    auth.destroyOtherSessions(auth.sessionIdFromRequest(req));
+    return sendJson(res, 200, { ok: true, token: tokenInfo() });
   }
 
   /* Public content (published projects only) */
@@ -365,7 +422,7 @@ async function handleApi(req, res, url) {
 function snapshotContent(req, res, url) {
   if (req.method.toUpperCase() === 'GET') return;
   if (res.statusCode < 200 || res.statusCode >= 300) return;
-  if (/^\/api\/(login|logout|session|upload)\b/.test(url.pathname)) return;
+  if (/^\/api\/(login|logout|session|upload|admin)\b/.test(url.pathname)) return;
 
   try {
     contentFile.exportContent();
