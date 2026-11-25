@@ -361,6 +361,8 @@
 
   function renderHero() {
     const hero = state.content.hero;
+    const heroImages = hero.images || {};
+    const canvasBg = state.content.canvasBg || {};
     return `
       <div class="page-head">
         <h2>Hero</h2>
@@ -371,8 +373,8 @@
         <h3>Bloque de portada</h3>
         ${checkField('hero-enabled', 'Mostrar bloque de hero sobre el lienzo', hero.enabled)}
         <div class="grid">
-          ${textField('hero-eyebrow', 'Antetítulo', hero.eyebrow)}
           ${textField('hero-title', 'Título', hero.title)}
+          ${textField('hero-accentWord', 'Palabra destacada (2.ª línea)', hero.accentWord, 'text', 'Se muestra en cursiva con el color de acento.')}
           <div style="grid-column:1/-1">
             <div class="field">
               <label for="hero-subtitle">Subtítulo</label>
@@ -381,6 +383,9 @@
           </div>
           ${textField('hero-ctaLabel', 'Texto del botón', hero.ctaLabel)}
           ${textField('hero-ctaHref', 'Enlace del botón', hero.ctaHref)}
+          ${textField('hero-ctaGhostLabel', 'Texto del enlace secundario', hero.ctaGhostLabel)}
+          ${textField('hero-ctaGhostHref', 'Enlace secundario', hero.ctaGhostHref)}
+          <div style="grid-column:1/-1">${textField('hero-chips', 'Etiquetas (separadas por comas)', (hero.chips || []).join(', '), 'text', 'Se muestran como chips bajo el subtítulo.')}</div>
         </div>
       </div>
 
@@ -390,6 +395,45 @@
           <div style="grid-column:1/-1">${textField('hero-marqueeText', 'Texto de la cinta', hero.marqueeText, 'text', 'Se repite automáticamente en bucle.')}</div>
         </div>
         ${checkField('hero-showStamps', 'Mostrar sellos animados del lienzo', hero.showStamps)}
+      </div>
+
+      <div class="card">
+        <h3>Composición visual</h3>
+        <p class="hint" style="margin-top:-8px;margin-bottom:16px">Fotografías en capas del hero: principal y detalle pequeño.</p>
+        <h4>Foto principal</h4>
+        <div class="grid">
+          <div style="grid-column:1/-1" class="field">
+            <label for="hero-main-src">Imagen principal</label>
+            <div class="image-src-row">
+              <input id="hero-main-src" type="text" value="${esc(heroImages.main && heroImages.main.src)}" placeholder="assets/uploads/… o URL">
+              <label class="btn small" style="cursor:pointer">Subir
+                <input type="file" accept="image/*" data-upload-field="hero-main-src" hidden>
+              </label>
+            </div>
+          </div>
+          ${textField('hero-main-alt', 'Texto alternativo', heroImages.main && heroImages.main.alt)}
+          ${textField('hero-main-caption', 'Pie de foto', heroImages.main && heroImages.main.caption)}
+          <div class="preview-box" style="grid-column:1/-1"><img data-preview="hero-main-src" src="${esc(assetUrl(heroImages.main && heroImages.main.src))}" alt="" ${heroImages.main && heroImages.main.src ? '' : 'hidden'}></div>
+        </div>
+        <h4>Detalle (imagen pequeña)</h4>
+        <div class="grid">
+          <div style="grid-column:1/-1" class="field">
+            <label for="hero-small-src">Imagen pequeña</label>
+            <div class="image-src-row">
+              <input id="hero-small-src" type="text" value="${esc(heroImages.small && heroImages.small.src)}" placeholder="assets/uploads/… o URL">
+              <label class="btn small" style="cursor:pointer">Subir
+                <input type="file" accept="image/*" data-upload-field="hero-small-src" hidden>
+              </label>
+            </div>
+          </div>
+          ${textField('hero-small-alt', 'Texto alternativo', heroImages.small && heroImages.small.alt)}
+          ${textField('hero-small-caption', 'Pie de foto', heroImages.small && heroImages.small.caption)}
+          <div class="preview-box" style="grid-column:1/-1"><img data-preview="hero-small-src" src="${esc(assetUrl(heroImages.small && heroImages.small.src))}" alt="" ${heroImages.small && heroImages.small.src ? '' : 'hidden'}></div>
+        </div>
+        <div class="grid" style="grid-column:1/-1;margin-top:8px">
+          ${textField('hero-badgeText', 'Texto del anillo giratorio', hero.badgeText)}
+          ${textField('hero-glassText', 'Etiqueta sobre la foto', hero.glassText, 'text', 'p. ej. est. 2016')}
+        </div>
       </div>
 
       <div class="card">
@@ -427,6 +471,36 @@
           ${textField('hero-bgPosition', 'Posición', hero.bgPosition, 'text', 'p. ej. center, top, 50% 30%')}
         </div>
         <div class="preview-box"><img data-preview="hero-bgImage" src="${esc(assetUrl(hero.bgImage))}" alt="" ${hero.bgImage ? '' : 'hidden'}></div>
+      </div>
+
+      <div class="card">
+        <h3>Fondo del lienzo (page-fixed-bg-container)</h3>
+        <p class="hint" style="margin-top:-8px;margin-bottom:16px">El fondo fijo que va justo después del hero, debajo de los sellos y la cinta.</p>
+        ${checkField('canvasBg-enabled', 'Mostrar el bloque de fondo del lienzo', canvasBg.enabled)}
+        <div class="grid">
+          ${colorField('canvasBg-color', 'Color de fondo', canvasBg.color)}
+          ${textField('canvasBg-opacity', 'Opacidad del bloque (%)', canvasBg.opacity, 'number', '0 – 100')}
+          <div style="grid-column:1/-1" class="field">
+            <label for="canvasBg-image">Imagen de fondo</label>
+            <div class="image-src-row">
+              <input id="canvasBg-image" type="text" value="${esc(canvasBg.image)}" placeholder="assets/uploads/… o URL">
+              <label class="btn small" style="cursor:pointer">Subir
+                <input type="file" accept="image/*" data-upload-field="canvasBg-image" hidden>
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="canvasBg-imageSize">Ajuste de la imagen</label>
+            <select id="canvasBg-imageSize">
+              <option value="cover" ${canvasBg.imageSize === 'cover' ? 'selected' : ''}>Cubrir (cover)</option>
+              <option value="contain" ${canvasBg.imageSize === 'contain' ? 'selected' : ''}>Contener (contain)</option>
+              <option value="auto" ${canvasBg.imageSize === 'auto' ? 'selected' : ''}>Tamaño original</option>
+            </select>
+          </div>
+          ${textField('canvasBg-imagePosition', 'Posición', canvasBg.imagePosition, 'text', 'p. ej. center, top, 50% 30%')}
+        </div>
+        <div class="preview-box"><img data-preview="canvasBg-image" src="${esc(assetUrl(canvasBg.image))}" alt="" ${canvasBg.image ? '' : 'hidden'}></div>
+        <div class="btn-row"><button class="btn primary" data-save="canvasBg">Guardar fondo del lienzo</button></div>
       </div>
 
       <div class="btn-row"><button class="btn primary" data-save="hero">Guardar hero</button></div>`;
@@ -513,6 +587,7 @@
     const projects = state.content.projects;
     if (!state.projectId && projects.length) state.projectId = projects[0].id;
     const project = currentProject();
+    const ps = state.content.projectsSection || {};
 
     const chips = projects.map(item => `
       <button class="chip ${item.id === state.projectId ? 'active' : ''} ${item.enabled ? '' : 'off'}" data-project="${item.id}">
@@ -557,7 +632,32 @@
     return `
       <div class="page-head">
         <h2>Proyectos</h2>
-        <p>Edita cada proyecto y las imágenes que contiene, conservando su posición original.</p>
+        <p>Edita el bloque de sección que sigue al hero, cada proyecto y sus imágenes.</p>
+      </div>
+
+      <div class="card">
+        <h3>Cabecera de la sección (bloque tras el hero)</h3>
+        <p class="hint" style="margin-top:-8px;margin-bottom:16px">Activa o desactiva el bloque completo de proyectos y ajusta sus textos y colores.</p>
+        ${checkField('ps-enabled', 'Mostrar la sección de proyectos', ps.enabled)}
+        <div class="grid">
+          ${textField('ps-kicker', 'Antetítulo', ps.kicker)}
+          ${textField('ps-title', 'Título', ps.title)}
+          <div style="grid-column:1/-1">
+            <div class="field">
+              <label for="ps-note">Nota</label>
+              <textarea id="ps-note">${esc(ps.note)}</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="grid">
+          ${colorField('ps-bg', 'Fondo', ps.bg)}
+          ${colorField('ps-ink', 'Color del título', ps.ink)}
+          ${colorField('ps-muted', 'Color textos secundarios', ps.muted)}
+          ${colorField('ps-accent', 'Color de acento', ps.accent)}
+          ${colorField('ps-border', 'Borde superior', ps.border)}
+        </div>
+        <p class="hint" style="margin-top:-6px;margin-bottom:0">Vacío = usa los colores globales de “Colores y tipografía”.</p>
+        <div class="btn-row"><button class="btn primary" data-save="projectsSection">Guardar cabecera</button></div>
       </div>
 
       <div class="project-picker">${chips}</div>
@@ -724,21 +824,59 @@
       } else if (group === 'hero') {
         await api('PUT', '/api/settings/hero', {
           enabled: checked('hero-enabled'),
-          eyebrow: val('hero-eyebrow'),
           title: val('hero-title'),
+          accentWord: val('hero-accentWord'),
           subtitle: val('hero-subtitle'),
           ctaLabel: val('hero-ctaLabel'),
           ctaHref: val('hero-ctaHref'),
+          ctaGhostLabel: val('hero-ctaGhostLabel'),
+          ctaGhostHref: val('hero-ctaGhostHref'),
+          chips: String(val('hero-chips')).split(',').map(s => s.trim()).filter(Boolean),
           marqueeText: val('hero-marqueeText'),
           showStamps: checked('hero-showStamps'),
           bgType: val('hero-bgType'),
           bgColor: val('hero-bgColor'),
           bgImage: val('hero-bgImage'),
           bgSize: val('hero-bgSize'),
-          bgPosition: val('hero-bgPosition')
+          bgPosition: val('hero-bgPosition'),
+          images: {
+            main: {
+              src: val('hero-main-src'),
+              alt: val('hero-main-alt'),
+              caption: val('hero-main-caption')
+            },
+            small: {
+              src: val('hero-small-src'),
+              alt: val('hero-small-alt'),
+              caption: val('hero-small-caption')
+            }
+          },
+          badgeText: val('hero-badgeText'),
+          glassText: val('hero-glassText')
         });
       } else if (group === 'footer') {
         await api('PUT', '/api/settings/footer', collectFooter());
+      } else if (group === 'projectsSection') {
+        await api('PUT', '/api/settings/projectsSection', {
+          enabled: checked('ps-enabled'),
+          kicker: val('ps-kicker'),
+          title: val('ps-title'),
+          note: val('ps-note'),
+          bg: val('ps-bg'),
+          ink: val('ps-ink'),
+          muted: val('ps-muted'),
+          accent: val('ps-accent'),
+          border: val('ps-border')
+        });
+      } else if (group === 'canvasBg') {
+        await api('PUT', '/api/settings/canvasBg', {
+          enabled: checked('canvasBg-enabled'),
+          color: val('canvasBg-color'),
+          image: val('canvasBg-image'),
+          imageSize: val('canvasBg-imageSize'),
+          imagePosition: val('canvasBg-imagePosition'),
+          opacity: num('canvasBg-opacity')
+        });
       } else if (group === 'project') {
         const project = currentProject();
         await api('PUT', `/api/projects/${project.id}`, {

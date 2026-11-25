@@ -8,7 +8,7 @@
   position: relative;
   z-index: 4;
   width: 100%;
-  background: var(--bg);
+  background: var(--ps-bg, var(--bg));
 }
 
 /* ── Section intro ─────────────────────────────────────────── */
@@ -23,7 +23,7 @@
     clamp(56px, 9vw, 118px)
     clamp(20px, 3.2vw, 48px)
     clamp(30px, 4vw, 56px);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--ps-border, var(--border));
 }
 
 @media (max-width: 760px) {
@@ -36,10 +36,23 @@
 
 .projects-embeds-kicker {
   grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--ps-muted, var(--ink-muted));
+}
+
+.projects-embeds-kicker::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 10px;
+  border-radius: 2px;
+  background: var(--ps-accent, var(--accent));
+  transform: translateY(-1px);
 }
 
 .projects-embeds-title {
@@ -49,7 +62,7 @@
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--ps-ink, var(--ink));
 }
 
 .projects-embeds-note {
@@ -57,7 +70,7 @@
   margin: 0 0 0.4em;
   font-size: clamp(13px, 1.2vw, 15px);
   line-height: 1.5;
-  color: var(--ink-muted);
+  color: var(--ps-muted, var(--ink-muted));
   text-align: right;
 }
 

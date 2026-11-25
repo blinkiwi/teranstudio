@@ -288,20 +288,218 @@
 
     if (!hero.enabled) {
       block.hidden = true;
+      block.innerHTML = '';
       return;
     }
 
     block.hidden = false;
     block.innerHTML = '';
 
-    if (hero.eyebrow) block.appendChild(el('span', 'studio-hero-eyebrow', hero.eyebrow));
-    if (hero.title) block.appendChild(el('h1', 'studio-hero-title', hero.title));
-    if (hero.subtitle) block.appendChild(el('p', 'studio-hero-subtitle', hero.subtitle));
-    if (hero.ctaLabel && hero.ctaHref) {
-      const cta = el('a', 'studio-hero-cta', hero.ctaLabel);
-      cta.href = hero.ctaHref;
-      block.appendChild(cta);
+    // Atmosphere, then the editorial grid with the copy and the visual.
+    block.appendChild(el('div', 'studio-hero-aurora'));
+    block.appendChild(el('div', 'studio-hero-grain'));
+
+    const grid = el('div', 'studio-hero-grid');
+    const copy = el('div', 'studio-hero-copy');
+
+    if (hero.title || hero.accentWord) {
+      const title = el('h1', 'studio-hero-title');
+      if (hero.title) {
+        const line = el('span', 'studio-hero-line');
+        line.setAttribute('data-reveal', '');
+        line.textContent = hero.title;
+        title.appendChild(line);
+      }
+      if (hero.accentWord) {
+        const line = el('span', 'studio-hero-line studio-hero-accent');
+        line.setAttribute('data-reveal', '');
+        line.textContent = hero.accentWord;
+        title.appendChild(line);
+      }
+      copy.appendChild(title);
     }
+
+    if (hero.subtitle) {
+      const sub = el('p', 'studio-hero-subtitle');
+      sub.setAttribute('data-reveal', '');
+      sub.textContent = hero.subtitle;
+      copy.appendChild(sub);
+    }
+
+    if ((hero.ctaLabel && hero.ctaHref) || (hero.ctaGhostLabel && hero.ctaGhostHref)) {
+      const actions = el('div', 'studio-hero-actions');
+      actions.setAttribute('data-reveal', '');
+      if (hero.ctaLabel && hero.ctaHref) {
+        const cta = el('a', 'studio-hero-cta', hero.ctaLabel);
+        cta.href = hero.ctaHref;
+        cta.setAttribute('data-magnetic', '');
+        actions.appendChild(cta);
+      }
+      if (hero.ctaGhostLabel && hero.ctaGhostHref) {
+        const ghost = el('a', 'studio-hero-ghost', '');
+        ghost.href = hero.ctaGhostHref;
+        ghost.appendChild(document.createTextNode(hero.ctaGhostLabel));
+        ghost.appendChild(el('span', 'studio-hero-ghost-arrow', '→'));
+        actions.appendChild(ghost);
+      }
+      copy.appendChild(actions);
+    }
+
+    if (Array.isArray(hero.chips) && hero.chips.length) {
+      const meta = el('div', 'studio-hero-meta');
+      meta.setAttribute('data-reveal', '');
+      hero.chips.forEach(chip => meta.appendChild(el('span', 'studio-hero-chip', chip)));
+      copy.appendChild(meta);
+    }
+
+    grid.appendChild(copy);
+
+    const images = hero.images || {};
+    const hasVisual = (images.main && images.main.src) || (images.small && images.small.src) || hero.badgeText;
+    if (hasVisual) {
+      const visual = el('div', 'studio-hero-visual');
+      visual.setAttribute('data-reveal', '');
+      visual.setAttribute('data-spotlight', '');
+
+      if (images.main && images.main.src) {
+        const figure = el('figure', 'studio-hero-photo studio-hero-photo-main');
+        const img = document.createElement('img');
+        img.src = images.main.src;
+        img.alt = images.main.alt || '';
+        img.loading = 'eager';
+        img.setAttribute('fetchpriority', 'high');
+        img.decoding = 'async';
+        figure.appendChild(img);
+        if (images.main.caption) {
+          const cap = el('figcaption', 'studio-hero-caption');
+          cap.appendChild(el('span', 'studio-hero-caption-num', '01'));
+          cap.appendChild(document.createTextNode(images.main.caption));
+          figure.appendChild(cap);
+        }
+        visual.appendChild(figure);
+      }
+
+      if (images.small && images.small.src) {
+        const figure = el('figure', 'studio-hero-photo studio-hero-photo-small');
+        const img = document.createElement('img');
+        img.src = images.small.src;
+        img.alt = images.small.alt || '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        figure.appendChild(img);
+        if (images.small.caption) {
+          figure.appendChild(el('figcaption', 'studio-hero-caption studio-hero-caption-small', images.small.caption));
+        }
+        visual.appendChild(figure);
+      }
+
+      if (hero.badgeText) {
+        visual.appendChild(buildHeroBadge(hero.badgeText));
+      }
+
+      if (hero.glassText) {
+        const glass = el('div', 'studio-hero-glass', hero.glassText);
+        glass.setAttribute('aria-hidden', 'true');
+        visual.appendChild(glass);
+      }
+
+      grid.appendChild(visual);
+    } else {
+      grid.classList.add('studio-hero-grid--solo');
+    }
+
+    block.appendChild(grid);
+
+    // Staggered entrance, magnetic CTA, cursor glow, scroll parallax.
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reveal = block.querySelectorAll('[data-reveal]');
+    reveal.forEach((node, index) => node.style.setProperty('--rd', `${index * 90}ms`));
+
+    if (!reduced && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveal.forEach(node => io.observe(node));
+    } else {
+      reveal.forEach(node => node.classList.add('is-in'));
+    }
+
+    if (reduced) return;
+
+    const spotlight = block.querySelector('[data-spotlight]');
+    if (spotlight) {
+      spotlight.addEventListener('pointermove', event => {
+        const rect = spotlight.getBoundingClientRect();
+        spotlight.style.setProperty('--sx', `${((event.clientX - rect.left) / rect.width) * 100}%`);
+        spotlight.style.setProperty('--sy', `${((event.clientY - rect.top) / rect.height) * 100}%`);
+      });
+    }
+
+    const magnetic = block.querySelector('[data-magnetic]');
+    if (magnetic) {
+      magnetic.addEventListener('pointermove', event => {
+        const rect = magnetic.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        magnetic.style.setProperty('--mx', `${(x * 12).toFixed(1)}px`);
+        magnetic.style.setProperty('--my', `${(y * 12).toFixed(1)}px`);
+      });
+      magnetic.addEventListener('pointerleave', () => {
+        magnetic.style.setProperty('--mx', '0px');
+        magnetic.style.setProperty('--my', '0px');
+      });
+    }
+
+    const photos = block.querySelectorAll('.studio-hero-photo');
+    if (photos.length) {
+      let raf = 0;
+      const parallax = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const rect = block.getBoundingClientRect();
+          const progress = Math.min(Math.max((window.innerHeight - rect.top) / (rect.height + window.innerHeight), 0), 1);
+          photos.forEach((photo, index) => {
+            const travel = (index % 2 === 0 ? -1 : 1) * 24 * progress;
+            photo.style.setProperty('--py', `${travel.toFixed(1)}px`);
+          });
+          raf = 0;
+        });
+      };
+      window.addEventListener('scroll', parallax, { passive: true });
+      parallax();
+    }
+  }
+
+  /** Rotating SVG circular badge (text on a ring path). */
+  function buildHeroBadge(label) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const badge = el('div', 'studio-hero-badge');
+    badge.setAttribute('aria-hidden', 'true');
+
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 120 120');
+
+    const defs = document.createElementNS(ns, 'defs');
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', 'M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0');
+    path.setAttribute('id', 'studio-hero-badge-path');
+    defs.appendChild(path);
+
+    const textEl = document.createElementNS(ns, 'text');
+    const textPath = document.createElementNS(ns, 'textPath');
+    textPath.setAttribute('href', '#studio-hero-badge-path');
+    textPath.textContent = label;
+    textEl.appendChild(textPath);
+
+    svg.appendChild(defs);
+    svg.appendChild(textEl);
+    badge.appendChild(svg);
+    return badge;
   }
 
   /* ── hero background (colour or image) ──────────────────── */
@@ -345,11 +543,54 @@
     ].join('\n');
   }
 
+  /* ── canvas fixed background (page-fixed-bg-container) ──── */
+
+  function applyCanvasBg(section) {
+    if (!section) return;
+    const container = document.querySelector('.page-fixed-bg-container');
+    if (!container) return;
+
+    let style = document.getElementById('cms-canvas-bg');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'cms-canvas-bg';
+      document.head.appendChild(style);
+    }
+
+    if (section.enabled === false) {
+      container.style.display = 'none';
+      style.textContent = '';
+      return;
+    }
+
+    container.style.display = '';
+    const color = section.color || '#f2eddf';
+    const opacity = Math.max(0, Math.min(100, Number(section.opacity) || 100)) / 100;
+    const image = section.image ? `url("${section.image}")` : 'none';
+
+    style.textContent = [
+      `.page-fixed-bg-container .widget-background {`,
+      `  background-color: ${color} !important;`,
+      `  background-image: ${image} !important;`,
+      `  background-size: ${section.imageSize || 'cover'} !important;`,
+      `  background-position: ${section.imagePosition || 'center'} !important;`,
+      `  background-repeat: no-repeat !important;`,
+      `}`,
+      `.page-fixed-bg-container { opacity: ${opacity}; }`
+    ].join('\n');
+  }
+
   /* ── projects section head ──────────────────────────────── */
 
   function applyProjectsSection(section) {
     if (!section) return;
-    const head = document.querySelector('.projects-embeds-head');
+    const block = document.getElementById('proyectos');
+    if (!block) return;
+
+    // Entire block toggle (header + stacked projects).
+    block.hidden = section.enabled === false;
+
+    const head = block.querySelector('.projects-embeds-head');
     if (!head) return;
 
     const kicker = head.querySelector('.projects-embeds-kicker');
@@ -359,6 +600,18 @@
     if (kicker && section.kicker) kicker.textContent = section.kicker;
     if (title && section.title) title.textContent = section.title;
     if (note && section.note) note.textContent = section.note;
+
+    // Per-section palette (empty = fall back to the global theme).
+    const palette = {
+      '--ps-bg': section.bg,
+      '--ps-ink': section.ink,
+      '--ps-muted': section.muted,
+      '--ps-accent': section.accent,
+      '--ps-border': section.border
+    };
+    Object.keys(palette).forEach(name => {
+      if (palette[name]) block.style.setProperty(name, palette[name]);
+    });
   }
 
   /* ── project stack (index) ──────────────────────────────── */
@@ -633,6 +886,7 @@
         applyDrawer(content);
         applyHero(content.hero);
         applyHeroBackground(content.hero);
+        applyCanvasBg(content.canvasBg);
         applyProjectsSection(content.projectsSection);
         buildStack(content);
         applyFooter(content.footer);

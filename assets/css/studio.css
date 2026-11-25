@@ -554,14 +554,7 @@ article.page, .page {
   height: 7px;
   border-radius: 50%;
   background: #2e7d32;
-  box-shadow: 0 0 0 0 rgba(46,125,50,0.5);
-  animation: badge-pulse 2.4s ease infinite;
   flex-shrink: 0;
-}
-@keyframes badge-pulse {
-  0%   { box-shadow: 0 0 0 0   rgba(46,125,50,0.5); }
-  60%  { box-shadow: 0 0 0 7px rgba(46,125,50,0);   }
-  100% { box-shadow: 0 0 0 0   rgba(46,125,50,0);   }
 }
 
 /* ── 8. BACK TO TOP ──────────────────────────────────────────── */

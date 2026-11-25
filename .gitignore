@@ -10,6 +10,9 @@ data/
 # Copia local de seguridad de un estado anterior del sitio
 _backup_before_teran_mix/
 
+# Capturas y artefactos de revisión de diseño (pesan mucho)
+.impeccable/
+
 # Ruido de sistema
 *.log
 Thumbs.db

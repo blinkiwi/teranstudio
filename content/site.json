@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "exportedAt": "2026-11-18T13:30:20.301Z",
+  "exportedAt": "2026-11-25T02:37:50.058Z",
   "settings": {
     "site": {
       "title": "Terán Studio — Design and Art Web Studio",
@@ -60,24 +60,60 @@
       ]
     },
     "hero": {
-      "enabled": false,
-      "eyebrow": "Terán Studio",
-      "title": "Design & Art Web Studio",
-      "subtitle": "A graphic design, letterpress and art studio.",
-      "ctaLabel": "",
-      "ctaHref": "",
+      "enabled": true,
+      "title": "Design & Art",
+      "accentWord": "Web Studio",
+      "subtitle": "Estudio de diseño gráfico, letterpress y dirección creativa. Marcas, impresos y arte con método editorial, sin atajos.",
+      "ctaLabel": "Ver proyectos",
+      "ctaHref": "#proyectos",
+      "ctaGhostLabel": "Sobre el estudio",
+      "ctaGhostHref": "about.html",
+      "chips": [
+        "Branding",
+        "Art direction",
+        "Letterpress",
+        "Editorial"
+      ],
       "marqueeText": "Design & Art Web Studio — Terán Studio  —  graphic design — ",
       "showStamps": true,
       "bgType": "",
       "bgColor": "#D4DECE",
       "bgImage": "",
       "bgSize": "cover",
-      "bgPosition": "center"
+      "bgPosition": "center",
+      "images": {
+        "main": {
+          "src": "assets/uploads/hero-print.png",
+          "alt": "Prensa tipográfica del estudio inundada de luz de mañana",
+          "caption": "Letterpress — prensa del estudio"
+        },
+        "small": {
+          "src": "assets/uploads/hero-type.png",
+          "alt": "Tipos de madera y plomo sobre papel crema",
+          "caption": "Tipos de madera y plomo"
+        }
+      },
+      "badgeText": "Graphic Design • Letterpress • Art",
+      "glassText": "est. 2016"
     },
     "projectsSection": {
+      "enabled": true,
       "kicker": "01 — 10 · Terán Studio Archive",
       "title": "Proyectos",
-      "note": "Selected branding, art direction & letterpress projects. Scroll to explore."
+      "note": "Selected branding, art direction & projects. Scroll to explore.",
+      "bg": "",
+      "ink": "",
+      "muted": "",
+      "accent": "",
+      "border": ""
+    },
+    "canvasBg": {
+      "enabled": true,
+      "color": "#f2eddf",
+      "image": "",
+      "imageSize": "cover",
+      "imagePosition": "center",
+      "opacity": 100
     },
     "footer": {
       "enabled": true,
