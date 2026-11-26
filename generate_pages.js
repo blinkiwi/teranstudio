@@ -15,19 +15,19 @@ Object.keys(urlMap).forEach(u => {
 
 // Map page indices to target filenames and clean titles
 const pagesConfig = [
-  { index: 0, path: '1', file: 'index.html', title: 'No Plan — Design and Art Studio', isProject: false, tag: 'Studio Home' },
-  { index: 1, path: 'lost-sock', file: 'lost-sock.html', title: 'Lost Sock Roasters — No Plan', isProject: true, tag: '01 / Branding & Coffee' },
-  { index: 2, path: 'motorkat', file: 'motorkat.html', title: 'Motorkat — No Plan', isProject: true, tag: '02 / Wood Grill & Raw Bar' },
-  { index: 3, path: 'zinnia', file: 'zinnia.html', title: 'Zinnia — No Plan', isProject: true, tag: '03 / Multi-Restaurant Concept' },
-  { index: 4, path: 'peoples-book', file: 'peoples-book.html', title: 'People’s Book — No Plan', isProject: true, tag: '04 / Bookstore Identity' },
-  { index: 5, path: 'soko', file: 'soko.html', title: 'SOKO — No Plan', isProject: true, tag: '05 / Butcher Shop & Deli' },
-  { index: 6, path: 'indigro', file: 'indigro.html', title: 'Indigro — No Plan', isProject: true, tag: '06 / Houseplant Studio' },
-  { index: 7, path: 'atlantic-rhythms-1', file: 'atlantic-rhythms-1.html', title: 'Goodnight Shiva — No Plan', isProject: true, tag: '07 / Cassette J-Card' },
-  { index: 8, path: 'atlantic-rhythms-2', file: 'atlantic-rhythms-2.html', title: 'Miru Mira — No Plan', isProject: true, tag: '08 / Cassette J-Card' },
-  { index: 9, path: 'no-way', file: 'no-way.html', title: 'No Way — No Plan', isProject: true, tag: '09 / 2,100 sq ft Mural' },
-  { index: 10, path: 'abcdc', file: 'abcdc.html', title: 'ABCDC — No Plan', isProject: true, tag: '10 / Cherry Blossom Sculpture' },
-  { index: 11, path: 'about', file: 'about.html', title: 'About — No Plan Studio', isProject: false, tag: 'About Studio' },
-  { index: 12, path: 'contact', file: 'contact.html', title: 'Contact — No Plan Studio', isProject: false, tag: 'Get In Touch' }
+  { index: 0, path: '1', file: 'index.html', title: 'Terán Studio — Design and Art Studio', isProject: false, tag: 'Studio Home' },
+  { index: 1, path: 'lost-sock', file: 'lost-sock.html', title: 'Lost Sock Roasters — Terán Studio', isProject: true, tag: '01 / Branding & Coffee' },
+  { index: 2, path: 'motorkat', file: 'motorkat.html', title: 'Motorkat — Terán Studio', isProject: true, tag: '02 / Wood Grill & Raw Bar' },
+  { index: 3, path: 'zinnia', file: 'zinnia.html', title: 'Zinnia — Terán Studio', isProject: true, tag: '03 / Multi-Restaurant Concept' },
+  { index: 4, path: 'peoples-book', file: 'peoples-book.html', title: 'People’s Book — Terán Studio', isProject: true, tag: '04 / Bookstore Identity' },
+  { index: 5, path: 'soko', file: 'soko.html', title: 'SOKO — Terán Studio', isProject: true, tag: '05 / Butcher Shop & Deli' },
+  { index: 6, path: 'indigro', file: 'indigro.html', title: 'Indigro — Terán Studio', isProject: true, tag: '06 / Houseplant Studio' },
+  { index: 7, path: 'atlantic-rhythms-1', file: 'atlantic-rhythms-1.html', title: 'Goodnight Shiva — Terán Studio', isProject: true, tag: '07 / Cassette J-Card' },
+  { index: 8, path: 'atlantic-rhythms-2', file: 'atlantic-rhythms-2.html', title: 'Miru Mira — Terán Studio', isProject: true, tag: '08 / Cassette J-Card' },
+  { index: 9, path: 'no-way', file: 'no-way.html', title: 'No Way — Terán Studio', isProject: true, tag: '09 / 2,100 sq ft Mural' },
+  { index: 10, path: 'abcdc', file: 'abcdc.html', title: 'ABCDC — Terán Studio', isProject: true, tag: '10 / Cherry Blossom Sculpture' },
+  { index: 11, path: 'about', file: 'about.html', title: 'About — Terán Studio', isProject: false, tag: 'About Studio' },
+  { index: 12, path: 'contact', file: 'contact.html', title: 'Contact — Terán Studio', isProject: false, tag: 'Get In Touch' }
 ];
 
 const projectsOnly = pagesConfig.filter(p => p.isProject);
@@ -148,8 +148,8 @@ function generatePagerHtml(currentPage) {
 function generateNavHeaderHtml(currentPage) {
   return `
     <header class="studio-nav-header">
-      <a href="index.html" class="studio-nav-logo" title="No Plan Studio">
-        <span>NO PLAN</span>
+      <a href="index.html" class="studio-nav-logo" title="Terán Studio">
+        <span>TERÁN STUDIO</span>
       </a>
       <nav class="studio-nav-links">
         <button class="studio-nav-link projects-toggle" type="button">Proyectos</button>
@@ -180,7 +180,7 @@ function buildPage(pageConfig) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>${pageConfig.title}</title>
-  <meta name="description" content="Clon demostrativo de alta fidelidad de No Plan Studio (noplan.studio) con estilos, colores, efectos y páginas internas vinculadas.">
+  <meta name="description" content="Clon demostrativo de alta fidelidad de Terán Studio (noplan.studio) con estilos, colores, efectos y páginas internas vinculadas.">
   <link rel="icon" href="assets/images/Favicon-39e6daeb-f233-4a04-a635-_7478052d.png" type="image/png">
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/viewer.css">
@@ -203,7 +203,7 @@ function buildPage(pageConfig) {
   <!-- Demonstrative Studio Badge -->
   <div class="studio-demo-badge">
     <div class="badge-dot"></div>
-    <span>No Plan Studio &bull; Clon Demostrativo</span>
+    <span>Terán Studio &bull; Clon Demostrativo</span>
   </div>
 
   <!-- Custom Letterpress Cursor -->

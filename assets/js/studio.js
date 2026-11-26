@@ -1,5 +1,5 @@
 /**
- * No Plan Studio Clone — Animation Engine v2
+ * Terán Studio Clone — Animation Engine v2
  * Single rAF game-loop, LERP smoothing, scroll-driven stamp rotation,
  * scroll-linked marquee, parallax layers, fade reveals, page transitions,
  * magnetic cursor, mobile nav, scroll progress bar, lazy images.
@@ -728,7 +728,7 @@
 
       if (window.parent && window.parent !== window) {
         window.parent.postMessage(
-          { type: 'noplan:embed-navigate', href },
+          { type: 'teranstudio:embed-navigate', href },
           window.location.origin === 'null' ? '*' : window.location.origin
         );
       } else {
@@ -773,7 +773,7 @@
     requestAnimationFrame(animLoop);
 
     console.log(
-      '%cNo Plan Studio%c Animation Engine v2 loaded',
+      '%cTerán Studio%c Animation Engine v2 loaded',
       'background:#111;color:#f2eddf;padding:3px 8px;border-radius:3px;font-weight:700;',
       'color:#555;padding:3px 0;'
     );

@@ -1,5 +1,5 @@
 /**
- * No Plan Studio — Admin panel (vanilla JS, no build step).
+ * Terán Studio — Admin panel (vanilla JS, no build step).
  *
  * Governs: top menu, hero, projects (with per-project images), footer,
  * colors, typography and sizes. Authentication uses the ADMIN_TOKEN.
@@ -14,7 +14,9 @@
   const state = {
     content: null,
     tab: 'apariencia',
-    projectId: null
+    projectId: null,
+    pageKey: 'index',
+    googleFonts: []
   };
 
   const FONT_PRESETS = [
@@ -102,16 +104,69 @@
     </div>`;
   }
 
-  function fontField(id, label, value) {
-    const options = FONT_PRESETS
-      .map(preset => `<option value="${esc(preset.value)}" ${preset.value === value ? 'selected' : ''}>${esc(preset.label)}</option>`)
+  function fontField(id, label, value, options) {
+    const opts = options || {};
+    const current = value || '';
+    const google = state.googleFonts || [];
+    const known = FONT_PRESETS.some(preset => preset.value === current)
+      || google.some(font => font.stack === current);
+    const custom = current !== '' && !known;
+
+    const systemOptions = FONT_PRESETS
+      .map(preset => `<option value="${esc(preset.value)}" ${preset.value === current ? 'selected' : ''}>${esc(preset.label)}</option>`)
       .join('');
+    const googleOptions = google
+      .map(font => `<option value="${esc(font.stack)}" ${font.stack === current ? 'selected' : ''}>${esc(font.family)} · ${esc(font.category)}</option>`)
+      .join('');
+
     return `<div class="field">
-      <label for="${id}">${esc(label)}</label>
-      <input id="${id}" type="text" list="${id}-presets" value="${esc(value)}">
-      <datalist id="${id}-presets">${options}</datalist>
-      <span class="hint">Puedes escribir cualquier stack CSS de fuentes.</span>
+      <label for="${id}-choice">${esc(label)}</label>
+      <select id="${id}-choice" data-font-choice="${id}">
+        ${opts.allowInherit
+          ? `<option value="" ${current === '' ? 'selected' : ''}>Heredar del tema</option>`
+          : `<option value="" ${current === '' ? 'selected' : ''} disabled>— Elige una tipografía —</option>`}
+        <optgroup label="Sistema">${systemOptions}</optgroup>
+        ${googleOptions ? `<optgroup label="Google Fonts">${googleOptions}</optgroup>` : ''}
+        <option value="__custom__" ${custom ? 'selected' : ''}>Personalizada (stack CSS)…</option>
+      </select>
+      <input id="${id}" type="text" data-font-input="${id}" value="${esc(current)}" placeholder="'Familia', serif" ${custom ? '' : 'hidden'}>
+      <span class="font-sample" data-font-sample="${id}" style="font-family:${esc(current || 'inherit')}">Aa — Design &amp; Art Studio</span>
+      <span class="hint">${esc(opts.hint || 'Fuentes del sistema, de Google Fonts o un stack CSS propio.')}</span>
     </div>`;
+  }
+
+  /* Google Fonts: the panel loads a stylesheet per family so the sample and
+     the hero preview use the real face. The public site does the same from
+     assets/js/cms.js with the same catalogue. */
+  const loadedPanelFonts = new Set();
+
+  function fontFamilyOf(stack) {
+    const first = String(stack || '').split(',')[0].trim();
+    return first.replace(/^['"]|['"]$/g, '').trim();
+  }
+
+  function ensurePanelFont(stack) {
+    const family = fontFamilyOf(stack);
+    if (!family || loadedPanelFonts.has(family)) return;
+    const font = (state.googleFonts || []).find(item => item.family.toLowerCase() === family.toLowerCase());
+    if (!font) return;
+
+    loadedPanelFonts.add(family);
+    const weights = (font.weights && font.weights.length ? font.weights : [400]);
+    const axis = font.italic
+      ? `ital,wght@${weights.map(weight => `0,${weight}`).join(';')};1,400`
+      : `wght@${weights.join(';')}`;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(font.family)}:${axis}&display=swap`;
+    document.head.appendChild(link);
+  }
+
+  function applyFontSample(input, value) {
+    const field = input.closest('.field');
+    const sample = field && field.querySelector('[data-font-sample]');
+    if (sample) sample.style.fontFamily = value || 'inherit';
+    ensurePanelFont(value);
   }
 
   /* ── login ──────────────────────────────────────────────── */
@@ -141,6 +196,7 @@
     { id: 'menu', label: 'Menú superior' },
     { id: 'hero', label: 'Hero' },
     { id: 'proyectos', label: 'Proyectos' },
+    { id: 'paginas', label: 'Páginas y bloques' },
     { id: 'footer', label: 'Footer' },
     { id: 'seguridad', label: 'Seguridad' }
   ];
@@ -391,6 +447,44 @@
       </div>
 
       <div class="card">
+        <h3>Tipografía y colores del hero</h3>
+        <p class="hint" style="margin-top:-8px;margin-bottom:16px">
+          Todos los campos son opcionales: vacío o 0 usa el valor del tema global.
+        </p>
+        <div class="grid">
+          ${fontField('hero-fontFamily', 'Tipografía del hero', hero.fontFamily || '', { allowInherit: true, hint: 'Heredar del tema, una fuente de Google Fonts o un stack CSS propio.' })}
+          <div class="field">
+            <label for="hero-titleWeight">Grosor / estilo del título</label>
+            <select id="hero-titleWeight">
+              <option value="" ${!hero.titleWeight ? 'selected' : ''}>Heredado (400)</option>
+              <option value="300" ${hero.titleWeight === '300' ? 'selected' : ''}>Light (300)</option>
+              <option value="400" ${hero.titleWeight === '400' ? 'selected' : ''}>Regular (400)</option>
+              <option value="500" ${hero.titleWeight === '500' ? 'selected' : ''}>Medium (500)</option>
+              <option value="600" ${hero.titleWeight === '600' ? 'selected' : ''}>Semibold (600)</option>
+              <option value="700" ${hero.titleWeight === '700' ? 'selected' : ''}>Bold (700)</option>
+              <option value="italic" ${hero.titleWeight === 'italic' ? 'selected' : ''}>Cursiva (italic)</option>
+            </select>
+          </div>
+          ${textField('hero-titleSize', 'Tamaño del título (px)', hero.titleSize, 'number', '0 = automático y responsive.')}
+          ${textField('hero-titleLineHeight', 'Altura de línea del título', hero.titleLineHeight, 'text', 'Ej. 0.88 · vacío = automático.')}
+          ${textField('hero-titleLetterSpacing', 'Interletraje del título', hero.titleLetterSpacing, 'text', 'Ej. -0.045em · vacío = automático.')}
+          ${textField('hero-subtitleSize', 'Tamaño del subtítulo (px)', hero.subtitleSize, 'number', '0 = automático.')}
+          ${textField('hero-chipSize', 'Tamaño de las etiquetas (px)', hero.chipSize, 'number', '0 = automático.')}
+          ${textField('hero-ctaSize', 'Tamaño de los botones (px)', hero.ctaSize, 'number', '0 = automático.')}
+        </div>
+        <div class="grid" style="margin-top:4px">
+          ${colorField('hero-titleColor', 'Color del título', hero.titleColor)}
+          ${colorField('hero-accentColor', 'Color de la palabra destacada', hero.accentColor)}
+          ${colorField('hero-subtitleColor', 'Color del subtítulo', hero.subtitleColor)}
+          ${colorField('hero-chipColor', 'Color de las etiquetas', hero.chipColor)}
+          ${colorField('hero-chipBg', 'Fondo de las etiquetas', hero.chipBg)}
+          ${colorField('hero-ctaBg', 'Fondo del botón', hero.ctaBg)}
+          ${colorField('hero-ctaColor', 'Texto del botón', hero.ctaColor)}
+          ${colorField('hero-ghostColor', 'Color del enlace secundario', hero.ghostColor)}
+        </div>
+      </div>
+
+      <div class="card">
         <h3>Cinta animada</h3>
         <div class="grid">
           <div style="grid-column:1/-1">${textField('hero-marqueeText', 'Texto de la cinta', hero.marqueeText, 'text', 'Se repite automáticamente en bucle.')}</div>
@@ -636,21 +730,319 @@
     return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
   }
 
+  /* ── tab: páginas y bloques ─────────────────────────────── */
+
+  const MARQUEE_WIDGET = '65eb824cda7f23003dcb2a6e';
+  const MANAGED_SELECTOR = '.studio-nav-header, .projects-drawer, .projects-embeds, .studio-footer, .studio-demo-badge, #site-hero';
+
+  function pageList() {
+    const pages = [{ key: 'index', file: 'index.html', label: 'Inicio' }];
+    (state.content.projects || []).forEach(project => {
+      if (!project.page) return;
+      const key = String(project.page).replace(/\.html?$/i, '');
+      if (!key || pages.some(page => page.key === key)) return;
+      pages.push({ key, file: project.page, label: project.title || key });
+    });
+    if (!pages.some(page => page.key === state.pageKey)) state.pageKey = pages[0].key;
+    return pages;
+  }
+
+  function isBottomBar(node) {
+    const style = node.getAttribute('style') || '';
+    return /(?:^|;)\s*bottom\s*:/.test(style) && !/(?:^|;)\s*top\s*:/.test(style);
+  }
+
+  /* Reads the exported page and turns its Readymag widgets into editable
+     blocks. Positions/shapes/hotspots are decoration; text, images and
+     buttons carry the content. Blocks owned by other tabs are skipped. */
+  function extractBlocks(doc, project) {
+    const managedImages = new Set(
+      [].concat(
+        ((project && project.images) || []).map(image => image.widgetId),
+        (project && project.hiddenWidgets) || []
+      ).filter(Boolean)
+    );
+    const blocks = [];
+
+    doc.querySelectorAll('.rmwidget[data-id]').forEach(node => {
+      const id = node.getAttribute('data-id');
+      if (!id || id === MARQUEE_WIDGET) return;
+      if (node.closest(MANAGED_SELECTOR) || isBottomBar(node)) return;
+
+      if (node.classList.contains('widget-text-v3')) {
+        const viewer = node.querySelector('.text-viewer');
+        if (!viewer) return;
+
+        // Names of the project index are painted from the panel projects:
+        // they are not editable here to avoid two sources of truth.
+        const anchor = viewer.querySelector('a[href]');
+        if (anchor) {
+          const file = String(anchor.getAttribute('href') || '')
+            .split('/').pop().split(/[?#]/)[0].toLowerCase();
+          const isProjectLink = (state.content.projects || [])
+            .some(item => String(item.page || '').toLowerCase() === file);
+          if (isProjectLink) return;
+        }
+
+        const text = viewer.textContent.replace(/\s+/g, ' ').trim();
+        if (!text) return;
+        blocks.push({ id, type: 'text', label: text.slice(0, 90), html: viewer.innerHTML.trim() });
+        return;
+      }
+
+      if (node.classList.contains('widget-picture') || node.classList.contains('video')) {
+        if (managedImages.has(id)) return;
+        const img = node.querySelector('img');
+        const bg = node.querySelector('.bgpic');
+        const src = (img && img.getAttribute('src')) || (bg && bg.getAttribute('url')) || '';
+        if (!src) return;
+        const alt = (img && img.getAttribute('alt')) || '';
+        blocks.push({
+          id,
+          type: 'picture',
+          label: node.classList.contains('video') ? 'Miniatura de video' : alt || 'Imagen',
+          src,
+          alt
+        });
+        return;
+      }
+
+      if (node.classList.contains('widget-button')) {
+        const text = node.querySelector('.common-button .text, .text');
+        const label = text ? text.textContent.replace(/\s+/g, ' ').trim() : '';
+        if (!label) return;
+        const anchor = node.querySelector('a');
+        blocks.push({
+          id,
+          type: 'button',
+          label: label.slice(0, 90),
+          href: anchor ? anchor.getAttribute('href') || '' : ''
+        });
+      }
+    });
+
+    return blocks;
+  }
+
+  function renderPaginas() {
+    const pages = pageList();
+    const chips = pages.map(page => `
+      <button class="chip ${page.key === state.pageKey ? 'active' : ''}" data-page="${esc(page.key)}">${esc(page.label)}</button>
+    `).join('');
+
+    return `
+      <div class="page-head">
+        <h2>Páginas y bloques</h2>
+        <p>Edita los textos, imágenes, botones y metadatos de cada página del sitio.</p>
+      </div>
+      <div class="card">
+        <h3>Página</h3>
+        <div class="project-picker" style="margin-bottom:0">${chips}</div>
+      </div>
+      <div id="blocks-host"><div class="empty">Cargando bloques…</div></div>`;
+  }
+
+  function blockCard(block, override) {
+    const o = override || {};
+    const hidden = o.hidden === true;
+    let body = '';
+
+    if (block.type === 'text') {
+      body = `<div class="block-html" contenteditable="true" spellcheck="true" data-block-html>${o.html !== undefined ? o.html : block.html}</div>
+        <span class="hint">Edita el texto directamente. Se conservan los estilos y enlaces del bloque.</span>`;
+    } else if (block.type === 'picture') {
+      const src = o.src !== undefined ? o.src : block.src;
+      body = `<div class="block-image-row">
+          <img class="block-thumb" src="${esc(assetUrl(src))}" alt="" data-block-preview>
+          <div class="block-image-fields">
+            <input type="text" data-block-src value="${esc(src)}" placeholder="assets/… o URL">
+            <input type="text" data-block-alt value="${esc(o.alt !== undefined ? o.alt : block.alt)}" placeholder="Texto alternativo (alt)">
+            <label class="btn small" style="cursor:pointer;align-self:flex-start">
+              Subir imagen
+              <input type="file" accept="image/*" data-block-upload hidden>
+            </label>
+          </div>
+        </div>`;
+    } else if (block.type === 'button') {
+      body = `<div class="grid">
+          <div class="field">
+            <label>Texto del botón</label>
+            <input type="text" data-block-label value="${esc(o.label !== undefined ? o.label : block.label)}">
+          </div>
+          <div class="field">
+            <label>Enlace</label>
+            <input type="text" data-block-href value="${esc(o.href !== undefined ? o.href : block.href)}" placeholder="contact.html, https://…, mailto:…">
+          </div>
+        </div>`;
+    }
+
+    return `
+      <div class="block-card" data-block="${esc(block.id)}">
+        <div class="block-head">
+          <span class="block-type">${block.type === 'text' ? 'Texto' : block.type === 'picture' ? 'Imagen' : 'Botón'}</span>
+          <span class="block-name">${esc(block.label)}</span>
+          <label class="block-hidden"><input type="checkbox" data-block-hidden ${hidden ? 'checked' : ''}> Ocultar</label>
+        </div>
+        <div class="block-body">${body}</div>
+        <div class="btn-row">
+          <button class="btn primary small" data-block-save>Guardar bloque</button>
+          ${override ? '<button class="btn small" data-block-reset>Restaurar original</button>' : ''}
+          <code class="block-id">${esc(block.id)}</code>
+        </div>
+      </div>`;
+  }
+
+  function renderPageEditor(page, blocks, saved) {
+    const meta = saved.meta || {};
+    const counts = blocks.reduce((acc, block) => {
+      acc[block.type] = (acc[block.type] || 0) + 1;
+      return acc;
+    }, {});
+    const summary = [
+      counts.text ? `${counts.text} textos` : '',
+      counts.picture ? `${counts.picture} imágenes` : '',
+      counts.button ? `${counts.button} botones` : ''
+    ].filter(Boolean).join(' · ');
+
+    return `
+      <div class="card">
+        <h3>${esc(page.label)} · <code>${esc(page.file)}</code></h3>
+        <p class="hint" style="margin-top:-8px">
+          ${blocks.length} bloques editables${summary ? ` (${esc(summary)})` : ''}. Los bloques que gestionan otras pestañas
+          (menú, hero, footer, imágenes de proyecto) no se listan aquí.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Metadatos de la página</h3>
+        <div class="grid">
+          ${textField('page-meta-title', 'Título (pestaña del navegador)', meta.title || '')}
+          ${textField('page-meta-description', 'Descripción (SEO)', meta.description || '')}
+        </div>
+        <div class="btn-row"><button class="btn primary" data-meta-save>Guardar metadatos</button></div>
+      </div>
+
+      <div class="block-list">
+        ${blocks.map(block => blockCard(block, saved[block.id])).join('') || '<div class="empty">No hay bloques editables en esta página.</div>'}
+      </div>`;
+  }
+
+  async function loadPageBlocks() {
+    const host = document.getElementById('blocks-host');
+    if (!host) return;
+    const pages = pageList();
+    const page = pages.find(item => item.key === state.pageKey) || pages[0];
+    state.pageKey = page.key;
+
+    host.innerHTML = '<div class="empty">Cargando bloques…</div>';
+    try {
+      const response = await fetch(`/${page.file}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`No se pudo leer ${page.file}`);
+      const html = await response.text();
+      if (!host.isConnected) return;
+
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const project = (state.content.projects || []).find(item => item.page === page.file);
+      const blocks = extractBlocks(doc, project);
+      const stored = (state.content.blocks && state.content.blocks[page.key]) || {};
+      const saved = { ...stored };
+
+      if (!saved.meta) {
+        const description = doc.querySelector('meta[name="description"]');
+        saved.meta = {
+          title: doc.title || '',
+          description: description ? description.getAttribute('content') || '' : ''
+        };
+      }
+      if (!host.isConnected) return;
+      host.innerHTML = renderPageEditor(page, blocks, saved);
+    } catch (error) {
+      if (host.isConnected) host.innerHTML = `<div class="empty">${esc(error.message)}</div>`;
+    }
+  }
+
+  function blockOverrides() {
+    const blocks = (state.content.blocks = state.content.blocks || {});
+    return blocks;
+  }
+
+  async function persistBlocks(message) {
+    try {
+      const result = await api('PUT', '/api/settings/blocks', blockOverrides());
+      state.content.blocks = result.value || {};
+      toast(message, 'ok');
+      await loadPageBlocks();
+    } catch (error) {
+      toast(error.message, 'error');
+    }
+  }
+
+  async function saveBlock(card) {
+    if (!card) return;
+    const id = card.dataset.block;
+    const blocks = blockOverrides();
+    const pageBlocks = blocks[state.pageKey] || {};
+    const next = { ...(pageBlocks[id] || {}) };
+
+    const html = card.querySelector('[data-block-html]');
+    if (html) next.html = html.innerHTML.trim();
+    const src = card.querySelector('[data-block-src]');
+    if (src) next.src = src.value.trim();
+    const alt = card.querySelector('[data-block-alt]');
+    if (alt) next.alt = alt.value;
+    const label = card.querySelector('[data-block-label]');
+    if (label) next.label = label.value;
+    const href = card.querySelector('[data-block-href]');
+    if (href) next.href = href.value.trim();
+    const hidden = card.querySelector('[data-block-hidden]');
+    if (hidden) next.hidden = hidden.checked;
+    if (!next.hidden) delete next.hidden;
+    if (next.src === '') delete next.src;
+
+    pageBlocks[id] = next;
+    blocks[state.pageKey] = pageBlocks;
+    await persistBlocks('Bloque guardado');
+  }
+
+  async function resetBlock(card) {
+    if (!card) return;
+    const blocks = blockOverrides();
+    const pageBlocks = blocks[state.pageKey] || {};
+    delete pageBlocks[card.dataset.block];
+    if (!Object.keys(pageBlocks).length) delete blocks[state.pageKey];
+    await persistBlocks('Bloque restaurado');
+  }
+
+  async function savePageMeta() {
+    const blocks = blockOverrides();
+    const pageBlocks = blocks[state.pageKey] || {};
+    pageBlocks.meta = {
+      title: val('page-meta-title'),
+      description: val('page-meta-description')
+    };
+    blocks[state.pageKey] = pageBlocks;
+    await persistBlocks('Metadatos guardados');
+  }
+
   /* ── tab: proyectos ─────────────────────────────────────── */
 
   function currentProject() {
+    if (!state.content || !Array.isArray(state.content.projects)) return null;
     return state.content.projects.find(project => project.id === state.projectId) || null;
   }
 
   function renderProyectos() {
     const projects = state.content.projects;
-    if (!state.projectId && projects.length) state.projectId = projects[0].id;
-    const project = currentProject();
+    let project = currentProject();
+    if (!project && projects.length) {
+      state.projectId = projects[0].id;
+      project = currentProject();
+    }
     const ps = state.content.projectsSection || {};
 
     const chips = projects.map(item => `
       <button class="chip ${item.id === state.projectId ? 'active' : ''} ${item.enabled ? '' : 'off'}" data-project="${item.id}">
-        ${esc(item.title)}${item.inStack ? '' : ' ·página'}${item.enabled ? '' : ' · borrador'}
+        ${esc(item.title)}${item.system ? ' · inicio' : (item.inStack ? '' : ' · página')}${item.enabled ? '' : ' · borrador'}
       </button>`).join('');
 
     if (!project) {
@@ -695,6 +1087,19 @@
       </div>
 
       <div class="card">
+        <h3>Imágenes del inicio</h3>
+        <label class="check" style="margin-bottom:8px">
+          <input id="projects-manageHomeImages" type="checkbox" ${state.content.site.manageHomeImages !== false ? 'checked' : ''}>
+          Mostrar «Inicio» en esta lista
+        </label>
+        <p class="hint" style="margin:0">
+          Activado: las 30 imágenes fijas del lienzo aparecen al final como «Inicio · inicio».
+          Desactivado: ese bloque se oculta y las imágenes se editan en
+          «Páginas y bloques → Inicio».
+        </p>
+      </div>
+
+      <div class="card">
         <h3>Cabecera de la sección (bloque tras el hero)</h3>
         <p class="hint" style="margin-top:-8px;margin-bottom:16px">Activa o desactiva el bloque completo de proyectos y ajusta sus textos y colores.</p>
         ${checkField('ps-enabled', 'Mostrar la sección de proyectos', ps.enabled)}
@@ -721,14 +1126,23 @@
 
       <div class="project-picker">${chips}</div>
 
+      ${project.system ? `
+      <div class="card">
+        <h3>Inicio</h3>
+        <p class="hint" style="margin:0">
+          Imágenes fijas del lienzo de la portada (sellos y piezas animadas). Se aplican al
+          sitio tal como las ves aquí: puedes cambiar el archivo, ocultarlas o eliminarlas.
+          El hero, el menú y el footer se editan en sus pestañas.
+        </p>
+      </div>` : `
       <div class="card">
         <h3>Datos del proyecto</h3>
         <div class="grid">
-          ${textField('project-title', 'Título', project.title)}
+          ${textField('project-title', 'Título', project.title, 'text', 'Se usa en el índice, la pila del inicio y la barra inferior. El texto grande dentro de la página se edita en «Páginas y bloques».')}
           ${textField('project-subtitle', 'Categoría', project.subtitle)}
           ${colorField('project-color', 'Color de fondo', project.color)}
-          ${textField('project-slug', 'Slug', project.slug)}
-          ${textField('project-page', 'Archivo (página)', project.page)}
+          ${textField('project-slug', 'Slug', project.slug, 'text', 'Identificador interno. La página se vincula por el archivo, no por el slug.')}
+          ${textField('project-page', 'Archivo (página)', project.page, 'text', 'Archivo HTML real del proyecto.')}
           ${textField('project-pageHeight', 'Alto de página (px)', project.pageHeight, 'number')}
         </div>
         ${checkField('project-inStack', 'Incluir en la pila del inicio', project.inStack)}
@@ -746,9 +1160,46 @@
           <button class="btn" data-project-down>↓ Bajar en el orden</button>
           <button class="btn danger" data-project-delete>Eliminar proyecto</button>
         </div>
+      </div>`}
+
+      <div class="card" ${project.system ? 'hidden' : ''}>
+        <h3>Fondo del proyecto</h3>
+        <p class="hint" style="margin-top:-8px;margin-bottom:16px">
+          El color base se edita arriba, en «Datos del proyecto». Aquí puedes añadir una
+          <strong>imagen de fondo</strong> que se mantiene fija durante todo el scroll y se
+          funde con el siguiente bloque en la pila del inicio.
+        </p>
+        <div class="field">
+          <label for="project-bgImage">Imagen de fondo</label>
+          <div class="image-src-row">
+            <input id="project-bgImage" type="text" value="${esc(project.bgImage)}" placeholder="assets/uploads/… o URL">
+            <label class="btn small" style="cursor:pointer">Subir
+              <input type="file" accept="image/*" data-upload-field="project-bgImage" hidden>
+            </label>
+          </div>
+          <span class="hint">Vacío = solo el color del proyecto.</span>
+        </div>
+        <div class="preview-box"><img data-preview="project-bgImage" src="${esc(assetUrl(project.bgImage))}" alt="" ${project.bgImage ? '' : 'hidden'}></div>
+        <div class="grid" style="margin-top:16px">
+          <div class="field">
+            <label for="project-bgSize">Ajuste de la imagen</label>
+            <select id="project-bgSize">
+              <option value="cover" ${project.bgSize === 'cover' ? 'selected' : ''}>Cubrir (cover)</option>
+              <option value="contain" ${project.bgSize === 'contain' ? 'selected' : ''}>Contener (contain)</option>
+              <option value="auto" ${project.bgSize === 'auto' ? 'selected' : ''}>Tamaño original</option>
+            </select>
+          </div>
+          ${textField('project-bgPosition', 'Posición', project.bgPosition || 'center', 'text', 'p. ej. center, top, 50% 30%')}
+          ${colorField('project-bgOverlay', 'Velo de color sobre la imagen', project.bgOverlay)}
+          ${textField('project-bgOverlayOpacity', 'Opacidad del velo (%)', project.bgOverlayOpacity, 'number', '0 – 100')}
+        </div>
+        ${checkField('project-bgFixed', 'Mantener la imagen fija durante el scroll', project.bgFixed !== false)}
+        <div class="btn-row">
+          <button class="btn primary" data-save="project">Guardar proyecto</button>
+        </div>
       </div>
 
-      <div class="card">
+      <div class="card" ${project.system ? 'hidden' : ''}>
         <h3>Barra inferior del proyecto</h3>
         <p class="hint" style="margin-top:-8px;margin-bottom:16px">
           Es la franja que aparece al final del scroll de esta página: el nombre repetido a la
@@ -778,7 +1229,25 @@
         <div class="btn-row">
           <button class="btn small" data-add-image>+ Añadir imagen</button>
         </div>
-      </div>`;
+      </div>
+
+      ${(project.hiddenImages || []).length ? `
+      <div class="card">
+        <h3>Imágenes eliminadas (${project.hiddenImages.length})</h3>
+        <p class="hint" style="margin-top:-8px;margin-bottom:16px">
+          Ya no se muestran en el sitio. Puedes restaurarlas cuando quieras.
+        </p>
+        <div class="list">
+          ${project.hiddenImages.map(image => `
+            <div class="image-item" data-hidden-image="${image.id}">
+              <img class="image-thumb" src="/${esc(image.src)}" alt="" loading="lazy">
+              <div class="image-fields"><span class="hint">${esc(image.src)}</span></div>
+              <div class="row-actions">
+                <button class="icon-btn" data-image-restore title="Restaurar">↺</button>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>` : ''}`;
   }
 
   /* ── render dispatcher ──────────────────────────────────── */
@@ -791,11 +1260,19 @@
       menu: renderMenu,
       hero: renderHero,
       proyectos: renderProyectos,
+      paginas: renderPaginas,
       footer: renderFooter,
       seguridad: renderSeguridad
     };
     main().innerHTML = (builders[state.tab] || renderApariencia)();
     if (state.tab === 'seguridad') loadTokenStatus();
+    if (state.tab === 'paginas') loadPageBlocks();
+
+    // Load the Google Fonts used by the fields currently on screen.
+    document.querySelectorAll('[data-font-sample]').forEach(sample => {
+      const input = document.getElementById(sample.dataset.fontSample);
+      ensurePanelFont(input ? input.value : '');
+    });
   }
 
   async function reload() {
@@ -854,7 +1331,8 @@
           logo: val('site-logo'),
           logoAlt: val('site-logoAlt'),
           logoHeight: num('site-logoHeight'),
-          favicon: val('site-favicon')
+          favicon: val('site-favicon'),
+          manageHomeImages: state.content.site.manageHomeImages !== false
         });
       } else if (group === 'apariencia') {
         await api('PUT', '/api/settings/theme', {
@@ -913,7 +1391,23 @@
             }
           },
           badgeText: val('hero-badgeText'),
-          glassText: val('hero-glassText')
+          glassText: val('hero-glassText'),
+          fontFamily: val('hero-fontFamily'),
+          titleSize: num('hero-titleSize'),
+          titleWeight: val('hero-titleWeight'),
+          titleLineHeight: Number(val('hero-titleLineHeight')) || 0,
+          titleLetterSpacing: val('hero-titleLetterSpacing'),
+          subtitleSize: num('hero-subtitleSize'),
+          chipSize: num('hero-chipSize'),
+          ctaSize: num('hero-ctaSize'),
+          titleColor: val('hero-titleColor'),
+          accentColor: val('hero-accentColor'),
+          subtitleColor: val('hero-subtitleColor'),
+          chipColor: val('hero-chipColor'),
+          chipBg: val('hero-chipBg'),
+          ctaBg: val('hero-ctaBg'),
+          ctaColor: val('hero-ctaColor'),
+          ghostColor: val('hero-ghostColor')
         });
       } else if (group === 'footer') {
         await api('PUT', '/api/settings/footer', collectFooter());
@@ -952,7 +1446,13 @@
           showBar: checked('project-showBar'),
           footerTitle: val('project-footerTitle'),
           infoLabel: val('project-infoLabel'),
-          infoHref: val('project-infoHref')
+          infoHref: val('project-infoHref'),
+          bgImage: val('project-bgImage'),
+          bgSize: val('project-bgSize'),
+          bgPosition: val('project-bgPosition'),
+          bgOverlay: val('project-bgOverlay'),
+          bgOverlayOpacity: num('project-bgOverlayOpacity'),
+          bgFixed: checked('project-bgFixed')
         });
       } else if (group === 'seguridad') {
         const newToken = val('token-new').trim();
@@ -1045,6 +1545,32 @@
       if (confirm) confirm.value = token;
       if (current) current.focus();
       toast('Token generado · guarda el cambio para aplicarlo', 'ok');
+      return;
+    }
+
+    /* páginas y bloques */
+    const pageChip = target.closest('[data-page]');
+    if (pageChip) {
+      state.pageKey = pageChip.dataset.page;
+      renderTab();
+      return;
+    }
+
+    if (target.closest('[data-block-save]')) {
+      const card = target.closest('[data-block]');
+      target.disabled = true;
+      await saveBlock(card);
+      return;
+    }
+
+    if (target.closest('[data-block-reset]')) {
+      if (!confirm('¿Restaurar este bloque al contenido original de la página?')) return;
+      await resetBlock(target.closest('[data-block]'));
+      return;
+    }
+
+    if (target.closest('[data-meta-save]')) {
+      await savePageMeta();
       return;
     }
 
@@ -1155,6 +1681,19 @@
       return;
     }
 
+    /* imágenes eliminadas (restaurar) */
+    const hiddenItem = target.closest('[data-hidden-image]');
+    if (hiddenItem && target.closest('[data-image-restore]')) {
+      try {
+        await api('PUT', `/api/images/${Number(hiddenItem.dataset.hiddenImage)}`, { hidden: false });
+        toast('Imagen restaurada', 'ok');
+        await reload();
+      } catch (error) {
+        toast(error.message, 'error');
+      }
+      return;
+    }
+
     /* images */
     const imageItem = target.closest('[data-image]');
     if (imageItem && project) {
@@ -1174,8 +1713,9 @@
         return;
       }
       if (target.closest('[data-image-remove]')) {
-        if (!confirm('¿Eliminar esta imagen del proyecto?')) return;
+        if (!confirm('¿Eliminar esta imagen del proyecto? Dejará de verse en el sitio y podrás restaurarla desde «Imágenes eliminadas».')) return;
         await api('DELETE', `/api/images/${imageId}`);
+        toast('Imagen eliminada del sitio', 'ok');
         await reload();
         return;
       }
@@ -1215,6 +1755,45 @@
     if (target.matches('[data-sync-color]')) {
       const input = document.getElementById(target.dataset.syncColor);
       if (input) input.value = target.value;
+      return;
+    }
+
+    /* tipografía: selector de presets / Google Fonts + stack personalizado */
+    const fontChoice = target.closest('[data-font-choice]');
+    if (fontChoice) {
+      const input = document.getElementById(fontChoice.dataset.fontChoice);
+      if (!input) return;
+      const value = fontChoice.value;
+      if (value === '__custom__') {
+        input.hidden = false;
+        input.focus();
+      } else {
+        input.value = value;
+        input.hidden = true;
+        applyFontSample(input, value);
+      }
+      return;
+    }
+
+    const fontInput = target.closest('[data-font-input]');
+    if (fontInput) {
+      applyFontSample(fontInput, fontInput.value);
+      return;
+    }
+
+    // Mostrar / ocultar el proyecto virtual «Inicio» en Proyectos.
+    if (target.matches('#projects-manageHomeImages')) {
+      const site = { ...(state.content.site || {}) };
+      site.manageHomeImages = target.checked;
+      try {
+        await api('PUT', '/api/settings/site', site);
+        const current = currentProject();
+        if (current && current.system && !target.checked) state.projectId = null;
+        toast(target.checked ? 'Bloque «Inicio» activado' : 'Bloque «Inicio» desactivado', 'ok');
+        await reload();
+      } catch (error) {
+        toast(error.message, 'error');
+      }
       return;
     }
 
@@ -1262,6 +1841,33 @@
       } catch (error) {
         toast(error.message, 'error');
       }
+      return;
+    }
+
+    /* página: subir imagen de un bloque */
+    const blockUpload = target.closest('[data-block-upload]');
+    if (blockUpload) {
+      const card = blockUpload.closest('[data-block]');
+      if (!card || !blockUpload.files[0]) return;
+      try {
+        const url = await uploadFile(blockUpload.files[0]);
+        const srcInput = card.querySelector('[data-block-src]');
+        if (srcInput) srcInput.value = url;
+        const preview = card.querySelector('[data-block-preview]');
+        if (preview) preview.src = assetUrl(url);
+        toast('Imagen subida · guarda el bloque para aplicarla', 'ok');
+      } catch (error) {
+        toast(error.message, 'error');
+      }
+      return;
+    }
+
+    /* página: refrescar la miniatura al cambiar la ruta */
+    const blockSrc = target.closest('[data-block-src]');
+    if (blockSrc) {
+      const card = blockSrc.closest('[data-block]');
+      const preview = card && card.querySelector('[data-block-preview]');
+      if (preview) preview.src = assetUrl(blockSrc.value.trim());
       return;
     }
   });
@@ -1318,6 +1924,14 @@
         return;
       }
       state.content = await api('GET', '/api/admin/content');
+
+      // Google Fonts catalogue for the typography pickers.
+      try {
+        const response = await fetch('/assets/data/google-fonts.json', { cache: 'force-cache' });
+        state.googleFonts = response.ok ? await response.json() : [];
+      } catch (_) {
+        state.googleFonts = [];
+      }
 
       // Mirror the site favicon in the panel tab.
       const favicon = state.content.site && state.content.site.favicon;

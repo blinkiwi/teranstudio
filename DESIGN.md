@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: NoPlan Studio Template System
+name: Terán Studio Template System
 ---
 
 ## Overview

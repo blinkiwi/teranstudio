@@ -1,5 +1,5 @@
 /**
- * No Plan Studio — Stacked project embeds
+ * Terán Studio — Stacked project embeds
  * Lays out every project iframe at its real height and applies a
  * gentle layered parallax while the sheets enter the viewport.
  */
@@ -130,10 +130,21 @@
     updateTransition();
 
     sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+
+      // Background images live in a fixed layer inside each sheet and
+      // crossfade at the block boundaries: fully visible while the sheet
+      // covers the viewport, fading in/out as the next one takes over.
+      const layer = section.querySelector('.project-embed-bg');
+      if (layer) {
+        const enter = clamp((viewportH - rect.top) / viewportH, 0, 1);
+        const exit = clamp(rect.bottom / viewportH, 0, 1);
+        layer.style.opacity = Math.min(enter, exit).toFixed(3);
+      }
+
       const frame = section.querySelector('iframe');
       if (!frame) return;
 
-      const rect = section.getBoundingClientRect();
       if (rect.bottom < -160 || rect.top > limit) return;
 
       if (reduceMotion.matches) {
@@ -223,6 +234,18 @@
       transitionCount.textContent = meta.index + ' / ' + meta.total;
       transitionEl.style.setProperty('--transition-bg', bg || '#f2eddf');
       transitionEl.style.setProperty('--transition-ink', dark ? '#f2eddf' : '#111111');
+
+      // Hand the next sheet's background image to the chapter card so the
+      // image change reads as a real transition into the next block.
+      const image = (next.dataset.bgImage || '').trim();
+      const veil = overlayLayer(next.dataset.bgOverlay, next.dataset.bgOverlayOpacity);
+      transitionEl.style.setProperty(
+        '--transition-image',
+        image ? `${veil}url("${image}")` : 'none'
+      );
+      transitionEl.style.setProperty('--transition-image-size', next.dataset.bgSize || 'cover');
+      transitionEl.style.setProperty('--transition-image-position', next.dataset.bgPosition || 'center');
+
       transitionColors = {
         ink: dark ? '#f2eddf' : '#111111',
         contrast: dark ? '#111111' : '#f2eddf'
@@ -274,6 +297,43 @@
     });
 
     return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  }
+
+  /* Optional colour veil painted on top of a project background image. */
+  function overlayLayer(color, opacity) {
+    const rgb = parseHex(color);
+    const alpha = Math.max(0, Math.min(100, Number(opacity) || 0)) / 100;
+    if (!rgb || alpha <= 0) return '';
+    return `linear-gradient(rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha}), rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})), `;
+  }
+
+  /* Paints a sticky image behind every sheet that has one configured.
+     Because it is sticky inside the tall section, the image stays fixed
+     while the reader scrolls the project and hands over to the next
+     sheet (and to the full-screen transition card) at the boundary. */
+  function setupBackgrounds() {
+    sections.forEach(section => {
+      const image = (section.dataset.bgImage || '').trim();
+      let layer = section.querySelector('.project-embed-bg');
+
+      if (!image) {
+        if (layer) layer.remove();
+        section.classList.remove('has-bg');
+        return;
+      }
+
+      if (!layer) {
+        layer = document.createElement('div');
+        layer.className = 'project-embed-bg';
+        layer.setAttribute('aria-hidden', 'true');
+        section.insertBefore(layer, section.firstChild);
+      }
+
+      const veil = overlayLayer(section.dataset.bgOverlay, section.dataset.bgOverlayOpacity);
+      layer.style.backgroundImage = `${veil}url("${image}")`;
+      layer.style.backgroundSize = section.dataset.bgSize || 'cover';
+      layer.style.backgroundPosition = section.dataset.bgPosition || 'center';
+    });
   }
 
   function updateNavTheme() {
@@ -365,6 +425,7 @@
   }
 
   buildReveals();
+  setupBackgrounds();
 
   /* Full-screen chapter transition for project-to-project boundaries.
      It is fixed above the sheets but below the general menu, and is
@@ -492,7 +553,7 @@
 
   window.addEventListener('message', event => {
     const data = event.data;
-    if (!data || data.type !== 'noplan:embed-navigate') return;
+    if (!data || data.type !== 'teranstudio:embed-navigate') return;
 
     const fromEmbed = sections.some(section => {
       const frame = section.querySelector('iframe');

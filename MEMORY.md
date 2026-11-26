@@ -2,7 +2,7 @@
 schemaVersion: 1
 scope: workspace
 updatedAt: "2026-07-19T00:17:19.085Z"
-workspaceName: "NoPlan"
+workspaceName: "Terán Studio"
 ---
 
 # Project Memory

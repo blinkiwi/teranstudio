@@ -1,5 +1,5 @@
 /* =============================================================
-   No Plan Studio — CMS layers (hero + footer)
+   Terán Studio — CMS layers (hero + footer)
    Styles for the optional hero block and the data-driven footer.
    ============================================================= */
 
@@ -29,6 +29,28 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
   background: var(--bg);
   color: var(--ink);
   border-bottom: 1px solid var(--border);
+
+  /* Editable from the panel. Inline custom properties set by cms.js win
+     over these defaults (and over the responsive overrides below). */
+  --hero-font: var(--font);
+  --hero-title-size: clamp(46px, 8.2vw, 122px);
+  --hero-title-weight: 400;
+  --hero-title-style: normal;
+  --hero-title-line: 0.88;
+  --hero-title-tracking: -0.045em;
+  --hero-title-color: var(--ink);
+  --hero-accent-color: var(--accent);
+  --hero-subtitle-size: clamp(15px, 1.45vw, 18px);
+  --hero-subtitle-color: var(--ink-muted);
+  --hero-meta-size: 10.5px;
+  --hero-meta-color: var(--ink-muted);
+  --hero-meta-bg: rgba(17, 17, 17, 0.05);
+  --hero-cta-size: 11px;
+  --hero-cta-bg: var(--ink);
+  --hero-cta-color: var(--bg);
+  --hero-cta-hover-bg: var(--accent);
+  --hero-ghost-color: var(--ink);
+  font-family: var(--hero-font);
 }
 
 .studio-hero-grid {
@@ -104,11 +126,13 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
 
 .studio-hero-title {
   margin: 0;
-  font-family: var(--font);
-  font-weight: 400;
-  font-size: clamp(46px, 8.2vw, 122px);
-  line-height: 0.88;
-  letter-spacing: -0.045em;
+  font-family: var(--hero-font);
+  font-weight: var(--hero-title-weight);
+  font-style: var(--hero-title-style);
+  font-size: var(--hero-title-size);
+  line-height: var(--hero-title-line);
+  letter-spacing: var(--hero-title-tracking);
+  color: var(--hero-title-color);
   text-wrap: balance;
 }
 
@@ -117,16 +141,16 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
 }
 
 .studio-hero-accent {
-  color: var(--accent);
+  color: var(--hero-accent-color);
   font-style: italic;
 }
 
 .studio-hero-subtitle {
   margin: 0;
   max-width: 44ch;
-  font-size: clamp(15px, 1.45vw, 18px);
+  font-size: var(--hero-subtitle-size);
   line-height: 1.55;
-  color: var(--ink-muted);
+  color: var(--hero-subtitle-color);
   text-wrap: pretty;
 }
 
@@ -141,12 +165,12 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
 .studio-hero-cta {
   display: inline-block;
   padding: 15px 30px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--hero-cta-bg);
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--hero-cta-bg);
+  color: var(--hero-cta-color);
   text-decoration: none;
-  font-size: 11px;
+  font-size: var(--hero-cta-size);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
@@ -159,8 +183,8 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
 }
 
 .studio-hero-cta:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--hero-cta-hover-bg);
+  border-color: var(--hero-cta-hover-bg);
   box-shadow: 0 16px 34px -16px rgba(17, 17, 17, 0.45);
 }
 
@@ -168,19 +192,19 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--ink);
+  color: var(--hero-ghost-color);
   text-decoration: none;
-  font-size: 11px;
+  font-size: var(--hero-cta-size);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  border-bottom: 1px solid color-mix(in oklab, var(--ink) 30%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, currentColor 30%, transparent);
   padding-bottom: 4px;
   transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .studio-hero-ghost:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color: var(--hero-accent-color);
+  border-color: var(--hero-accent-color);
 }
 
 .studio-hero-ghost-arrow {
@@ -210,16 +234,17 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
   padding: 7px 13px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(17, 17, 17, 0.05);
-  font-size: 10.5px;
+  background: var(--hero-meta-bg);
+  font-size: var(--hero-meta-size);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--hero-meta-color);
 }
 
 @supports (background: color-mix(in oklab, red 5%, transparent)) {
-  .studio-hero-chip {
-    background: color-mix(in oklab, var(--ink) 5%, transparent);
+  .studio-hero {
+    /* Default when the panel leaves the chip background empty. */
+    --hero-meta-bg: color-mix(in oklab, var(--ink) 5%, transparent);
   }
 }
 
@@ -418,7 +443,7 @@ html.cms-hide-stamps .fixed-position-container .animation-container {
 
 @media (max-width: 640px) {
   .studio-hero-grid { gap: 44px; }
-  .studio-hero-title { font-size: clamp(40px, 13vw, 72px); }
+  .studio-hero { --hero-title-size: clamp(40px, 13vw, 72px); }
   .studio-hero-visual { aspect-ratio: 4 / 3.4; }
   .studio-hero-badge { top: -4%; left: -1%; }
   .studio-hero-glass { top: auto; bottom: 6%; right: -2%; }

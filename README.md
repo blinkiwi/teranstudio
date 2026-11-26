@@ -1,6 +1,6 @@
-# TernStudio Web
+# Terán Studio Web
 
-Este proyecto es un clon demostrativo e interactivo del sitio web oficial de **[No Plan Studio](https://noplan.studio/)** (Takoma Park, MD), enfocado en preservar con máxima fidelidad sus estilos, colores característicos, tipografía artesanal, animaciones e interconexión fluida de páginas y casos de estudio internos.
+Sitio web de **Terán Studio** — estudio de diseño gráfico, letterpress y dirección de arte (Takoma Park, MD) — con estilos, colores característicos, tipografía artesanal, animaciones e interconexión fluida de páginas y casos de estudio internos.
 
 ---
 
@@ -87,11 +87,26 @@ El sitio público ahora se hidrata desde una API respaldada por SQLite. El panel
 | Área del panel | Qué controla |
 | --- | --- |
 | **Sitio** | Título de la pestaña, **descripción** (meta description), **logotipo** (subida de imagen), **favicon** (subida de imagen) y botón **borrar caché**. |
-| **Colores y tipografía** | Paleta completa (fondo, tintas, acento, bordes), familia tipográfica, tamaños base/menú/título, interletraje y altura de línea. |
+| **Colores y tipografía** | Paleta completa (fondo, tintas, acento, bordes), familia tipográfica (**sistema, Google Fonts o stack propio**), tamaños base/menú/título, interletraje y altura de línea. |
 | **Menú superior** | Texto y enlace del logo, y la lista de enlaces (internos, externos o abrir índice). |
-| **Hero** | Bloque de portada opcional (antetítulo, título, subtítulo, botón) y el texto de la cinta animada + sellos. |
-| **Proyectos** | Cada proyecto (título, categoría, color, slug, archivo, alto, orden, visibilidad) y **todas sus imágenes**. |
+| **Hero** | Bloque de portada opcional (antetítulo, título, subtítulo, botón), **tipografía propia** (fuente, tamaño, grosor, interlineado, interletraje), **colores** (título, destacado, subtítulo, etiquetas, botones) y el texto de la cinta animada + sellos. |
+| **Proyectos** | Cada proyecto (título, categoría, color, slug, archivo, alto, orden, visibilidad), **fondo con imagen fija** (ajuste, posición, velo y opacidad) y **todas sus imágenes**. |
+| **Páginas y bloques** | Editor genérico por página: **textos** (con estilos y enlaces conservados), **imágenes** (ruta o subida), **botones**, visibilidad de cada bloque y **metadatos** (título/descripción). Detecta los bloques del HTML exportado, sin tocar el código. |
 | **Footer** | Marca, lema, columnas de enlaces, redes sociales, copyright y el distintivo flotante. |
+| **Seguridad** | Cambio del token de acceso (se guarda en `.env` y cierra las demás sesiones). |
+
+El menú, el logo y el índice lateral se aplican ahora en **todas** las páginas, no solo
+en el inicio. Los bloques gestionados por otras pestañas (hero, footer, imágenes de
+proyecto, barra inferior) se excluyen del editor de páginas para evitar duplicados.
+
+### Google Fonts
+Los selectores de tipografía (tema y hero) incluyen **35 fuentes de Google** además de
+las del sistema y la opción de stack CSS propio. El catálogo vive en
+`assets/data/google-fonts.json` (familia, stack, pesos, cursiva). Tanto el panel como
+`assets/js/cms.js` cargan dinámicamente la hoja de Google Fonts solo cuando la fuente
+elegida está en el catálogo; el sitio mantiene los stacks del sistema como respaldo.
+La tipografía del tema se aplica a la interfaz y los textos heredados; los bloques de
+Readymag que traen su propia fuente en línea conservan su diseño.
 
 ### Autenticación
 El acceso se controla con un **token único** definido en `.env`:
@@ -117,6 +132,38 @@ del slot original — nunca mueve, redimensiona ni reposiciona ninguna imagen �
 las posiciones originales se mantienen intactas.
 
 Puedes subir imágenes nuevas (se guardan en `assets/uploads/`) o apuntar a una ruta/URL existente.
+Al **eliminar** una imagen deja de mostrarse en el sitio (el HTML original sigue existiendo, así
+que el CMS oculta ese bloque) y pasa a la sección **Imágenes eliminadas** del panel, desde donde
+se puede **restaurar**.
+
+Cada proyecto se vincula a su página por el campo **Archivo** (`page`), no por el slug:
+renombrar el slug no desconecta la página de su color, sus imágenes ni su barra inferior.
+Al arrancar, el servidor elimina imágenes huérfanas (con `widgetId` que ya no existe en la
+página), **añade los slots de imagen que falten** y ordena la lista del panel exactamente
+como aparecen en la página. Así el panel y el frontend muestran siempre las mismas imágenes,
+en el mismo orden.
+
+El inicio no es una página de proyecto, así que sus **30 imágenes fijas del lienzo** viven en
+un proyecto virtual **«Inicio»** (marcado como `system`): aparece al final de la lista de
+Proyectos y se edita con el mismo gestor de imágenes, pero no sale en el índice lateral ni en
+la pila del inicio. La casilla **«Imágenes del inicio → Mostrar “Inicio” en esta lista»**
+(arriba en Proyectos) activa o desactiva ese bloque: al desactivarla, «Inicio» desaparece de
+Proyectos y las 30 imágenes se editan en **Páginas y bloques → Inicio**.
+
+Los **índices de proyecto** que traen las páginas exportadas (la lista enlazada dentro de cada
+proyecto y la barra inferior `← Índice (n/10) →`) se repintan desde los títulos y el orden del
+panel. Renombrar un proyecto actualiza todas esas referencias; por eso esos enlaces ya no se
+editan en «Páginas y bloques».
+
+### Fondo con imagen por proyecto
+Además del color, cada proyecto puede tener una **imagen de fondo** (`bgImage`) con:
+
+- **Ajuste** (`cover` / `contain` / tamaño original) y **posición**.
+- **Velo de color** y su **opacidad** para mantener la legibilidad.
+- **Imagen fija**: en la página individual se usa `background-attachment: fixed`; en la
+  pila del inicio la imagen vive en una capa fija dentro de cada bloque y se desvanece
+  (crossfade) hacia la imagen del siguiente proyecto al cruzar el límite. La tarjeta de
+  transición de capítulo también muestra la imagen del siguiente bloque.
 
 ### API (resumen)
 ```
@@ -127,7 +174,7 @@ POST   /api/logout
 GET    /api/session
 GET    /api/admin/token            → estado del token (autenticado)
 PUT    /api/admin/token            → { currentToken, newToken } rotar token
-PUT    /api/settings/:grupo        → theme | sizes | nav | hero | projectsSection | footer
+PUT    /api/settings/:grupo        → theme | sizes | nav | hero | projectsSection | footer | blocks
 POST   /api/projects               → crear proyecto
 PUT    /api/projects/:id           → editar proyecto
 DELETE /api/projects/:id
@@ -156,7 +203,7 @@ POST /api/cache/clear   → { ok: true, version: N }
 ```
 
 ### Base de datos y contenido versionado
-El contenido vive en SQLite (`data/noplan.db`, **no se sube a git**), y cada cambio
+El contenido vive en SQLite (`data/teranstudio.db`, **no se sube a git**), y cada cambio
 del panel se copia automáticamente a **`content/site.json`**, que sí se versiona.
 
 Así un clon limpio arranca con todo tu contenido: al primer `npm start`, si la base
@@ -178,7 +225,7 @@ Tras cada sesión de edición, haz commit de `content/site.json` para conservar 
 ## 📁 Estructura del Proyecto
 
 ```
-NoPlan/
+Terán Studio/
 ├── index.html                 # Página de inicio del estudio
 ├── lost-sock.html             # Caso de estudio: Lost Sock Roasters
 ├── motorkat.html              # Caso de estudio: Motorkat
@@ -208,7 +255,7 @@ NoPlan/
 │   ├── index.html             # Panel de administración (SPA vanilla)
 │   ├── admin.css              # Estilos del panel
 │   └── admin.js               # Lógica del panel (menú, hero, proyectos, footer…)
-├── data/                      # Base de datos SQLite (noplan.db)
+├── data/                      # Base de datos SQLite (teranstudio.db)
 ├── scripts/
 │   ├── cms-seed.js            # Sembrar / reiniciar el contenido
 │   └── cms-export.js          # Escribir content/site.json a mano

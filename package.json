@@ -1,8 +1,8 @@
 {
-  "name": "noplan-studio-cms",
+  "name": "teranstudio-cms",
   "version": "1.0.0",
   "private": true,
-  "description": "No Plan Studio — clon full stack con panel de administración (Node nativo + node:sqlite, sin dependencias).",
+  "description": "Terán Studio — clon full stack con panel de administración (Node nativo + node:sqlite, sin dependencias).",
   "main": "server.js",
   "scripts": {
     "start": "node --no-warnings server.js",
@@ -15,7 +15,7 @@
     "node": ">=22.5.0"
   },
   "keywords": [
-    "noplan",
+    "teranstudio",
     "cms",
     "sqlite",
     "node"

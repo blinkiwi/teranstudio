@@ -1,5 +1,5 @@
 /**
- * No Plan Studio — CMS hydration layer.
+ * Terán Studio — CMS hydration layer.
  *
  * Loads the editable content from the API and paints it onto the public
  * site: theme tokens, top menu, hero, project stack, footer and the
@@ -12,8 +12,8 @@
 (function () {
   'use strict';
 
-  if (window.__NOPLAN_CMS__) return;
-  window.__NOPLAN_CMS__ = true;
+  if (window.__TERANSTUDIO_CMS__) return;
+  window.__TERANSTUDIO_CMS__ = true;
 
   const API = '/api/content';
   const MARQUEE_WIDGET = '65eb824cda7f23003dcb2a6e';
@@ -23,6 +23,21 @@
     const file = (window.location.pathname.split('/').pop() || 'index').replace(/\.html?$/i, '');
     return file || 'index';
   })();
+
+  const pageFile = (function () {
+    const file = window.location.pathname.split('/').pop() || 'index.html';
+    return file || 'index.html';
+  })();
+
+  /* A project page is linked by its FILE (`page`), not by the editable
+     slug: changing the slug in the panel must not disconnect the page
+     from its colour, images and bottom bar. */
+  function findProjectForPage(content) {
+    const projects = content.projects || [];
+    return projects.find(project => String(project.page || '').toLowerCase() === pageFile.toLowerCase())
+      || projects.find(project => project.slug === slug)
+      || null;
+  }
 
   const isIndex = !!document.querySelector('.projects-embeds') || slug === 'index';
 
@@ -89,12 +104,56 @@
     });
   }
 
+  /* ── Google Fonts ───────────────────────────────────────── */
+
+  const GOOGLE_FONTS_DATA = '/assets/data/google-fonts.json';
+  const loadedGoogleFonts = new Set();
+  let googleFontsPromise = null;
+
+  function fontFamilyOf(stack) {
+    const first = String(stack || '').split(',')[0].trim();
+    return first.replace(/^['"]|['"]$/g, '').trim();
+  }
+
+  /* Loads the Google Fonts stylesheet for a stack saved in the panel.
+     Unknown families (local fonts, system stacks) are ignored silently. */
+  function ensureGoogleFont(stack) {
+    const family = fontFamilyOf(stack);
+    if (!family || loadedGoogleFonts.has(family.toLowerCase())) return;
+
+    if (!googleFontsPromise) {
+      googleFontsPromise = fetch(GOOGLE_FONTS_DATA)
+        .then(response => (response.ok ? response.json() : []))
+        .catch(() => []);
+    }
+
+    googleFontsPromise.then(fonts => {
+      const font = (fonts || []).find(item => item.family.toLowerCase() === family.toLowerCase());
+      if (!font) return;
+      const key = font.family.toLowerCase();
+      if (loadedGoogleFonts.has(key)) return;
+      loadedGoogleFonts.add(key);
+
+      const weights = font.weights && font.weights.length ? font.weights : [400];
+      const axis = font.italic
+        ? `ital,wght@${weights.map(weight => `0,${weight}`).join(';')};1,400`
+        : `wght@${weights.join(';')}`;
+
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(font.family)}:${axis}&display=swap`;
+      document.head.appendChild(link);
+    });
+  }
+
   /* ── theme (colors, typography, sizes) ──────────────────── */
 
   function applyTheme(content) {
     const t = content.theme || {};
     const s = content.sizes || {};
     const accentSoft = hexToRgba(t.accent, 0.12);
+
+    ensureGoogleFont(t.fontFamily);
 
     const lines = [];
     const set = (name, value) => {
@@ -116,6 +175,7 @@
     rules.push(`:root {\n${lines.join('\n')}\n}`);
 
     if (t.baseFontSize) rules.push(`html { font-size: ${Number(t.baseFontSize)}px; }`);
+    if (t.fontFamily) rules.push(`html body { font-family: var(--font); }`);
     if (t.lineHeight) rules.push(`body { line-height: ${Number(t.lineHeight)}; }`);
 
     if (t.navFontSize) {
@@ -234,6 +294,8 @@
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
           }
+          const target = String(link.href || '').split('/').pop().replace(/\.html?$/i, '');
+          if (target && target === slug) a.classList.add('active');
           links.appendChild(a);
         }
       }
@@ -248,7 +310,7 @@
 
     list.innerHTML = '';
 
-    const home = el('a', 'projects-drawer-item active');
+    const home = el('a', 'projects-drawer-item' + (slug === 'index' ? ' active' : ''));
     home.href = 'index.html';
     home.appendChild(el('span', null, (content.nav && content.nav.logoText) || ''));
     home.appendChild(el('span', 'item-num', 'Studio Home'));
@@ -259,6 +321,7 @@
       .forEach((project, index) => {
         const item = el('a', 'projects-drawer-item');
         item.href = project.page;
+        if (String(project.page || '').replace(/\.html?$/i, '') === slug) item.classList.add('active');
         item.appendChild(el('span', null, project.title));
         const num = String(index + 1).padStart(2, '0');
         item.appendChild(el('span', 'item-num', `${num} / ${project.subtitle || ''}`.trim()));
@@ -267,6 +330,43 @@
   }
 
   /* ── hero ───────────────────────────────────────────────── */
+
+  /* Optional per-hero typography. Every value is painted as a CSS custom
+     property on the hero block, so the stylesheet keeps its defaults and
+     the panel only overrides what the editor actually set. */
+  function applyHeroTypography(block, hero) {
+    const setVar = (name, value) => {
+      if (value === undefined || value === null) return;
+      const text = String(value).trim();
+      if (!text) return;
+      block.style.setProperty(name, text);
+    };
+    const px = value => {
+      const size = Number(value);
+      return size > 0 ? size : 0;
+    };
+
+    if (hero.fontFamily) setVar('--hero-font', hero.fontFamily);
+    ensureGoogleFont(hero.fontFamily);
+    if (px(hero.titleSize)) setVar('--hero-title-size', `min(${px(hero.titleSize)}px, 13vw)`);
+    if (hero.titleWeight) {
+      if (hero.titleWeight === 'italic') setVar('--hero-title-style', 'italic');
+      else setVar('--hero-title-weight', hero.titleWeight);
+    }
+    if (Number(hero.titleLineHeight) > 0) setVar('--hero-title-line', Number(hero.titleLineHeight));
+    if (hero.titleLetterSpacing) setVar('--hero-title-tracking', hero.titleLetterSpacing);
+    if (px(hero.subtitleSize)) setVar('--hero-subtitle-size', `min(${px(hero.subtitleSize)}px, 5vw)`);
+    if (px(hero.chipSize)) setVar('--hero-meta-size', `${px(hero.chipSize)}px`);
+    if (px(hero.ctaSize)) setVar('--hero-cta-size', `${px(hero.ctaSize)}px`);
+    if (hero.titleColor) setVar('--hero-title-color', hero.titleColor);
+    if (hero.accentColor) setVar('--hero-accent-color', hero.accentColor);
+    if (hero.subtitleColor) setVar('--hero-subtitle-color', hero.subtitleColor);
+    if (hero.chipColor) setVar('--hero-meta-color', hero.chipColor);
+    if (hero.chipBg) setVar('--hero-meta-bg', hero.chipBg);
+    if (hero.ctaBg) setVar('--hero-cta-bg', hero.ctaBg);
+    if (hero.ctaColor) setVar('--hero-cta-color', hero.ctaColor);
+    if (hero.ghostColor) setVar('--hero-ghost-color', hero.ghostColor);
+  }
 
   function applyHero(hero) {
     if (!hero) return;
@@ -294,6 +394,7 @@
 
     block.hidden = false;
     block.innerHTML = '';
+    applyHeroTypography(block, hero);
 
     // Atmosphere, then the editorial grid with the copy and the visual.
     block.appendChild(el('div', 'studio-hero-aurora'));
@@ -631,6 +732,14 @@
       article.dataset.page = project.page;
       article.dataset.height = String(project.pageHeight || 800);
       article.style.setProperty('--page-bg', project.color || '#f2eddf');
+      if (project.bgImage) {
+        article.classList.add('has-bg');
+        article.dataset.bgImage = project.bgImage;
+        article.dataset.bgSize = project.bgSize || 'cover';
+        article.dataset.bgPosition = project.bgPosition || 'center';
+        article.dataset.bgOverlay = project.bgOverlay || '';
+        article.dataset.bgOverlayOpacity = String(Number(project.bgOverlayOpacity) || 0);
+      }
 
       const backdrop = el('div', 'project-embed-backdrop');
       backdrop.setAttribute('aria-hidden', 'true');
@@ -748,14 +857,31 @@
   function applyProjectImages(project) {
     if (!project || !Array.isArray(project.images)) return;
 
-    const fallback = Array.from(document.querySelectorAll('.rmwidget.widget-picture'));
+    // Images removed from the panel stay hidden: the exported HTML still
+    // contains the original asset, so the slot must be switched off here.
+    (project.hiddenWidgets || []).forEach(widgetId => {
+      const node = document.querySelector(`[data-id="${widgetId}"]`);
+      if (node) node.style.display = 'none';
+    });
 
-    project.images.forEach((image, index) => {
-      let widget = image.widgetId
-        ? document.querySelector(`[data-id="${image.widgetId}"]`)
-        : null;
-      if (!widget && fallback[index]) widget = fallback[index];
-      if (!widget) return;
+    const fallback = Array.from(document.querySelectorAll('.rmwidget.widget-picture'));
+    const claimed = new Set();
+
+    project.images.forEach(image => {
+      // Images with a widgetId belong to a concrete slot: if it is not on
+      // this page (or is repeated) they are ignored. Only rows without a
+      // widgetId (added manually) use the next free slot, so they can
+      // never overwrite a real image.
+      let widget = null;
+      if (image.widgetId) {
+        widget = document.querySelector(`[data-id="${image.widgetId}"]`);
+        if (widget && claimed.has(widget)) widget = null;
+        if (!widget) return;
+      } else {
+        widget = fallback.find(node => !claimed.has(node)) || null;
+        if (!widget) return;
+      }
+      claimed.add(widget);
 
       setWidgetImage(widget, image.src);
       applyWidgetPosition(widget, image.position);
@@ -768,8 +894,12 @@
 
   /* ── project page background ────────────────────────────── */
 
-  function applyProjectBackground(color) {
-    if (!color) return;
+  function applyProjectBackground(project) {
+    if (!project) return;
+
+    const color = project.color || '';
+    const image = String(project.bgImage || '').trim();
+    const embed = /[?&]embed=1(?:&|$)/.test(window.location.search);
 
     let style = document.getElementById('cms-project-bg');
     if (!style) {
@@ -778,15 +908,43 @@
       document.head.appendChild(style);
     }
 
-    // The Readymag export paints its colour on `.widget-background` alone,
-    // so it only covered part of the page. Push the project colour onto
-    // every page surface to fill the whole background.
-    style.textContent = [
-      `html, body, #mags, article.page, .page { background: ${color} !important; }`,
-      `.page-fixed-bg-container, .widget-background, .content-scroll-wrapper, .content-bounds, .page-content-container { background-color: ${color} !important; }`
-    ].join('\n');
+    const surfaces = 'html, body, #mags, article.page, .page';
+    const inner = '.page-fixed-bg-container, .widget-background, .content-scroll-wrapper, .content-bounds, .page-content-container';
 
-    document.documentElement.style.setProperty('--page-bg', color);
+    if (!image) {
+      if (!color) return;
+      style.textContent = [
+        `${surfaces} { background-color: ${color} !important; background-image: none !important; }`,
+        `${inner} { background-color: ${color} !important; }`
+      ].join('\n');
+      document.documentElement.style.setProperty('--page-bg', color);
+      return;
+    }
+
+    const opacity = Math.max(0, Math.min(100, Number(project.bgOverlayOpacity) || 0)) / 100;
+    const overlay = project.bgOverlay ? hexToRgba(project.bgOverlay, opacity) : '';
+    const layers = overlay
+      ? `linear-gradient(${overlay}, ${overlay}), url("${image}")`
+      : `url("${image}")`;
+    const size = project.bgSize || 'cover';
+    const position = project.bgPosition || 'center';
+    const attachment = project.bgFixed === false ? 'scroll' : 'fixed';
+
+    if (embed) {
+      // Inside the home stack the background is painted by the host page
+      // (sticky layer), so this document must stay transparent above it.
+      style.textContent = `${surfaces}, ${inner} { background: transparent !important; }`;
+    } else {
+      // Standalone project page: the image stays fixed while the page
+      // scrolls, with the project colour underneath and the optional
+      // overlay on top.
+      style.textContent = [
+        `${surfaces}, ${inner} { background: transparent !important; }`,
+        `html, body { background-color: ${color || 'transparent'} !important; background-image: ${layers} !important; background-size: ${size} !important; background-position: ${position} !important; background-repeat: no-repeat !important; background-attachment: ${attachment} !important; }`
+      ].join('\n');
+    }
+
+    document.documentElement.style.setProperty('--page-bg', color || '#f2eddf');
   }
 
   /* ── project page bottom bar (name + "+info" button) ────── */
@@ -853,12 +1011,150 @@
           window.open(href, '_blank', 'noopener');
         } else if (window.parent && window.parent !== window) {
           const origin = window.location.origin === 'null' ? '*' : window.location.origin;
-          window.parent.postMessage({ type: 'noplan:embed-navigate', href }, origin);
+          window.parent.postMessage({ type: 'teranstudio:embed-navigate', href }, origin);
         } else {
           window.location.href = href;
         }
       });
     }
+  }
+
+  /* ── per-page block overrides (generic editor) ──────────── */
+
+  function makeClickable(node, href) {
+    node.style.pointerEvents = 'auto';
+    node.style.cursor = 'pointer';
+    node.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (/^(https?:)?\/\//i.test(href) || /^mailto:|tel:/i.test(href)) {
+        window.open(href, '_blank', 'noopener');
+      } else if (window.parent && window.parent !== window) {
+        const origin = window.location.origin === 'null' ? '*' : window.location.origin;
+        window.parent.postMessage({ type: 'teranstudio:embed-navigate', href }, origin);
+      } else {
+        window.location.href = href;
+      }
+    });
+  }
+
+  /* Paints the overrides saved by the “Páginas” tab. Runs on every page
+     after the structured blocks (nav, hero, stack, footer, project) so a
+     hand-edited widget always wins over the generated defaults. */
+  function applyBlocks(content) {
+    const page = content.blocks && content.blocks[slug];
+    if (!page) return;
+
+    if (page.meta) {
+      if (page.meta.title) document.title = page.meta.title;
+      if (page.meta.description) setMetaDescription(page.meta.description);
+    }
+
+    Object.keys(page).forEach(blockId => {
+      if (blockId === 'meta') return;
+      const override = page[blockId];
+      if (!override) return;
+
+      const node = document.querySelector(`.rmwidget[data-id="${blockId}"], [data-id="${blockId}"]`);
+      if (!node) return;
+
+      if (override.hidden) {
+        node.style.display = 'none';
+        return;
+      }
+
+      if (typeof override.html === 'string' && override.html !== '') {
+        const viewer = node.querySelector('.text-viewer');
+        if (viewer) viewer.innerHTML = override.html;
+      }
+
+      if (override.label !== undefined) {
+        const text = node.querySelector('.common-button .text, .text');
+        if (text) text.textContent = override.label;
+      }
+
+      if (override.src) setWidgetImage(node, override.src);
+
+      if (override.alt) {
+        const img = node.querySelector('img');
+        if (img) img.setAttribute('alt', override.alt);
+      }
+
+      if (override.href !== undefined) {
+        const href = String(override.href || '').trim();
+        const a = node.querySelector('a');
+        if (a) {
+          if (!href) a.removeAttribute('href');
+          else {
+            a.setAttribute('href', href);
+            if (/^(https?:)?\/\//i.test(href)) {
+              a.setAttribute('target', '_blank');
+              a.setAttribute('rel', 'noopener noreferrer');
+            }
+          }
+        } else if (href) {
+          makeClickable(node, href);
+        }
+      }
+    });
+  }
+
+  /* Project indexes in the exported pages (the side list and the bottom
+     pager) keep the original names in static HTML. Both are repainted from
+     the panel projects so renames show up everywhere. */
+  function projectForHref(content, href) {
+    if (!href || /^(?:#|https?:|mailto:|tel:|javascript:)/i.test(href)) return null;
+    const file = href.split('/').pop().split(/[?#]/)[0].toLowerCase();
+    if (!file) return null;
+    return (content.projects || []).find(project => String(project.page || '').toLowerCase() === file) || null;
+  }
+
+  function applyProjectIndexLinks(content) {
+    document.querySelectorAll('.rmwidget.widget-text-v3 a[href]').forEach(link => {
+      const project = projectForHref(content, link.getAttribute('href'));
+      if (project && project.title) link.textContent = project.title;
+    });
+  }
+
+  function applyProjectPager(content) {
+    const pager = document.querySelector('.studio-pager');
+    if (!pager) return;
+
+    const stack = (content.projects || []).filter(project => project.inStack && project.enabled);
+    const index = stack.findIndex(project => String(project.page || '').toLowerCase() === pageFile.toLowerCase());
+    const links = Array.from(pager.querySelectorAll('a'));
+    if (index < 0 || stack.length < 2 || links.length < 3) return;
+
+    const prev = stack[(index - 1 + stack.length) % stack.length];
+    const next = stack[(index + 1) % stack.length];
+
+    const write = (link, name, arrow, first) => {
+      link.textContent = '';
+      const label = document.createElement('span');
+      label.textContent = name;
+      const glyph = document.createElement('span');
+      glyph.textContent = arrow;
+      if (first) {
+        link.appendChild(glyph);
+        link.appendChild(document.createTextNode(' '));
+        link.appendChild(label);
+      } else {
+        link.appendChild(label);
+        link.appendChild(document.createTextNode(' '));
+        link.appendChild(glyph);
+      }
+    };
+
+    links[0].setAttribute('href', prev.page);
+    links[0].setAttribute('title', `Proyecto anterior: ${prev.title}`);
+    write(links[0], prev.title, '←', true);
+
+    links[1].setAttribute('title', 'Ver todos los proyectos');
+    links[1].textContent = `Índice (${index + 1}/${stack.length})`;
+
+    links[2].setAttribute('href', next.page);
+    links[2].setAttribute('title', `Siguiente proyecto: ${next.title}`);
+    write(links[2], next.title, '→', false);
   }
 
   /* ── run ────────────────────────────────────────────────── */
@@ -877,25 +1173,32 @@
     if (content) {
       applyTheme(content);
 
-      // The menu paints the text logo first; applySite then swaps it for
-      // an uploaded logo image when one is configured.
-      if (isIndex) applyNav(content.nav);
+      // Menu, logo and drawer are shared by every page; several inner
+      // pages ship their own static copy, so they are repainted here too.
+      applyNav(content.nav);
       applySite(content);
+      applyDrawer(content);
 
       if (isIndex) {
-        applyDrawer(content);
         applyHero(content.hero);
         applyHeroBackground(content.hero);
         applyCanvasBg(content.canvasBg);
         applyProjectsSection(content.projectsSection);
         buildStack(content);
+        // Fixed canvas images of the home page, managed as the “Inicio”
+        // pseudo-project in the panel.
+        applyProjectImages(content.home);
         applyFooter(content.footer);
       } else {
-        const project = content.projects.find(item => item.slug === slug);
-        applyProjectBackground(project && project.color);
+        const project = findProjectForPage(content);
+        applyProjectBackground(project);
         applyProjectImages(project);
         applyProjectBar(project);
       }
+
+      applyBlocks(content);
+      applyProjectIndexLinks(content);
+      applyProjectPager(content);
     }
 
     // Load the animation engine after hydration so it measures the

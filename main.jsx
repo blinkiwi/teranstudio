@@ -24,7 +24,7 @@ const Navigation = () => {
     React.createElement('nav', 
       { className: `nav ${scrolled ? 'nav-scrolled' : ''}` },
       React.createElement('div', { className: 'nav-container' },
-        React.createElement('a', { href: '#home', className: 'nav-logo' }, 'noplan'),
+        React.createElement('a', { href: '#home', className: 'nav-logo' }, 'Terán Studio'),
         React.createElement('ul', { className: 'nav-links' },
           React.createElement('li', null, React.createElement('a', { href: '#projects' }, 'Projects')),
           React.createElement('li', null, React.createElement('a', { href: '#about' }, 'About')),
@@ -46,7 +46,7 @@ const HeroSection = () => React.createElement('section', { id: 'home', className
     React.createElement('div', { className: 'hero-content' },
       React.createElement('h1', { className: 'hero-title' },
         'Studio ',
-        React.createElement('span', { className: 'hero-accent' }, 'No Plan')
+        React.createElement('span', { className: 'hero-accent' }, 'Terán Studio')
       ),
       React.createElement('p', { className: 'hero-subtitle' }, 'Creative agency crafting digital experiences'),
       React.createElement('a', { href: '#projects', className: 'btn btn-primary' }, 'View Work')
@@ -160,7 +160,7 @@ const ContactSection = () => {
 const Footer = () => React.createElement('footer', { className: 'footer' },
   React.createElement('div', { className: 'footer-container' },
     React.createElement('div', { className: 'footer-brand' },
-      React.createElement('h3', null, 'noplan'),
+      React.createElement('h3', null, 'Terán Studio'),
       React.createElement('p', null, 'Creative digital studio')
     ),
     React.createElement('div', { className: 'footer-links' },
@@ -174,7 +174,7 @@ const Footer = () => React.createElement('footer', { className: 'footer' },
       React.createElement('a', { href: '#', 'aria-label': 'LinkedIn' }, 'LinkedIn')
     ),
     React.createElement('div', { className: 'footer-copyright' },
-      React.createElement('p', null, '&copy; 2024 No Plan Studio. All rights reserved.')
+      React.createElement('p', null, '&copy; 2024 Terán Studio. All rights reserved.')
     )
   )
 );

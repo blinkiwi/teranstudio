@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * No Plan Studio — full stack server.
+ * Terán Studio — full stack server.
  *
  * Zero npm dependencies:
  *   · static file serving for the public site
@@ -22,7 +22,7 @@ env.loadEnv();
 
 const db = require('./lib/db');
 const contentFile = require('./lib/contentfile');
-const { seedIfEmpty } = require('./lib/seed');
+const { seedIfEmpty, pruneOrphanImages, reconcileProjectImages, ensureHomeProject, parseImages } = require('./lib/seed');
 const auth = require('./lib/auth');
 const { GROUPS } = require('./lib/content');
 
@@ -157,7 +157,7 @@ function serveStatic(req, res, pathname) {
     if (err || !stats.isFile()) {
       res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
       return res.end(`<!DOCTYPE html>
-<html lang="es"><head><meta charset="utf-8"><title>404 — No Plan Studio</title></head>
+<html lang="es"><head><meta charset="utf-8"><title>404 — Terán Studio</title></head>
 <body style="background:#f2eddf;font-family:sans-serif;padding:40px;text-align:center;">
 <h1>404 — Página no encontrada</h1>
 <p>No encontramos el recurso solicitado.</p>
@@ -204,6 +204,66 @@ function tokenInfo() {
 
 const TOKEN_MIN_LENGTH = 16;
 const TOKEN_MAX_LENGTH = 256;
+
+/* The block editor stores the inner HTML of text widgets. It is only fed
+   by the authenticated panel, but strip anything executable so a saved
+   block can never inject scripts into the public site. */
+function sanitizeBlockHtml(value) {
+  return String(value == null ? '' : value)
+    .slice(0, 40000)
+    .replace(/<\s*(script|style|iframe|object|embed|link|meta)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
+    .replace(/<\s*(script|style|iframe|object|embed|link|meta)\b[^>]*\/?>/gi, '')
+    .replace(/\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/(href|src)\s*=\s*(?:"\s*javascript:[^"]*"|'\s*javascript:[^']*'|javascript:[^\s>]+)/gi, '$1="#"');
+}
+
+function cleanText(value, max) {
+  return String(value == null ? '' : value).trim().slice(0, max);
+}
+
+/** Keeps the blocks group small, predictable and free of markup hazards. */
+function sanitizeBlocks(input) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) return {};
+  const output = {};
+
+  for (const [pageKey, page] of Object.entries(input)) {
+    if (!/^[a-z0-9][a-z0-9-]{0,79}$/i.test(pageKey)) continue;
+    if (!page || typeof page !== 'object' || Array.isArray(page)) continue;
+
+    const cleanPage = {};
+
+    for (const [blockId, override] of Object.entries(page)) {
+      if (!override || typeof override !== 'object' || Array.isArray(override)) continue;
+
+      if (blockId === 'meta') {
+        const meta = {};
+        if (override.title !== undefined) meta.title = cleanText(override.title, 200);
+        if (override.description !== undefined) meta.description = cleanText(override.description, 500);
+        if (Object.keys(meta).length) cleanPage.meta = meta;
+        continue;
+      }
+
+      if (!/^[A-Za-z0-9_-]{1,64}$/.test(blockId)) continue;
+
+      const clean = {};
+      if (typeof override.html === 'string') clean.html = sanitizeBlockHtml(override.html);
+      if (typeof override.label === 'string') clean.label = cleanText(override.label, 300);
+      if (typeof override.src === 'string') clean.src = cleanText(override.src, 600);
+      if (typeof override.alt === 'string') clean.alt = cleanText(override.alt, 300);
+      if (typeof override.href === 'string') {
+        const href = cleanText(override.href, 600);
+        clean.href = /^\s*javascript:/i.test(href) ? '' : href;
+      }
+      if (override.hidden === true) clean.hidden = true;
+
+      if (Object.keys(clean).length) cleanPage[blockId] = clean;
+    }
+
+    if (Object.keys(cleanPage).length) output[pageKey] = cleanPage;
+  }
+
+  return output;
+}
 
 async function handleApi(req, res, url) {
   const { pathname } = url;
@@ -342,7 +402,8 @@ async function handleApi(req, res, url) {
   if (match && (method === 'PUT' || method === 'PATCH')) {
     if (!requireAuth()) return;
     if (!GROUPS.includes(match[1])) return sendJson(res, 400, { error: 'Grupo desconocido' });
-    const body = await readJson(req);
+    let body = await readJson(req);
+    if (match[1] === 'blocks') body = sanitizeBlocks(body);
     return sendJson(res, 200, { group: match[1], value: db.setGroup(match[1], body) });
   }
 
@@ -374,6 +435,10 @@ async function handleApi(req, res, url) {
     }
     if (method === 'DELETE') {
       if (!requireAuth()) return;
+      const project = db.getProject(match[1]);
+      if (project && project.system) {
+        return sendJson(res, 400, { error: 'El proyecto «Inicio» no se puede eliminar' });
+      }
       const ok = db.deleteProject(match[1]);
       return sendJson(res, ok ? 200 : 404, { ok });
     }
@@ -386,6 +451,23 @@ async function handleApi(req, res, url) {
     if (!project) return sendJson(res, 404, { error: 'Proyecto no encontrado' });
     const body = await readJson(req);
     if (!body.src) return sendJson(res, 400, { error: 'src es obligatorio' });
+
+    // A new image must bind to a real widget of the page; otherwise it
+    // could never be painted or could steal another slot. Pick the first
+    // free picture slot automatically.
+    if (!body.widgetId && project.page) {
+      const file = path.join(BASE_DIR, project.page);
+      if (fs.existsSync(file)) {
+        const used = new Set(
+          db.listImages(project.id, { includeHidden: true })
+            .map(image => image.widgetId)
+            .filter(Boolean)
+        );
+        const free = parseImages(fs.readFileSync(file, 'utf8')).find(image => !used.has(image.widgetId));
+        if (free) body.widgetId = free.widgetId;
+      }
+    }
+
     return sendJson(res, 201, db.createImage(project.id, body));
   }
 
@@ -409,8 +491,8 @@ async function handleApi(req, res, url) {
     }
     if (method === 'DELETE') {
       if (!requireAuth()) return;
-      const ok = db.deleteImage(match[1]);
-      return sendJson(res, ok ? 200 : 404, { ok });
+      const ok = db.hideImage(match[1]);
+      return sendJson(res, ok ? 200 : 404, { ok, hidden: true });
     }
   }
 
@@ -453,13 +535,28 @@ const server = http.createServer(async (req, res) => {
 });
 
 const seedResult = seedIfEmpty();
+const homeCreated = ensureHomeProject();
+if (homeCreated) console.log('Proyecto «Inicio» creado para las imágenes fijas de la portada');
+const prunedImages = pruneOrphanImages();
+const reconciled = reconcileProjectImages();
+if (prunedImages || reconciled.added || reconciled.reordered) {
+  if (prunedImages) console.log(`Imágenes huérfanas eliminadas: ${prunedImages}`);
+  if (reconciled.added || reconciled.reordered) {
+    console.log(`Imágenes sincronizadas con las páginas: +${reconciled.added} nuevas, ${reconciled.reordered} reordenadas`);
+  }
+  try {
+    contentFile.exportContent();
+  } catch (error) {
+    console.warn('[cms] No se pudo escribir content/site.json:', error.message);
+  }
+}
 CACHE_VERSION = db.getCacheVersion();
 setInterval(auth.pruneSessions, 1000 * 60 * 30).unref();
 
 server.listen(PORT, () => {
   const token = auth.adminToken();
   console.log('===================================================');
-  console.log('No Plan Studio — Servidor full stack activo');
+  console.log('Terán Studio — Servidor full stack activo');
   console.log(`Sitio:  http://localhost:${PORT}`);
   console.log(`Panel:  http://localhost:${PORT}/admin`);
   console.log(`SQLite: ${db.DB_PATH}`);

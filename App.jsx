@@ -282,7 +282,7 @@ const Navigation = ({ theme, onToggleTheme }) => {
   return (
     <nav className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
-        <a href="#home" className="nav-logo">noplan<span style={{ color: 'var(--color-accent)' }}>.</span></a>
+        <a href="#home" className="nav-logo">Terán Studio<span style={{ color: 'var(--color-accent)' }}>.</span></a>
         <div className="nav-right">
           <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
             <li><a href="#projects" onClick={() => setMobileMenuOpen(false)}>Projects</a></li>
@@ -306,7 +306,7 @@ const HeroSection = () => (
     <div className="hero-container">
       <div className="hero-content">
         <span className="hero-eyebrow">Creative Studio</span>
-        <h1 className="hero-title">We build with <span className="hero-accent">no plan</span>, only intent</h1>
+        <h1 className="hero-title">We build with <span className="hero-accent">intent</span>, not a template</h1>
         <p className="hero-subtitle">
           An independent design collective crafting brand identities, interfaces, and digital experiences that move people.
         </p>
@@ -454,7 +454,7 @@ const Footer = () => (
   <footer className="footer">
     <div className="footer-container">
       <div className="footer-brand">
-        <h3>noplan<span style={{ color: 'var(--color-accent)' }}>.</span></h3>
+        <h3>Terán Studio<span style={{ color: 'var(--color-accent)' }}>.</span></h3>
         <p>Creative digital studio building with intent, not templates.</p>
       </div>
       <div className="footer-col">
@@ -471,7 +471,7 @@ const Footer = () => (
       </div>
     </div>
     <div className="footer-copyright">
-      <p>© 2025 No Plan Studio. All rights reserved.</p>
+      <p>© 2025 Terán Studio. All rights reserved.</p>
     </div>
   </footer>
 );
